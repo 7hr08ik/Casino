@@ -1,0 +1,20 @@
+28/01/2025
+Created initial by following guide found on medium. (Acknowledgments)
+    Simple game window, player box, and target box
+    Made target box open pinball game
+Seperated variables/constants into seperate config.pygame
+
+06/02
+Added extra keys to movement
+    WASD + arrows
+
+10/02
+Added BG image
+Added Game exit target
+
+11/02
+Added animated player character
+Altered code to use new player image instead of box
+
+23/02
+Added Loading Screen (picture from Paul Leanka)

@@ -1,0 +1,22 @@
+
+
+Unified player 
+    After load Screen
+        Player name
+            Create txt file (named) containing Money
+            Starting amount
+        Load Player?
+    Each game will read the player session?
+    Get everybody to create a variable for each game starting cash
+        Can then link this variable to the global cash amount???
+
+
+# ----------------------------------------------------------------------------------------
+
+
+Create high scores screen
+
+Implement scoreing system to include all teh other games. 
+    Simply load the current score, and save it when done.
+    Needs to be simple, and small.
+    Perhaps, add another python file to each game to contain the code

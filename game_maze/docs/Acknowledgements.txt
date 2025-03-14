@@ -1,0 +1,29 @@
+Acknowledgments
+===============
+
+Programs/Software Used
+----------------------
+
+Python3
+pygame 2.6.1
+
+VS Code (OSS)
+    Plugins
+        Codeium. Coding Autocomplete assistant.
+        Ruff Extension. Formatting and error highlighting.
+
+Built on Linux and Windows
+
+Online Resources Used
+---------------------
+
+https://yofreesamples.com/mazes/
+
+Character Files
+    https://aske4.itch.io/antihero-character
+
+Maze assets
+    https://gamebetweenthelines.itch.io/2d-top-down-pixel-art-tileset-casino?download
+
+Animation Help
+    https://stackoverflow.com/questions/49352990/how-do-i-get-my-images-to-work-as-an-animation-in-pygame

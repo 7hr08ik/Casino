@@ -1,0 +1,39 @@
+04/02
+Copied basic game structure from lobby
+Ball implemented
+
+Plan to implement
+    Flippers
+    Gravity
+
+10/02
+
+Got gravity working
+    constant downwards velocity
+    Added bounce capability
+Made basic background image to get collisions working
+Updated to use png of ball instead of printing circle
+
+25/02
+added flipper class, to handle all the roations etc
+1st attempt at implementing flippers.
+    Attempted to copy the can_move function and add new function for moving the flippers
+    Too complex. No need
+2nd attempt
+    Adding the flippers to the already running ball movement function.
+Add additional velocity if hits flippers, and flipper moving
+    Created seperate settings for bounce on flippers
+
+28/02
+Implemented new method for collision
+    Now using a mask on every surface.
+    If mask overlaps, then collision
+Finally got collision workign with the ball and the flippers
+    Ball crawls through flipper rather than bouncing off
+    FINALLY got it working
+    Needed a full re-write and new functions to get working
+        But the ball now returns to previous location before bouncing (to solve the creeping ball)
+
+06/03
+FUCKING DONE IT!!
+Flippers are now rotating correctly around a pivot
