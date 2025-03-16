@@ -17,6 +17,11 @@ WIN_SIZE = (1280, 720)
 CLOCK = pg.time.Clock()
 LOAD_SCRN_DLY = 3000  # 3sec
 
+# Images
+LOAD_SCR_IMG = pg.image.load("img/loading.png")
+BG_IMG = pg.image.load("img/bg.png")
+LOSER_IMG = pg.image.load("img/loser.png")
+
 # Shortcuts
 GAME_PINBALL = [sys.executable, os.path.abspath("games/pinball/main.py")]
 GAME_MAZE = [sys.executable, os.path.abspath("games/maze/main.py")]
@@ -25,10 +30,6 @@ GAME_BLACKJACK = [sys.executable, os.path.abspath("games/blackjack/BlackJack_ICA
 GAME_DICE = [sys.executable, os.path.abspath("games/dice/main.py")]
 GAME_ROULETTE = [sys.executable, os.path.abspath("games/roulette/main.py")]
 GAME_SHELL = [sys.executable, os.path.abspath("games/shell/3_Shell_Game.py")]
-
-# Images
-LOAD_SCR_IMG = pg.image.load("img/loading.png")
-BG_IMG = pg.image.load("img/bg.png")
 
 # ----------------------------------
 # Player / Targets

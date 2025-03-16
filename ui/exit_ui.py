@@ -7,10 +7,12 @@
 # Main Imports
 import pygame as pg
 
-from logic.save_load import load_high_scores
+import conf
+import sys
+from logic.save_load import load_high_scores, delete_player
 
 
-class HighScoresUI:
+class ExitUI:
     def __init__(self, screen):
         self.screen = screen
         self.font = pg.font.Font(None, 36)
@@ -29,12 +31,12 @@ class HighScoresUI:
             no_scores_text = self.font.render("No scores available", True, (255, 255, 255))
             self.screen.blit(no_scores_text, (self.screen.get_width() / 2 - no_scores_text.get_width() / 2, 100))
         else:
-            self._draw_high_scores()
+            self.draw_exit_main()
 
         # Draw back button
-        self._draw_back_button()
+        self.back_btn()
 
-    def _draw_high_scores(self):
+    def draw_exit_main(self):
         """Draw the high scores list"""
         # Highlight top player
         top_player = self.high_scores[0]
@@ -75,7 +77,22 @@ class HighScoresUI:
             if y_pos > self.screen.get_height() - 100:
                 break
 
-    def _draw_back_button(self):
+    def draw_exit_loser(self, screen, player_name):
+        """
+        Print loser screen and remove player from json file
+        """
+
+        # Load, loser page
+        screen.blit(conf.LOSER_IMG, (0, 0))
+        pg.display.flip()
+        pg.time.wait(conf.LOAD_SCRN_DLY)  # Wait for X seconds
+
+        # Delete the current player from the json file
+        delete_player(player_name)
+        pg.quit()
+        sys.exit()
+
+    def back_btn(self):
         """Draw the back button"""
         bg_color = (150, 150, 150) if self.back_button["hover"] else (100, 100, 100)
         pg.draw.rect(self.screen, bg_color, self.back_button["rect"])
@@ -84,8 +101,11 @@ class HighScoresUI:
         self.screen.blit(back_text, back_text_rect)
         pg.draw.rect(self.screen, (200, 200, 200), self.back_button["rect"], 2)
 
-    def handle_event(self, event):
-        """Handle events for the High Scores screen"""
+    def key_input(self, event):
+        """
+        Handle key input, and mouse input for exit screens
+        """
+
         if event.type == pg.MOUSEMOTION:
             self.back_button["hover"] = self.back_button["rect"].collidepoint(pg.mouse.get_pos())
         elif event.type == pg.MOUSEBUTTONDOWN:

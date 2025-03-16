@@ -19,6 +19,32 @@ from logic.save_load import save_player_data
 from ui.ui import UIElements
 
 
+def draw_target(screen, color, position, size, alpha=0):
+    """
+    Draw target points on the screen.
+    Targets are transparent and have a border.
+    """
+    # Create surface
+    target_surface = pg.Surface((size, size), pg.SRCALPHA)
+    # Make the surface transparent
+    target_surface.fill((color[0], color[1], color[2], alpha))
+    # Put surface in a rectangle
+    pg.draw.rect(target_surface, color, (0, 0, size, size), 1)
+    # Print screen with transparent surface in position
+    screen.blit(target_surface, position)
+
+
+def activate_target(player_rect, target_rect, game_command=None):
+    """
+    When player reaches target, activate X game.
+    """
+    if player_rect.colliderect(target_rect):
+        pg.quit()
+        if game_command:
+            subprocess.run(game_command, check=False)
+        sys.exit()
+
+
 def main():
     """
     Main function to initialize and run the game loop.
@@ -33,7 +59,8 @@ def main():
     pg.display.flip()
     pg.time.wait(conf.LOAD_SCRN_DLY)  # Wait for X seconds
 
-    # 3 - Show player selection screen and create/load player data
+    # 3 - Player data elements
+    # Show player selection screen and create/load player data
     ui = UIElements(screen)
     player_data = ui.main_menu()
     # Handle exceptions where no player selected at menu.
@@ -45,7 +72,7 @@ def main():
     print(f"Welcome, {player_data['player_name']}! Balance: ${player_data['cash_balance']}")
 
     # 4 - Initialize game elements
-    player = Player(conf.p_pos[0], conf.p_pos[1])
+    player = Player(conf.p_pos[0], conf.p_pos[1], screen)
     clock = conf.CLOCK
 
     # ----------------------------------
@@ -83,31 +110,7 @@ def main():
 
         # ----------------------------------
         # Exit_targets
-        # Started with individual commands, evolved into this.
-        def draw_target(screen, color, position, size, alpha=0):
-            """
-            Draw target points on the screen.
-            Targets are transparent and have a border.
-            """
-            # Create surface
-            target_surface = pg.Surface((size, size), pg.SRCALPHA)
-            # Make the surface transparent
-            target_surface.fill((color[0], color[1], color[2], alpha))
-            # Put surface in a rectangle
-            pg.draw.rect(target_surface, color, (0, 0, size, size), 1)
-            # Print screen with transparent surface in position
-            screen.blit(target_surface, position)
-
-        def activate_target(player_rect, target_rect, game_command=None):
-            """
-            When player reaches target, activate X game.
-            """
-            if player_rect.colliderect(target_rect):
-                pg.quit()
-                if game_command:
-                    subprocess.run(game_command, check=False)
-                sys.exit()
-
+        #
         # Draw exit and targets
         targets = [
             (conf.e_pos, conf.e_size, None),  # Exit Target

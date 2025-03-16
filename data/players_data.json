@@ -1,7 +1,7 @@
 {
-    "Dave": {
+    "one": {
         "player_name": "Dave",
-        "cash_balance": 1000,
+        "cash_balance": 1,
         "high_scores": {
             "cash": 1000
         },
@@ -9,7 +9,7 @@
     },
     "Rob": {
         "player_name": "Rob",
-        "cash_balance": 1000,
+        "cash_balance": 10,
         "high_scores": {
             "cash": 1000
         },

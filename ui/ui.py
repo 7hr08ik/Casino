@@ -326,9 +326,6 @@ class UIElements:
             # Exit player selection mode
             self.player_selection_active = False
 
-            # Here you would typically transition to the main game screen
-            # For now, we'll just print a message
-
     def show_high_scores(self):
         """Show high scores screen"""
         running = True
@@ -374,27 +371,3 @@ class UIElements:
             clock.tick(60)
 
         return self.current_player
-
-    def update_player_balance(self, player_data, amount_change):
-        """Update player's cash balance and save the changes"""
-        player_data["cash_balance"] += amount_change
-        save_player_data(player_data["player_name"], player_data["cash_balance"], player_data["high_scores"])
-        return player_data
-
-    def update_player_high_score(self, player_data, game_name, score):
-        """Update player's high score for a specific game if it's higher than the current one"""
-        high_scores = player_data["high_scores"]
-
-        # Initialize the game entry if it doesn't exist
-        if game_name not in high_scores:
-            high_scores[game_name] = 0
-
-        # Update if the new score is higher
-        if score > high_scores[game_name]:
-            high_scores[game_name] = score
-
-            # Save the updated high scores
-            save_player_data(player_data["player_name"], player_data["cash_balance"], high_scores)
-            return True  # Indicate that a new high score was set
-
-        return False  # No new high score
