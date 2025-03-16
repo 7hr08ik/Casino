@@ -1,7 +1,15 @@
-import pygame
+# ===========================
+# BlackJack
+#
+# Author: Paul Leanca
+# 07/02/2025
+# ===========================
+
 import random
 import sys
 import time
+
+import pygame
 
 # Initialize Pygame
 pygame.init()
@@ -13,7 +21,7 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Blackjack Game")
 
 # Load images
-pop_image = pygame.image.load("pop_up.png")
+pop_image = pygame.image.load("game_blackjack/img/pop_up.png")
 pop_image = pygame.transform.scale(pop_image, (1300, 800))
 screen.blit(pop_image, (0, 0))
 pygame.display.update()
@@ -21,8 +29,8 @@ pygame.display.update()
 # Wait a few seconds before starting the game
 time.sleep(1)
 
-bg_image = pygame.image.load("background.jpg")
-card_back = pygame.image.load("card_back.png")
+bg_image = pygame.image.load("game_blackjack/img/background.jpg")
+card_back = pygame.image.load("game_blackjack/img/card_back.png")
 card_back = pygame.transform.scale(card_back, (111, 200))
 
 # Define suits
@@ -33,7 +41,7 @@ card_images = {}
 for suit in suits:
     for value in range(2, 15):  # 2 to Ace (14)
         try:
-            image = pygame.image.load(f"cards/{value}_of_{suit}.png")
+            image = pygame.image.load(f"game_blackjack/img/cards/{value}_of_{suit}.png")
             image = pygame.transform.scale(image, (111, 200))
             card_images[(value, suit)] = image
         except pygame.error:
@@ -42,6 +50,7 @@ for suit in suits:
 # Font setup
 font = pygame.font.Font(None, 36)
 
+
 # Button class
 class Button:
     def __init__(self, text, x, y, width, height, color, action):
@@ -49,15 +58,16 @@ class Button:
         self.rect = pygame.Rect(x, y, width, height)
         self.color = color
         self.action = action
-    
+
     def draw(self, screen):
         pygame.draw.rect(screen, self.color, self.rect)
         text_surf = font.render(self.text, True, (0, 0, 0))
         text_rect = text_surf.get_rect(center=self.rect.center)
         screen.blit(text_surf, text_rect)
-    
+
     def is_clicked(self, pos):
         return self.rect.collidepoint(pos)
+
 
 # Card class
 class Card:
@@ -65,7 +75,7 @@ class Card:
         self.value = value
         self.suit = suit
         self.image = card_images.get((value, suit))
-    
+
     def card_value(self):
         if self.value in [11, 12, 13]:
             return 10  # Jack, Queen, King
@@ -73,24 +83,26 @@ class Card:
             return 11  # Ace (will be adjusted in score calculation)
         return self.value
 
+
 # Deck class
 class Deck:
     def __init__(self):
         self.cards = [Card(value, suit) for suit in suits for value in range(2, 15)]
         random.shuffle(self.cards)
-    
+
     def draw_card(self):
         return self.cards.pop() if self.cards else None
+
 
 # Player class
 class Player:
     def __init__(self, name):
         self.name = name
         self.hand = []
-    
+
     def add_card(self, card):
         self.hand.append(card)
-    
+
     def calculate_score(self):
         score = sum(card.card_value() for card in self.hand)
         ace_count = sum(1 for card in self.hand if card.value == 14)
@@ -99,41 +111,44 @@ class Player:
             score -= 10
             ace_count -= 1
         return score
-    
+
     def is_busted(self):
         return self.calculate_score() > 21
+
+
 # Betting system
-credits = 100
+gambling_credits = 100
 bet = 10
 
-bet_buttons = [Button(f"Bet £{i}", 1050, 50 + (i//10)*50, 150, 40, (0, 255, 0), i) for i in range(10, 101, 10)]
+bet_buttons = [Button(f"Bet £{i}", 1050, 50 + (i // 10) * 50, 150, 40, (0, 255, 0), i) for i in range(10, 101, 10)]
 # Create buttons used during gameplay.
 hit_button = Button("Hit", 1000, 600, 100, 50, (255, 0, 0), "hit")
 stand_button = Button("Stand", 1150, 600, 100, 50, (255, 0, 0), "stand")
 play_again_button = Button("Play Again", 900, 600, 200, 50, (255, 0, 0), "play again")
 exit_button = Button("Exit", 1150, 600, 100, 50, (255, 0, 0), "exit")
 
+
 def play_round():
-    global credits, bet
-    
-    if credits < bet:
+    global gambling_credits, bet  # noqa: PLW0603
+
+    if gambling_credits < bet:
         return False
-    
-    credits -= bet
+
+    gambling_credits -= bet
     # Initialize a new deck and new players for each round
     deck = Deck()
     dealer = Player("Dealer")
     player = Player("Player")
-    
+
     # Deal two initial cards to each
     for _ in range(2):
         player.add_card(deck.draw_card())
         dealer.add_card(deck.draw_card())
-    
+
     player_turn = True
     round_over = False
     outcome = ""
-    
+
     # Main round loop
     while not round_over:
         # Process events
@@ -148,37 +163,37 @@ def play_round():
                         bet = button.action
         # Draw background
         screen.blit(bg_image, (0, 0))
-        
+
         # Draw dealer's cards
         if player_turn:
             # During player's turn, hide dealer's first card:
             screen.blit(card_back, (200, 100))
             for i, card in enumerate(dealer.hand[1:]):
                 if card.image:
-                    screen.blit(card.image, (200 + (i+1)*250, 100))
+                    screen.blit(card.image, (200 + (i + 1) * 170, 100))
         else:
             # Reveal all dealer cards once player's turn is over:
             for i, card in enumerate(dealer.hand):
                 if card.image:
-                    screen.blit(card.image, (200 + i*250, 100))
-        
+                    screen.blit(card.image, (200 + i * 170, 100))
+
         # Draw player's cards
         for i, card in enumerate(player.hand):
             if card.image:
-                screen.blit(card.image, (200 + i*250, 400))
-        
+                screen.blit(card.image, (200 + i * 170, 400))
+
         # Display player's current hand score
         player_score_text = font.render("Player Score: " + str(player.calculate_score()), True, (255, 255, 255))
         screen.blit(player_score_text, (10, 500))
-        credits_text = font.render(f"Credits: £{credits}  Bet: £{bet}", True, (255, 255, 255))
+        credits_text = font.render(f"Credits: £{gambling_credits}  Bet: £{bet}", True, (255, 255, 255))
         screen.blit(credits_text, (1000, 20))
         # Draw action buttons only during player's turn
         if player_turn:
             hit_button.draw(screen)
             stand_button.draw(screen)
-        
+
         pygame.display.update()
-        
+
         # Handle player's turn actions
         if player_turn:
             for event in events:
@@ -200,16 +215,16 @@ def play_round():
                 # Determine outcome
                 player_score = player.calculate_score()
                 dealer_score = dealer.calculate_score()
-                
+
                 if dealer.is_busted() or player_score > dealer_score:
                     outcome = "Player wins!"
-                    credits += bet * 2  # Player wins double the bet
+                    gambling_credits += bet * 2  # Player wins double the bet
                 elif player_score < dealer_score:
                     outcome = "Dealer wins!"
-                
+
                 else:
                     outcome = "It's a tie!"
-                    credits += bet  # Refund bet to player
+                    gambling_credits += bet  # Refund bet to player
                 if dealer_score == 21:
                     outcome = "BlackJack"
                 if player_score == 21:
@@ -217,40 +232,40 @@ def play_round():
                 round_over = True
         for button in bet_buttons:
             button.draw(screen)
-        
+
         hit_button.draw(screen)
         stand_button.draw(screen)
-        
+
         pygame.display.update()
         # Small delay to avoid a busy loop
         pygame.time.wait(100)
-    
+
     # Round is over: show the final hands, outcome, and player's score
     screen.blit(bg_image, (0, 0))
-    
+
     # Reveal dealer's full hand
     for i, card in enumerate(dealer.hand):
         if card.image:
-            screen.blit(card.image, (200 + i*250, 100))
+            screen.blit(card.image, (200 + i * 170, 100))
     # Show player's hand
     for i, card in enumerate(player.hand):
         if card.image:
-            screen.blit(card.image, (200 + i*250, 400))
-    
+            screen.blit(card.image, (200 + i * 170, 400))
+
     # Display outcome message at the top
     outcome_text = font.render(outcome, True, (255, 255, 255))
     screen.blit(outcome_text, (500, 50))
-    
+
     # Display player's final hand score
     final_score_text = font.render("Player Score: " + str(player.calculate_score()), True, (255, 255, 255))
     screen.blit(final_score_text, (200, 370))
-    
+
     # Draw the Play Again and Exit buttons
     play_again_button.draw(screen)
     exit_button.draw(screen)
-    
+
     pygame.display.update()
-    
+
     # Wait for the player to choose to play again or exit.
     waiting = True
     while waiting:
@@ -266,15 +281,17 @@ def play_round():
                     waiting = False
                     return False  # Indicates exit the game
         pygame.time.wait(100)
-    
+
+
 # Main loop: keep playing rounds until the player chooses to exit.
-def main():
+def main():  # TODO: Add code for running out of money, and save/load
     running = True
     while running:
         play_again = play_round()
-        if not play_again or credits <= 0:
+        if not play_again or gambling_credits <= 0:
             running = False
     pygame.quit()
-        
+
+
 if __name__ == "__main__":
     main()
