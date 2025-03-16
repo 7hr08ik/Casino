@@ -22,7 +22,7 @@ class Ui:
         self.start_time = pg.time.get_ticks()
         self.current_time = self.start_time
         self.cost = 0
-        self.starting_balance = 500
+        self.starting_balance = 50
         self.balance = self.starting_balance
 
         # UI styling

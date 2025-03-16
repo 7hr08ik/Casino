@@ -16,6 +16,7 @@ import pygame as pg
 import conf
 from logic.player import Player
 from logic.save_load import save_player_data
+from ui.exit_ui import ExitUI
 from ui.ui import UIElements
 
 
@@ -45,6 +46,18 @@ def activate_target(player_rect, target_rect, game_command=None):
         sys.exit()
 
 
+def check_player_balance(screen, player_data):
+    """
+    Check if player's cash balance has reached 0 or below.
+    Display exit screen if player is broke.
+    """
+    if player_data["cash_balance"] <= 0:
+        exit_ui = ExitUI(screen)
+        exit_ui.draw_exit_loser(screen, player_data["player_name"])
+    else:
+        pass
+
+
 def main():
     """
     Main function to initialize and run the game loop.
@@ -72,7 +85,7 @@ def main():
     print(f"Welcome, {player_data['player_name']}! Balance: ${player_data['cash_balance']}")
 
     # 4 - Initialize game elements
-    player = Player(conf.p_pos[0], conf.p_pos[1], screen)
+    player = Player(conf.p_pos[0], conf.p_pos[1])
     clock = conf.CLOCK
 
     # ----------------------------------
@@ -88,6 +101,9 @@ def main():
                 save_player_data(player_data["player_name"], player_data["cash_balance"], player_data["high_scores"])
                 pg.quit()
                 sys.exit()
+
+        # Check player balance
+        check_player_balance(screen, player_data)
 
         # Update Player
         player.update(dt)
