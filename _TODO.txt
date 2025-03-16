@@ -29,3 +29,9 @@ Create credits page
     Access when exiting game from fire_exit
     Access when leaving maze
     Save results to json
+
+    For single mode game start
+        Starting balance = try:
+                                save_load
+                           else:
+                                              1000

@@ -28,15 +28,16 @@ def main():
     pg.display.flip()
     pg.time.wait(conf.LOAD_SCRN_DLY)  # Wait for X seconds
 
-    # Initialize game elements
+    # 3 - Initialize game elements
     player = Player(conf.p_pos[0], conf.p_pos[1])
     ui = Ui()
 
     # ----------------------------------
-    # Main game loop
+    # 4 - Main game loop
     while True:
         # Limit FPS to 60
         conf.CLOCK.tick(60)
+        # Delta-Time for animations
         dt = conf.CLOCK.tick(30) / 1000
 
         # Handle events
@@ -45,8 +46,9 @@ def main():
                 pg.quit()
                 sys.exit()
 
-        # Fill the screen with red
-        screen.fill((90, 30, 105))
+        # Fill the screen - Makes carpet colour
+        # screen.fill((90, 30, 105))
+        screen.fill("grey12")
 
         # Print Background image
         screen.blit(conf.FLOOR_IMG, (0, 0))
@@ -55,16 +57,22 @@ def main():
         # Draw UI elements
         ui.draw_ui(screen)
 
-        # Draw player on screen
+        # Draw player
         player.draw(screen)
 
         # Update Player
         player.update(dt)
 
         # ----------------------------------
-        # Draw the exit
+        # Draw the target
+        #
+        # Create surface
+        target_surface = pg.Surface((conf.t_pos[0], conf.t_pos[1]), pg.SRCALPHA)
+        # Make the surface transparent
+        target_surface.fill(conf.TRANSPARENT)
+        # Put surface in a rectangle
         pg.draw.rect(
-            screen,
+            target_surface,
             conf.t_colour,
             (conf.t_pos[0], conf.t_pos[1], conf.t_size, conf.t_size),
         )
@@ -77,6 +85,13 @@ def main():
             pg.quit()
             subprocess.run(conf.GAME_LOBBY, check=False)
             sys.exit()
+
+        # ----------------------------------
+        # Add if statements to handle zero score
+        # if player.score == 0:
+        #     pg.quit()
+        #     subprocess.run(conf.GAME_LOBBY, check=False)
+        #     sys.exit()
 
         # Update the display
         pg.display.flip()

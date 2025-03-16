@@ -21,10 +21,10 @@ LOAD_SCRN_DLY = 3000  # 3sec
 GAME_PINBALL = [sys.executable, os.path.abspath("game_pinball/main.py")]
 GAME_MAZE = [sys.executable, os.path.abspath("game_maze/main.py")]
 GAME_LOTTERY = [sys.executable, os.path.abspath("game_lottery/main.py")]
-GAME_BLACKJACK = [sys.executable, os.path.abspath("game_blackjack/main.py")]
+GAME_BLACKJACK = [sys.executable, os.path.abspath("game_blackjack/BlackJack_ICA.py")]
 GAME_DICE = [sys.executable, os.path.abspath("game_dice/main.py")]
 GAME_ROULETTE = [sys.executable, os.path.abspath("game_roulette/main.py")]
-GAME_SHELL = [sys.executable, os.path.abspath("game_shell/main.py")]
+GAME_SHELL = [sys.executable, os.path.abspath("game_shell/3_Shell_Game.py")]
 
 # Images
 LOAD_SCR_IMG = pg.image.load("img/loading.png")
