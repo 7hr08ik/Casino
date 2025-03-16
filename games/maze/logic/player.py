@@ -15,11 +15,11 @@ class Player:
     def __init__(self, x, y):
         # Load images once when the program starts.
         # Put them into lists, one for each direction.
-        self.pl_idle = [pg.image.load("game_maze/img/Idle/Idle.png").convert_alpha()]
-        self.pl_run_up = [pg.image.load(f"game_maze/img/Walk/Up/{i}.png").convert_alpha() for i in range(1, 5)]
-        self.pl_run_down = [pg.image.load(f"game_maze/img/Walk/Down/{i}.png").convert_alpha() for i in range(1, 5)]
-        self.pl_run_left = [pg.image.load(f"game_maze/img/Walk/Left/{i}.png").convert_alpha() for i in range(1, 5)]
-        self.pl_run_right = [pg.image.load(f"game_maze/img/Walk/Right/{i}.png").convert_alpha() for i in range(1, 5)]
+        self.pl_idle = [pg.image.load("games/maze/img/Idle/Idle.png").convert_alpha()]
+        self.pl_run_up = [pg.image.load(f"games/maze/img/Walk/Up/{i}.png").convert_alpha() for i in range(1, 5)]
+        self.pl_run_down = [pg.image.load(f"games/maze/img/Walk/Down/{i}.png").convert_alpha() for i in range(1, 5)]
+        self.pl_run_left = [pg.image.load(f"games/maze/img/Walk/Left/{i}.png").convert_alpha() for i in range(1, 5)]
+        self.pl_run_right = [pg.image.load(f"games/maze/img/Walk/Right/{i}.png").convert_alpha() for i in range(1, 5)]
         self.bg_image = conf.BG_IMG.convert_alpha()  # Must stay in main.py Fails if moved to conf.py
 
         self.images = self.pl_idle
