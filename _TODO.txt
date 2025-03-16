@@ -1,5 +1,4 @@
 
-
 Unified player 
     After load Screen
         Player name
@@ -10,13 +9,23 @@ Unified player
     Get everybody to create a variable for each game starting cash
         Can then link this variable to the global cash amount???
 
-
 # ----------------------------------------------------------------------------------------
 
+add text to high scores screen for buttons
 
-Create high scores screen
+add exit screen to the maze "thank you for comming. your balance is....."
+or
+if money reaches zero then bouncers kick you out
 
-Implement scoreing system to include all teh other games. 
-    Simply load the current score, and save it when done.
-    Needs to be simple, and small.
-    Perhaps, add another python file to each game to contain the code
+-------------
+
+Create credits page
+    shows player score, and exits after 5 sec
+    if player balance is 0
+        show different screen
+        deletes player from json
+
+    Current player, and final balance
+    Access when exiting game from fire_exit
+    Access when leaving maze
+    Save results to json
