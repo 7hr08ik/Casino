@@ -27,7 +27,7 @@ GAME_PINBALL = [sys.executable, os.path.abspath("games/pinball/main.py")]
 GAME_MAZE = [sys.executable, os.path.abspath("games/maze/main.py")]
 GAME_LOTTERY = [sys.executable, os.path.abspath("games/lottery/main.py")]
 GAME_BLACKJACK = [sys.executable, os.path.abspath("games/blackjack/BlackJack_ICA.py")]
-GAME_DICE = [sys.executable, os.path.abspath("games/dice/main.py")]
+GAME_DICE = [sys.executable, os.path.abspath("games/dice/dice.py")]
 GAME_ROULETTE = [sys.executable, os.path.abspath("games/roulette/main.py")]
 GAME_SHELL = [sys.executable, os.path.abspath("games/shell/3_Shell_Game.py")]
 

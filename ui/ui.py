@@ -45,10 +45,25 @@ class UIElements:
 
         self.create_btns()
 
+    # -------------------------------------------------------------------------
+    # Utilities
+    #
+
+    # -------------------------------------------------------------------------
+    # Calculations
+    #
+
+    # -------------------------------------------------------------------------
+    # Functions / Methods
+    #
+
+    # -------------------------------------------------------------------------
+
     def create_btns(self):
         """
         Create all the buttons for the player selection screen
         """
+
         buttons = [
             ("New Player", self.new_player),
             ("Load Player", self.show_player_selection),
@@ -171,12 +186,14 @@ class UIElements:
             text_surface = self.font.render(self.input_text, True, (255, 255, 255))
             self.screen.blit(text_surface, (self.input_rect.x + 10, self.input_rect.y + 10))
 
-    def handle_event(self, event):
-        """Handle mouse and keyboard events for the UI"""
+    def main_menu_input(self, event):
+        """
+        Main Menu key input
+        """
         if self.input_active:
-            self.handle_input_event(event)
+            self.new_player_input(event)
         elif self.player_selection_active:
-            self.handle_player_selection_event(event)
+            self.load_player_input(event)
         else:
             if event.type == pg.MOUSEMOTION:
                 self.check_hover(pg.mouse.get_pos())
@@ -190,8 +207,10 @@ class UIElements:
                 elif event.key == pg.K_RETURN:
                     self.execute_selected()
 
-    def handle_player_selection_event(self, event):
-        """Handle events when player selection is active"""
+    def load_player_input(self, event):
+        """
+        Load player key input
+        """
         if event.type == pg.KEYDOWN:
             if event.key == pg.K_ESCAPE:
                 self.player_selection_active = False
@@ -224,8 +243,10 @@ class UIElements:
                     self.selected_player_index = clicked_index
                     self.load_selected_player()
 
-    def handle_input_event(self, event):
-        """Handle events when input box is active"""
+    def new_player_input(self, event):
+        """
+        New Player key input
+        """
         if event.type == pg.KEYDOWN:
             if event.key == pg.K_RETURN:
                 self.process_input()
@@ -360,7 +381,7 @@ class UIElements:
                 if event.type == pg.QUIT:
                     pg.quit()
                     sys.exit()
-                self.handle_event(event)
+                self.main_menu_input(event)
 
             # Clear screen and draw UI
             self.screen.fill((0, 0, 0))

@@ -7,14 +7,6 @@
         },
         "last_played": "2025-03-09 14:35:05"
     },
-    "Rob": {
-        "player_name": "Rob",
-        "cash_balance": 10,
-        "high_scores": {
-            "cash": 1000
-        },
-        "last_played": "2025-03-14 10:14:14"
-    },
     "Simon": {
         "player_name": "Simon",
         "cash_balance": 1000,

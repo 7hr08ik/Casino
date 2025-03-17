@@ -21,7 +21,7 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Blackjack Game")
 
 # Load images
-pop_image = pygame.image.load("game_blackjack/img/pop_up.png")
+pop_image = pygame.image.load("games/blackjack/img/pop_up.png")
 pop_image = pygame.transform.scale(pop_image, (1300, 800))
 screen.blit(pop_image, (0, 0))
 pygame.display.update()
@@ -29,8 +29,8 @@ pygame.display.update()
 # Wait a few seconds before starting the game
 time.sleep(1)
 
-bg_image = pygame.image.load("game_blackjack/img/background.jpg")
-card_back = pygame.image.load("game_blackjack/img/card_back.png")
+bg_image = pygame.image.load("games/blackjack/img/background.jpg")
+card_back = pygame.image.load("games/blackjack/img/card_back.png")
 card_back = pygame.transform.scale(card_back, (111, 200))
 
 # Define suits
@@ -41,7 +41,7 @@ card_images = {}
 for suit in suits:
     for value in range(2, 15):  # 2 to Ace (14)
         try:
-            image = pygame.image.load(f"game_blackjack/img/cards/{value}_of_{suit}.png")
+            image = pygame.image.load(f"games/blackjack/img/cards/{value}_of_{suit}.png")
             image = pygame.transform.scale(image, (111, 200))
             card_images[(value, suit)] = image
         except pygame.error:

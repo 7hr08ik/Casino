@@ -135,7 +135,7 @@ def main():
             (conf.t3_pos, conf.t3_size, conf.GAME_LOTTERY),  # Target 3 - Lottery
             (conf.t4_pos, conf.t4_size, conf.GAME_BLACKJACK),  # Target 4 - Blackjack
             (conf.t5_pos, conf.t5_size, conf.GAME_DICE),  # Target 5 - Dice game
-            (conf.t6_pos, conf.t6_size, conf.GAME_ROULETTE),  # Target 6 - Roulette
+            # (conf.t6_pos, conf.t6_size, conf.GAME_ROULETTE),  # Target 6 - Roulette
             (conf.t7_pos, conf.t7_size, conf.GAME_SHELL),  # Target 7 - Shell Game
         ]
 
