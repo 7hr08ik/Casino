@@ -9,14 +9,14 @@ import pygame as pg
 
 import conf
 import sys
-from logic.save_load import load_high_scores, delete_player
+from logic.save_load import delete_player
 
 
 class ExitUI:
     def __init__(self, screen):
         self.screen = screen
         self.font = pg.font.Font(None, 36)
-        self.high_scores = load_high_scores()
+        self.delete_player = delete_player(player_name=None)
         self.back_button = {"rect": pg.Rect(20, self.screen.get_height() - 70, 100, 40), "text": "Back", "hover": False}
 
     def draw(self):

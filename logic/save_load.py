@@ -98,7 +98,9 @@ def get_players_display_data():
 
 
 def delete_player(player_name):
-    """Delete a player from the saved data"""
+    """
+    Delete a player from the saved data
+    """
     all_players = load_all_players()
 
     if player_name in all_players:

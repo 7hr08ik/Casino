@@ -51,7 +51,7 @@ def check_player_balance(screen, player_data):
     Check if player's cash balance has reached 0 or below.
     Display exit screen if player is broke.
     """
-    if player_data["cash_balance"] <= 0:
+    if player_data["cash_balance"] <= 10: # 10 for testing
         exit_ui = ExitUI(screen)
         exit_ui.draw_exit_loser(screen, player_data["player_name"])
     else:
