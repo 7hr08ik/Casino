@@ -1,4 +1,36 @@
 
+Create credits page
+    shows player score, and exits after 5 sec
+    if player balance is 0
+        show different screen
+        deletes player from json
+
+    Current player, and final balance
+    Access when exiting game from fire_exit
+    Access when leaving maze
+    Save results to json
+
+    For single mode game start
+        Starting balance = try:
+                                save_load
+                           else:
+                                              1000
+
+# ------------------------------------------------------------
+maze
+
+blackjack
+
+dice
+
+lottery
+
+shell
+
+
+
+# ------------------------------------------------------------
+
 Unified player 
     After load Screen
         Player name
@@ -18,20 +50,3 @@ or
 if money reaches zero then bouncers kick you out
 
 -------------
-
-Create credits page
-    shows player score, and exits after 5 sec
-    if player balance is 0
-        show different screen
-        deletes player from json
-
-    Current player, and final balance
-    Access when exiting game from fire_exit
-    Access when leaving maze
-    Save results to json
-
-    For single mode game start
-        Starting balance = try:
-                                save_load
-                           else:
-                                              1000

@@ -1,0 +1,16 @@
+wc: 3/02/2025
+Created initial prototype
+wc: 10/02/2025
+Added Pygame Functionality
+(Game Window, Sprites, Etc)
+wc: 17/02/2025
+Added Functionality to on screen buttons
+Added Money Display
+wc: 24/02/2025
+Added Buttons
+Added input boxes
+wc: 2/03/2025
+Fixed Issue with input boxes that caused it to be skipped
+Added Functionality to the wheel
+Fixed an issue that caused an incorrect character to pre exist in the second text box
+Wheel now spins!

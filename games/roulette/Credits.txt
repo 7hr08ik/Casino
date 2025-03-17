@@ -1,0 +1,6 @@
+Sprites:
+Roulette wheel: https://www.gamblingzone.com/uk/roulette/type/european/
+Roulette Table: https://www.gamblingzone.com/uk/roulette/type/european/
+Learning Material:
+https://github.com/EyeBeards/PyGame_Roulette_v0.0/blob/main/roulette.py
+https://www.geeksforgeeks.org/getting-started-with-pygame/

@@ -1,66 +1,34 @@
 {
-    "one": {
+    "Dave": {
         "player_name": "Dave",
         "cash_balance": 1,
         "high_scores": {
-            "cash": 1000
+            "cash": 14785
         },
         "last_played": "2025-03-09 14:35:05"
     },
     "Simon": {
         "player_name": "Simon",
-        "cash_balance": 1000,
+        "cash_balance": 120,
         "high_scores": {
-            "cash": 1000
+            "cash": 4758
         },
         "last_played": "2025-03-14 10:13:51"
     },
     "Sorin": {
         "player_name": "Sorin",
-        "cash_balance": 1000,
+        "cash_balance": 275,
         "high_scores": {
-            "cash": 1000
+            "cash": 4352
         },
         "last_played": "2025-03-10 10:10:27"
     },
     "Suan": {
-        "player_name": "Suan",
-        "cash_balance": 1000,
+        "player_name": "Shawn",
+        "cash_balance": 500,
         "high_scores": {
-            "cash": 1000
+            "cash": 4836
         },
         "last_played": "2025-03-11 10:36:29"
-    },
-    "John": {
-        "player_name": "John",
-        "cash_balance": 1000,
-        "high_scores": {
-            "cash": 1000
-        },
-        "last_played": "2025-03-11 11:01:39"
-    },
-    "g": {
-        "player_name": "g",
-        "cash_balance": 1000,
-        "high_scores": {
-            "cash": 1000
-        },
-        "last_played": "2025-03-14 10:12:24"
-    },
-    "h": {
-        "player_name": "h",
-        "cash_balance": 1000,
-        "high_scores": {
-            "cash": 1000
-        },
-        "last_played": "2025-03-16 17:29:20"
-    },
-    "Dave": {
-        "player_name": "Dave",
-        "cash_balance": 1,
-        "high_scores": {
-            "cash": 1000
-        },
-        "last_played": "2025-03-16 21:29:00"
     }
 }

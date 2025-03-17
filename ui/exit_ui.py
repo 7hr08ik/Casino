@@ -1,15 +1,17 @@
 # ===========================
 # Python game suite
 #
-# Casino Lobby
+# Casino Lobby - Exit Screens
 # ===========================
 #
 # Main Imports
+import sys
+
 import pygame as pg
 
 import conf
-import sys
-from logic.save_load import delete_player
+from logic.save_load import delete_player, load_player_data, save_player_data
+from ui.ui import UIElements
 
 
 class ExitUI:
@@ -17,65 +19,63 @@ class ExitUI:
         self.screen = screen
         self.font = pg.font.Font(None, 36)
         self.delete_player = delete_player(player_name=None)
+        self.save_player = save_player_data(player_name=None, cash_balance=None, high_scores=None)
+        self.load_player = load_player_data(player_name=None)
         self.back_button = {"rect": pg.Rect(20, self.screen.get_height() - 70, 100, 40), "text": "Back", "hover": False}
 
-    def draw(self):
-        """Draw the High Scores screen"""
-        self.screen.fill((0, 0, 0))
+    # -------------------------------------------------------------------------
+    # Utilities
+    #
 
-        # Display title
-        title_text = self.font.render("Hall of Fame", True, (255, 255, 255))
-        self.screen.blit(title_text, (self.screen.get_width() / 2 - title_text.get_width() / 2, 20))
+    # -------------------------------------------------------------------------
+    # Calculations
+    #
 
-        if not self.high_scores:
-            no_scores_text = self.font.render("No scores available", True, (255, 255, 255))
-            self.screen.blit(no_scores_text, (self.screen.get_width() / 2 - no_scores_text.get_width() / 2, 100))
-        else:
-            self.draw_exit_main()
+    # -------------------------------------------------------------------------
+    # Functions / Methods
+    #
 
-        # Draw back button
-        self.back_btn()
+    # -------------------------------------------------------------------------
 
-    def draw_exit_main(self):
-        """Draw the high scores list"""
-        # Highlight top player
-        top_player = self.high_scores[0]
+    def draw_exit_main(self, screen):
+        """
+        Draw the Main Exit screen
+        """
+
+        ui = UIElements(screen)
+        player_data = ui.main_menu()
+
+        # Current Players Data
+        current_player = self.load_player(player_data["player_name"])
         top_box = pg.Rect(50, 80, self.screen.get_width() - 100, 150)
         pg.draw.rect(self.screen, (200, 200, 0), top_box, 2)
 
-        top_name_text = self.font.render(f"Top Player: {top_player['player_name']}", True, (255, 255, 255))
+        top_name_text = self.font.render(f"Top Player: {current_player['player_name']}", True, (255, 255, 255))
         self.screen.blit(top_name_text, (top_box.x + 20, top_box.y + 20))
 
-        top_score_text = self.font.render(f"Highest Score: ${top_player['high_scores']['cash']}", True, (255, 255, 255))
+        top_score_text = self.font.render(
+            f"Highest Score: ${current_player['high_scores']['cash']}", True, (255, 255, 255)
+        )
         self.screen.blit(top_score_text, (top_box.x + 20, top_box.y + 60))
 
         current_balance_text = self.font.render(
-            f"Current Balance: ${top_player['cash_balance']}", True, (255, 255, 255)
+            f"Current Balance: ${current_player['cash_balance']}", True, (255, 255, 255)
         )
         self.screen.blit(current_balance_text, (top_box.x + 20, top_box.y + 100))
 
-        # Display other players
-        y_pos = 240
-        for index, player in enumerate(self.high_scores[1:], 1):
-            box = pg.Rect(50, y_pos, self.screen.get_width() - 100, 60)
-            pg.draw.rect(self.screen, (255, 255, 255), box, 1)
+        # Add centered text box saying goodbye
+        goodbye_msg = """Thank you for visiting the Casino! \n
+                        We hope to see you again soon! \n
+                        \n
+                        Goodbye!"""
+        goodbye_text = self.font.render(goodbye_msg, True, (255, 255, 255))
+        goodbye_rect = goodbye_text.get_rect(center=(self.screen.get_width() // 2, self.screen.get_height() // 2))
+        self.screen.blit(goodbye_text, goodbye_rect)
 
-            rank_text = self.font.render(f"{index}.", True, (255, 255, 255))
-            self.screen.blit(rank_text, (box.x + 20, box.y + 20))
-
-            name_text = self.font.render(player["player_name"], True, (255, 255, 255))
-            self.screen.blit(name_text, (box.x + 50, box.y + 20))
-
-            score_text = self.font.render(f"${player['high_scores']['cash']}", True, (255, 255, 255))
-            self.screen.blit(score_text, (box.x + 200, box.y + 20))
-
-            balance_text = self.font.render(f"Current: ${player['cash_balance']}", True, (255, 255, 255))
-            self.screen.blit(balance_text, (box.x + 350, box.y + 20))
-
-            y_pos += 65
-
-            if y_pos > self.screen.get_height() - 100:
-                break
+        # Save the current player from the json file
+        save_player_data(player_data["player_name"], player_data["cash_balance"], player_data["high_scores"])
+        pg.quit()
+        sys.exit()
 
     def draw_exit_loser(self, screen, player_name):
         """

@@ -17,6 +17,18 @@ class HighScoresUI:
         self.high_scores = load_high_scores()
         self.back_button = {"rect": pg.Rect(20, self.screen.get_height() - 70, 100, 40), "text": "Back", "hover": False}
 
+    # -------------------------------------------------------------------------
+    # Utilities
+    #
+
+    # -------------------------------------------------------------------------
+    # Calculations
+    #
+
+    # -------------------------------------------------------------------------
+    # Functions / Methods
+    #
+
     def draw(self):
         """Draw the High Scores screen"""
         self.screen.fill((0, 0, 0))
@@ -33,6 +45,8 @@ class HighScoresUI:
 
         # Draw back button
         self._draw_back_button()
+
+    # -------------------------------------------------------------------------
 
     def _draw_high_scores(self):
         """Draw the high scores list"""
