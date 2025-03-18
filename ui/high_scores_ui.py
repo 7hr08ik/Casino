@@ -20,35 +20,31 @@ class HighScoresUI:
     # -------------------------------------------------------------------------
     # Utilities
     #
+    def back_btn(self):
+        """Draw the back button"""
+        bg_color = (150, 150, 150) if self.back_button["hover"] else (100, 100, 100)
+        pg.draw.rect(self.screen, bg_color, self.back_button["rect"])
+        back_text = self.font.render(self.back_button["text"], True, (255, 255, 255))
+        back_text_rect = back_text.get_rect(center=self.back_button["rect"].center)
+        self.screen.blit(back_text, back_text_rect)
+        pg.draw.rect(self.screen, (200, 200, 200), self.back_button["rect"], 2)
 
-    # -------------------------------------------------------------------------
-    # Calculations
-    #
+    def key_input(self, event):
+        """Handle events for the High Scores screen"""
+        if event.type == pg.MOUSEMOTION:
+            self.back_button["hover"] = self.back_button["rect"].collidepoint(pg.mouse.get_pos())
+        elif event.type == pg.MOUSEBUTTONDOWN:
+            if self.back_button["rect"].collidepoint(pg.mouse.get_pos()):
+                return True  # Return True to indicate we should go back
+        elif event.type == pg.KEYDOWN and (event.key == pg.K_q or event.key == pg.K_RETURN):
+            return True  # Return True to indicate we should go back
+
+        return False
 
     # -------------------------------------------------------------------------
     # Functions / Methods
     #
-
-    def draw(self):
-        """Draw the High Scores screen"""
-        self.screen.fill((0, 0, 0))
-
-        # Display title
-        title_text = self.font.render("Hall of Fame", True, (255, 255, 255))
-        self.screen.blit(title_text, (self.screen.get_width() / 2 - title_text.get_width() / 2, 20))
-
-        if not self.high_scores:
-            no_scores_text = self.font.render("No scores available", True, (255, 255, 255))
-            self.screen.blit(no_scores_text, (self.screen.get_width() / 2 - no_scores_text.get_width() / 2, 100))
-        else:
-            self._draw_high_scores()
-
-        # Draw back button
-        self._draw_back_button()
-
-    # -------------------------------------------------------------------------
-
-    def _draw_high_scores(self):
+    def draw_high_scores(self):
         """Draw the high scores list"""
         # Highlight top player
         top_player = self.high_scores[0]
@@ -89,23 +85,21 @@ class HighScoresUI:
             if y_pos > self.screen.get_height() - 100:
                 break
 
-    def _draw_back_button(self):
-        """Draw the back button"""
-        bg_color = (150, 150, 150) if self.back_button["hover"] else (100, 100, 100)
-        pg.draw.rect(self.screen, bg_color, self.back_button["rect"])
-        back_text = self.font.render(self.back_button["text"], True, (255, 255, 255))
-        back_text_rect = back_text.get_rect(center=self.back_button["rect"].center)
-        self.screen.blit(back_text, back_text_rect)
-        pg.draw.rect(self.screen, (200, 200, 200), self.back_button["rect"], 2)
+    def draw(self):
+        """Draw the High Scores screen"""
+        self.screen.fill((0, 0, 0))
 
-    def handle_event(self, event):
-        """Handle events for the High Scores screen"""
-        if event.type == pg.MOUSEMOTION:
-            self.back_button["hover"] = self.back_button["rect"].collidepoint(pg.mouse.get_pos())
-        elif event.type == pg.MOUSEBUTTONDOWN:
-            if self.back_button["rect"].collidepoint(pg.mouse.get_pos()):
-                return True  # Return True to indicate we should go back
-        elif event.type == pg.KEYDOWN and (event.key == pg.K_q or event.key == pg.K_RETURN):
-            return True  # Return True to indicate we should go back
+        # Display title
+        title_text = self.font.render("Hall of Fame", True, (255, 255, 255))
+        self.screen.blit(title_text, (self.screen.get_width() / 2 - title_text.get_width() / 2, 20))
 
-        return False
+        if not self.high_scores:
+            no_scores_text = self.font.render("No scores available", True, (255, 255, 255))
+            self.screen.blit(no_scores_text, (self.screen.get_width() / 2 - no_scores_text.get_width() / 2, 100))
+        else:
+            self.draw_high_scores()
+
+        # Draw back button
+        self.back_btn()
+
+    # -------------------------------------------------------------------------

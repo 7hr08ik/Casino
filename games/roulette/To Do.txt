@@ -1,4 +1,0 @@
--Add Leave Table Function x
--Make the Roulette Wheel spin
--Remove Counter:
--fix the enter bug

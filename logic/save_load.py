@@ -9,22 +9,31 @@ import datetime
 import json
 
 
-def save_player_data(player_name, cash_balance, high_scores):
-    """Save player data to a JSON file, updating high score if applicable"""
+def save_player_data(player_name, cash_balance, high_scores=None):
+    """
+    Save player data to a JSON file, updating high score if applicable
+    """
+
+    # Initialize some things
+    high_scores = high_scores or {}
+    cash_balance = cash_balance or 0
+    # Check high_scores has a "cash" key
+    if "cash" not in high_scores:
+        high_scores["cash"] = 0
+
+    # Variables
     all_players = load_all_players()
-
     current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-    # Update high score if current balance is higher
-    if cash_balance > high_scores.get("cash", 0):
-        high_scores["cash"] = cash_balance
-
     all_players[player_name] = {
         "player_name": player_name,
         "cash_balance": cash_balance,
         "high_scores": high_scores,
         "last_played": current_time,
     }
+
+    # Update high score if current balance is higher
+    if cash_balance > high_scores["cash"]:
+        high_scores["cash"] = cash_balance
 
     # Keep only top 20 players
     if len(all_players) > 20:
@@ -33,7 +42,8 @@ def save_player_data(player_name, cash_balance, high_scores):
         )
         del all_players[sorted_players[0][0]]
 
-    with open("data/players_data.json", "w") as f:
+    # Save to main data file
+    with open("data/players_database.json", "w") as f:
         json.dump(all_players, f, indent=4)
 
 
@@ -62,7 +72,7 @@ def load_player_data(player_name):
 def load_all_players():
     """Load all players data from the JSON file"""
     try:
-        with open("data/players_data.json") as f:
+        with open("data/players_database.json") as f:
             data = json.load(f)
             return data
     except (FileNotFoundError, json.JSONDecodeError):
@@ -107,7 +117,7 @@ def delete_player(player_name):
         del all_players[player_name]
 
         # Save the updated players data
-        with open("data/players_data.json", "w") as f:
+        with open("data/players_database.json", "w") as f:
             json.dump(all_players, f, indent=4)
 
         return True

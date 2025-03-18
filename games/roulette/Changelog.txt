@@ -14,3 +14,5 @@ Fixed Issue with input boxes that caused it to be skipped
 Added Functionality to the wheel
 Fixed an issue that caused an incorrect character to pre exist in the second text box
 Wheel now spins!
+wc: 9/03/2025
+Fixed Issue that makes an incorrect symbol be entered into the Bet: box

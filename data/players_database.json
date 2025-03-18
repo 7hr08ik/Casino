@@ -1,0 +1,26 @@
+{
+    "Sergant Slaughter": {
+        "player_name": "Sergant Slaughter",
+        "cash_balance": 10,
+        "high_scores": {
+            "cash": 445566
+        },
+        "last_played": "2025-03-18 11:49:59"
+    },
+    "Major Pain": {
+        "player_name": "Major Pain",
+        "cash_balance": 500,
+        "high_scores": {
+            "cash": 12345
+        },
+        "last_played": "2025-03-18 13:21:51"
+    },
+    "Corporal Punishment": {
+        "player_name": "Corporal Punishment",
+        "cash_balance": 1000,
+        "high_scores": {
+            "cash": 3486
+        },
+        "last_played": "2025-03-18 13:24:32"
+    }
+}

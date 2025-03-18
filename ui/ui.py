@@ -362,10 +362,10 @@ class UIElements:
                     if event.key == pg.K_q or event.key == pg.K_RETURN:
                         running = False
                 elif event.type == pg.MOUSEBUTTONDOWN:
-                    if self.high_scores_ui.handle_event(event):
+                    if self.high_scores_ui.key_input(event):
                         running = False
                 elif event.type == pg.MOUSEMOTION:
-                    self.high_scores_ui.handle_event(event)
+                    self.high_scores_ui.key_input(event)
 
     def exit_game(self):
         """Exit the game"""

@@ -19,27 +19,33 @@ from logic.save_load import save_player_data
 from ui.exit_ui import ExitUI
 from ui.ui import UIElements
 
+# Just needs something to be set to keep VSCode happy
+leave_game = True
+
 
 def draw_target(screen, color, position, size, alpha=0):
     """
     Draw target points on the screen.
-    Targets are transparent and have a border.
+    Targets are transparent but have a border.
     """
-    # Create surface
+    # 1 - Create surface
     target_surface = pg.Surface((size, size), pg.SRCALPHA)
-    # Make the surface transparent
+    # 2 - Make the surface transparent
     target_surface.fill((color[0], color[1], color[2], alpha))
-    # Put surface in a rectangle
+    # 3 - Put surface in a rectangle
     pg.draw.rect(target_surface, color, (0, 0, size, size), 1)
-    # Print screen with transparent surface in position
+    # 4 - Print screen with transparent surface in position
     screen.blit(target_surface, position)
 
 
-def activate_target(player_rect, target_rect, game_command=None):
+def activate_target(screen, player_data, player_rect, target_rect, game_command=None):
     """
-    When player reaches target, activate X game.
+    When player reaches target, run given command
     """
     if player_rect.colliderect(target_rect):
+        if game_command == leave_game:
+            exit_ui = ExitUI(screen)
+            exit_ui.print_exit_ui(screen, player_data)
         pg.quit()
         if game_command:
             subprocess.run(game_command, check=False)
@@ -51,7 +57,7 @@ def check_player_balance(screen, player_data):
     Check if player's cash balance has reached 0 or below.
     Display exit screen if player is broke.
     """
-    if player_data["cash_balance"] <= 10: # 10 for testing
+    if player_data["cash_balance"] <= 10:  # 10 for testing
         exit_ui = ExitUI(screen)
         exit_ui.draw_exit_loser(screen, player_data["player_name"])
     else:
@@ -129,7 +135,7 @@ def main():
         #
         # Draw exit and targets
         targets = [
-            (conf.e_pos, conf.e_size, None),  # Exit Target
+            (conf.e_pos, conf.e_size, leave_game),  # Exit Target
             # (conf.t_pos, conf.t_size, conf.GAME_PINBALL),  # Target 1 - Pinball
             (conf.t2_pos, conf.t2_size, conf.GAME_MAZE),  # Target 2 - Maze
             (conf.t3_pos, conf.t3_size, conf.GAME_LOTTERY),  # Target 3 - Lottery
@@ -141,7 +147,7 @@ def main():
 
         for pos, size, command in targets:
             draw_target(screen, conf.t_color, pos, size)
-            activate_target(player.rect, pg.Rect(*pos, size, size), command)
+            activate_target(screen, player_data, player.rect, pg.Rect(*pos, size, size), command)
 
         # Update the display
         pg.display.flip()
