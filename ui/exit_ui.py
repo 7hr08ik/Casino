@@ -17,6 +17,7 @@ class ExitUI:
     def __init__(self, screen):
         self.screen = screen
         self.font = pg.font.Font(None, 36)
+        self.small_font = pg.font.Font(None, 24)
         self.delete_player = delete_player
         self.save_player = save_player_data
         self.load_player = load_player_data
@@ -67,6 +68,11 @@ class ExitUI:
         goodbye_rect3 = goodbye_text3.get_rect(center=(self.screen.get_width() // 2, 420))
         self.screen.blit(goodbye_text3, goodbye_rect3)
 
+        # Nav text in center screen below box
+        leave_text = self.small_font.render("Press the 'ANY' key to continue ;)", True, (255, 255, 255))
+        leave_rect = leave_text.get_rect(center=(self.screen.get_width() // 2, 650))
+        self.screen.blit(leave_text, leave_rect)
+
         # Save the current player data
         self.save_player(player_data["player_name"], player_data["cash_balance"], player_data["high_scores"])
 
@@ -87,10 +93,11 @@ class ExitUI:
         """
         Show exit screen
         """
+
         running = True
         while running:
             for event in pg.event.get():
-                if event.type == pg.QUIT or pg.KEYDOWN or pg.MOUSEBUTTONDOWN:
+                if event.type == pg.QUIT:
                     running = False
 
             self.draw_main_exit(screen, player_data)
@@ -101,6 +108,7 @@ class ExitUI:
         # Save player data and exit
         self.save_player(player_data["player_name"], player_data["cash_balance"], player_data["high_scores"])
         print("Player data saved. Exiting game.")
+        running = False
         pg.quit()
         sys.exit()
 

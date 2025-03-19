@@ -1,6 +1,6 @@
 
 add code to all saveing
-    create new extra file "current_player.json"
+    create new tmp file "current_player.json"
     print all current player info to that file
     update BOTH when saveing
     reffer to this file, when integrating other games
@@ -22,6 +22,7 @@ Create credits page
                                 save_load
                            else:
                                               1000
+
 # ------------------------------------------------------------
 
 update integration file to include all the new tweaks to save_load
@@ -31,6 +32,7 @@ go through all of the code, and rename/tweaks
 try combine all the key input stuff into one function/method
 
 # ------------------------------------------------------------
+
 maze
 
 blackjack
@@ -40,7 +42,6 @@ dice
 lottery
 
 shell
-
 
 
 # ------------------------------------------------------------

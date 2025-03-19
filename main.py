@@ -105,7 +105,7 @@ def main():
             if event.type == pg.QUIT:
                 running = False
             # For ANY event, run input handling
-            ui.handle_input(event)
+            ui.input_main(event)
 
         # Check player balance
         check_player_balance(screen, player_data)

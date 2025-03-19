@@ -1,19 +1,11 @@
 {
-    "Sergant Slaughter": {
-        "player_name": "Sergant Slaughter",
-        "cash_balance": 10,
-        "high_scores": {
-            "cash": 445566
-        },
-        "last_played": "2025-03-18 11:49:59"
-    },
     "Major Pain": {
         "player_name": "Major Pain",
         "cash_balance": 500,
         "high_scores": {
             "cash": 12345
         },
-        "last_played": "2025-03-18 13:21:51"
+        "last_played": "2025-03-18 19:03:51"
     },
     "Corporal Punishment": {
         "player_name": "Corporal Punishment",
@@ -22,5 +14,61 @@
             "cash": 3486
         },
         "last_played": "2025-03-18 13:24:32"
+    },
+    "tester1": {
+        "player_name": "tester1",
+        "cash_balance": 100,
+        "high_scores": {
+            "cash": 3486
+        },
+        "last_played": "2025-03-19 21:23:13"
+    },
+    "tester2": {
+        "player_name": "tester2",
+        "cash_balance": 5,
+        "high_scores": {
+            "cash": 3486
+        },
+        "last_played": "2025-03-18 13:24:32"
+    },
+    "tester3": {
+        "player_name": "tester3",
+        "cash_balance": 100,
+        "high_scores": {
+            "cash": 3486
+        },
+        "last_played": "2025-03-18 13:24:32"
+    },
+    "tester4": {
+        "player_name": "tester4",
+        "cash_balance": 100,
+        "high_scores": {
+            "cash": 3486
+        },
+        "last_played": "2025-03-19 22:20:54"
+    },
+    "tester5": {
+        "player_name": "tester5",
+        "cash_balance": 100,
+        "high_scores": {
+            "cash": 3486
+        },
+        "last_played": "2025-03-18 13:24:32"
+    },
+    "tester6": {
+        "player_name": "tester6",
+        "cash_balance": 100,
+        "high_scores": {
+            "cash": 3486
+        },
+        "last_played": "2025-03-18 13:24:32"
+    },
+    "Keyboard test": {
+        "player_name": "Keyboard test",
+        "cash_balance": 1000,
+        "high_scores": {
+            "cash": 1000
+        },
+        "last_played": "2025-03-19 23:00:22"
     }
 }

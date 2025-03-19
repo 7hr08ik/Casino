@@ -14,6 +14,7 @@ class HighScoresUI:
     def __init__(self, screen):
         self.screen = screen
         self.font = pg.font.Font(None, 36)
+        self.small_font = pg.font.Font(None, 24)
         self.high_scores = load_high_scores()
         self.back_button = {"rect": pg.Rect(20, self.screen.get_height() - 70, 100, 40), "text": "Back", "hover": False}
 
@@ -54,13 +55,15 @@ class HighScoresUI:
         top_name_text = self.font.render(f"Top Player: {top_player['player_name']}", True, (255, 255, 255))
         self.screen.blit(top_name_text, (top_box.x + 20, top_box.y + 20))
 
-        top_score_text = self.font.render(f"Highest Score: ${top_player['high_scores']['cash']}", True, (255, 255, 255))
-        self.screen.blit(top_score_text, (top_box.x + 20, top_box.y + 60))
+        # Move score and balance to the right side
+        right_side_x = top_box.right - 200  # Position from the right edge
+        top_score_text = self.font.render(f"Highest Score: ${top_player['high_scores']['cash']}", True, (128, 128, 128))
+        self.screen.blit(top_score_text, (right_side_x - 110, top_box.y + 20))
 
         current_balance_text = self.font.render(
             f"Current Balance: ${top_player['cash_balance']}", True, (255, 255, 255)
         )
-        self.screen.blit(current_balance_text, (top_box.x + 20, top_box.y + 100))
+        self.screen.blit(current_balance_text, (right_side_x - 110, top_box.y + 60))
 
         # Display other players
         y_pos = 240
@@ -74,16 +77,23 @@ class HighScoresUI:
             name_text = self.font.render(player["player_name"], True, (255, 255, 255))
             self.screen.blit(name_text, (box.x + 50, box.y + 20))
 
-            score_text = self.font.render(f"${player['high_scores']['cash']}", True, (255, 255, 255))
-            self.screen.blit(score_text, (box.x + 200, box.y + 20))
+            # Move score and balance to the right side
+            right_side_x = box.right - 200  # Position from the right edge
+            score_text = self.font.render(f"Highest: ${player['high_scores']['cash']}", True, (128, 128, 128))
+            self.screen.blit(score_text, (right_side_x, box.y + 10))
 
             balance_text = self.font.render(f"Current: ${player['cash_balance']}", True, (255, 255, 255))
-            self.screen.blit(balance_text, (box.x + 350, box.y + 20))
+            self.screen.blit(balance_text, (right_side_x, box.y + 35))
 
             y_pos += 65
 
             if y_pos > self.screen.get_height() - 100:
                 break
+
+        # Nav text in center screen below box
+        leave_text = self.small_font.render("Press 'Q' or 'Enter to go back", True, (255, 255, 255))
+        leave_rect = leave_text.get_rect(center=(self.screen.get_width() // 2, 650))
+        self.screen.blit(leave_text, leave_rect)
 
     def draw(self):
         """Draw the High Scores screen"""

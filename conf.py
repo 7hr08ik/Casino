@@ -11,12 +11,13 @@ import sys
 import pygame as pg
 
 # ----------------------------------
+#
 # Game properties
 GAME_NAME = "Casino Lobby"
 WIN_SIZE = (1280, 720)
 CLOCK = pg.time.Clock()
 LOAD_SCRN_DLY = 3000  # 3sec
-EXIT_DLY = 1000 * 10 # : *sec
+EXIT_DLY = 5000  # 7sec
 
 # Images
 LOAD_SCR_IMG = pg.image.load("img/loading.png")
@@ -34,6 +35,7 @@ GAME_SHELL = [sys.executable, os.path.abspath("games/shell/3_Shell_Game.py")]
 
 # ----------------------------------
 # Player / Targets
+#
 # Define player properties
 p_pos = [600, 550]  # Starting position
 mv_spd = 7  # Movement speed
@@ -65,4 +67,5 @@ t6_size = 25
 # Target 7 - Shell Game
 t7_pos = [898, 426]
 t7_size = 16
+
 # ----------------------------------
