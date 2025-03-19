@@ -16,6 +16,7 @@ GAME_NAME = "Casino Lobby"
 WIN_SIZE = (1280, 720)
 CLOCK = pg.time.Clock()
 LOAD_SCRN_DLY = 3000  # 3sec
+EXIT_DLY = 1000 * 10 # : *sec
 
 # Images
 LOAD_SCR_IMG = pg.image.load("img/loading.png")
@@ -28,7 +29,7 @@ GAME_MAZE = [sys.executable, os.path.abspath("games/maze/main.py")]
 GAME_LOTTERY = [sys.executable, os.path.abspath("games/lottery/main.py")]
 GAME_BLACKJACK = [sys.executable, os.path.abspath("games/blackjack/BlackJack_ICA.py")]
 GAME_DICE = [sys.executable, os.path.abspath("games/dice/dice.py")]
-GAME_ROULETTE = [sys.executable, os.path.abspath("games/roulette/main.py")]
+GAME_ROULETTE = [sys.executable, os.path.abspath("games/roulette/Roulette Version 4.py")]
 GAME_SHELL = [sys.executable, os.path.abspath("games/shell/3_Shell_Game.py")]
 
 # ----------------------------------

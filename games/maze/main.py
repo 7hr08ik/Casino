@@ -6,9 +6,7 @@
 # ===========================
 #
 # Main Imports
-import subprocess
 import sys
-
 import pygame as pg
 
 # Local Imports
@@ -31,28 +29,23 @@ def main():
     # 3 - Initialize game elements
     player = Player(conf.p_pos[0], conf.p_pos[1])
     ui = Ui()
+    dt = 0
+    running = True
 
     # ----------------------------------
     # 4 - Main game loop
-    while True:
-        # Limit FPS to 60
-        conf.CLOCK.tick(60)
-        # Delta-Time for animations
-        dt = conf.CLOCK.tick(30) / 1000
-
+    while running:
         # Handle events
         for event in pg.event.get():
             if event.type == pg.QUIT:
-                pg.quit()
-                sys.exit()
+                running = False
 
         # Fill the screen - Makes carpet colour
-        # screen.fill((90, 30, 105))
         screen.fill("grey12")
 
-        # Print Background image
+        # Print Background images
         screen.blit(conf.FLOOR_IMG, (0, 0))
-        screen.blit(conf.BG_IMG, (0, 0))
+        screen.blit(conf.BG_IMG, (0, 0)) # Collision only here
 
         # Draw UI elements
         ui.draw_ui(screen)
@@ -80,22 +73,16 @@ def main():
         # ----------------------------------
         # Give Targets an action
         #
-        # Target 1 - Pinball
+        # Target 1
         if player.rect.colliderect(pg.Rect(conf.t_pos[0], conf.t_pos[1], conf.t_size, conf.t_size)):
+            # game_int.save_and_return()  # Save and return to lobby
             pg.quit()
-            subprocess.run(conf.GAME_LOBBY, check=False)
             sys.exit()
-
-        # ----------------------------------
-        # Add if statements to handle zero score
-        # if player.score == 0:
-        #     pg.quit()
-        #     subprocess.run(conf.GAME_LOBBY, check=False)
-        #     sys.exit()
 
         # Update the display
         pg.display.flip()
-
+        conf.CLOCK.tick(60) # Limit FPS to 60
+        dt = conf.CLOCK.tick(30) / 1000 # Delta-Time for animations
 
 if __name__ == "__main__":
     main()

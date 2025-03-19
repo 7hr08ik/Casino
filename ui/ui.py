@@ -186,30 +186,38 @@ class UIElements:
             text_surface = self.font.render(self.input_text, True, (255, 255, 255))
             self.screen.blit(text_surface, (self.input_rect.x + 10, self.input_rect.y + 10))
 
-    def main_menu_input(self, event):
+    def handle_input(self, event):
         """
-        Main Menu key input
+        Unified input handler for all UI elements
+        Handles both keyboard and mouse events based on current UI state
         """
         if self.input_active:
-            self.new_player_input(event)
+            self.handle_text_input(event)
         elif self.player_selection_active:
-            self.load_player_input(event)
+            self.handle_player_selection_input(event)
         else:
-            if event.type == pg.MOUSEMOTION:
-                self.check_hover(pg.mouse.get_pos())
-            elif event.type == pg.MOUSEBUTTONDOWN:
-                self.check_click(pg.mouse.get_pos())
-            elif event.type == pg.KEYDOWN:
-                if event.key == pg.K_UP:
-                    self.move_selection(-1)
-                elif event.key == pg.K_DOWN:
-                    self.move_selection(1)
-                elif event.key == pg.K_RETURN:
-                    self.execute_selected()
+            self.handle_main_menu_input(event)
 
-    def load_player_input(self, event):
+    def handle_text_input(self, event):
         """
-        Load player key input
+        Handle input for text entry fields
+        """
+        if event.type == pg.KEYDOWN:
+            if event.key == pg.K_RETURN:
+                self.process_input()
+            elif event.key == pg.K_BACKSPACE:
+                self.input_text = self.input_text[:-1]
+            elif event.key == pg.K_ESCAPE:
+                self.input_active = False
+                self.input_text = ""
+            else:
+                # Limit input length to prevent overflow
+                if len(self.input_text) < 20:
+                    self.input_text += event.unicode
+
+    def handle_player_selection_input(self, event):
+        """
+        Handle input for player selection screen
         """
         if event.type == pg.KEYDOWN:
             if event.key == pg.K_ESCAPE:
@@ -243,22 +251,21 @@ class UIElements:
                     self.selected_player_index = clicked_index
                     self.load_selected_player()
 
-    def new_player_input(self, event):
+    def handle_main_menu_input(self, event):
         """
-        New Player key input
+        Handle input for main menu
         """
-        if event.type == pg.KEYDOWN:
-            if event.key == pg.K_RETURN:
-                self.process_input()
-            elif event.key == pg.K_BACKSPACE:
-                self.input_text = self.input_text[:-1]
-            elif event.key == pg.K_ESCAPE:
-                self.input_active = False
-                self.input_text = ""
-            else:
-                # Limit input length to prevent overflow
-                if len(self.input_text) < 20:
-                    self.input_text += event.unicode
+        if event.type == pg.MOUSEMOTION:
+            self.check_hover(pg.mouse.get_pos())
+        elif event.type == pg.MOUSEBUTTONDOWN:
+            self.check_click(pg.mouse.get_pos())
+        elif event.type == pg.KEYDOWN:
+            if event.key == pg.K_UP:
+                self.move_selection(-1)
+            elif event.key == pg.K_DOWN:
+                self.move_selection(1)
+            elif event.key == pg.K_RETURN:
+                self.execute_selected()
 
     def process_input(self):
         """Process the input text based on current context"""
@@ -381,7 +388,7 @@ class UIElements:
                 if event.type == pg.QUIT:
                     pg.quit()
                     sys.exit()
-                self.main_menu_input(event)
+                self.handle_input(event)
 
             # Clear screen and draw UI
             self.screen.fill((0, 0, 0))

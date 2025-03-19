@@ -23,18 +23,6 @@ class ExitUI:
         self.back_button = {"rect": pg.Rect(20, self.screen.get_height() - 70, 100, 40), "text": "Back", "hover": False}
 
     # -------------------------------------------------------------------------
-    # Utilities
-    #
-    def back_btn(self):
-        """Draw the back button"""
-        bg_color = (150, 150, 150) if self.back_button["hover"] else (100, 100, 100)
-        pg.draw.rect(self.screen, bg_color, self.back_button["rect"])
-        back_text = self.font.render(self.back_button["text"], True, (255, 255, 255))
-        back_text_rect = back_text.get_rect(center=self.back_button["rect"].center)
-        self.screen.blit(back_text, back_text_rect)
-        pg.draw.rect(self.screen, (200, 200, 200), self.back_button["rect"], 2)
-
-    # -------------------------------------------------------------------------
     # Functions / Methods
     #
     def main_exit_details(self, screen, player_data):
@@ -95,9 +83,6 @@ class ExitUI:
         # Draw exit details
         self.main_exit_details(screen, player_data)
 
-        # Draw back button
-        self.back_btn()
-
     def print_exit_ui(self, screen, player_data):
         """
         Show exit screen
@@ -105,16 +90,17 @@ class ExitUI:
         running = True
         while running:
             for event in pg.event.get():
-                if event.type == pg.QUIT:
+                if event.type == pg.QUIT or pg.KEYDOWN or pg.MOUSEBUTTONDOWN:
                     running = False
 
             self.draw_main_exit(screen, player_data)
             pg.display.flip()
-            pg.time.wait(5000)  # Show screen for 3 seconds
+            pg.time.wait(conf.EXIT_DLY)
             running = False
 
         # Save player data and exit
         self.save_player(player_data["player_name"], player_data["cash_balance"], player_data["high_scores"])
+        print("Player data saved. Exiting game.")
         pg.quit()
         sys.exit()
 
@@ -125,7 +111,7 @@ class ExitUI:
         # Load and display loser page
         screen.blit(conf.LOSER_IMG, (0, 0))
         pg.display.flip()
-        pg.time.wait(conf.LOAD_SCRN_DLY)  # Wait for configured time
+        pg.time.wait(conf.EXIT_DLY)  # Wait for configured time
 
         # Delete the current player from the json file
         self.delete_player(player_name)

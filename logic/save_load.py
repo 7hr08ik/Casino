@@ -87,7 +87,9 @@ def get_player_names():
 
 
 def get_players_display_data():
-    """Get a list of player data for display in the UI"""
+    """
+    Get a list of player data for display in the UI
+    """
     all_players = load_all_players()
     display_data = []
 

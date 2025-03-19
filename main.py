@@ -20,6 +20,7 @@ from ui.exit_ui import ExitUI
 from ui.ui import UIElements
 
 # Just needs something to be set to keep VSCode happy
+# Used in the activate_target function
 leave_game = True
 
 
@@ -93,20 +94,18 @@ def main():
     # 4 - Initialize game elements
     player = Player(conf.p_pos[0], conf.p_pos[1])
     clock = conf.CLOCK
+    dt = 0
+    running = True
 
     # ----------------------------------
     # 5 - Main game loop
-    while True:
-        # Limit FPS to 60
-        dt = clock.tick(60) / 1000
-
+    while running:
         # Handle events
         for event in pg.event.get():
             if event.type == pg.QUIT:
-                # Save player data before exiting
-                save_player_data(player_data["player_name"], player_data["cash_balance"], player_data["high_scores"])
-                pg.quit()
-                sys.exit()
+                running = False
+            # For ANY event, run input handling
+            ui.handle_input(event)
 
         # Check player balance
         check_player_balance(screen, player_data)
@@ -141,7 +140,7 @@ def main():
             (conf.t3_pos, conf.t3_size, conf.GAME_LOTTERY),  # Target 3 - Lottery
             (conf.t4_pos, conf.t4_size, conf.GAME_BLACKJACK),  # Target 4 - Blackjack
             (conf.t5_pos, conf.t5_size, conf.GAME_DICE),  # Target 5 - Dice game
-            # (conf.t6_pos, conf.t6_size, conf.GAME_ROULETTE),  # Target 6 - Roulette
+            (conf.t6_pos, conf.t6_size, conf.GAME_ROULETTE),  # Target 6 - Roulette
             (conf.t7_pos, conf.t7_size, conf.GAME_SHELL),  # Target 7 - Shell Game
         ]
 
@@ -151,6 +150,13 @@ def main():
 
         # Update the display
         pg.display.flip()
+        clock.tick(60)  # Limit FPS to 60
+        dt = clock.tick(60) / 1000  # Delta Time - subFPS for the animations
+
+    # Save player data before exiting
+    save_player_data(player_data["player_name"], player_data["cash_balance"], player_data["high_scores"])
+    pg.quit()
+    sys.exit()
 
 
 if __name__ == "__main__":
