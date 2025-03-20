@@ -72,20 +72,29 @@ class Player:
     #
 
     def move_player(self):
+        """
+        Updates the player's position and image based on the player's input.
+
+        Keys that are checked for player movement are:
+            UP, DOWN, LEFT, RIGHT, W, A, S, D
+
+        The player's image list is changed to reflect the direction of movement.
+        If no movement keys are pressed, the player's image is set to the idle image.
+        """
         self.keys = pg.key.get_pressed()
 
         if (self.keys[pg.K_UP] or self.keys[pg.K_w]) and self.pos_y > 0:
             self.pos_y -= conf.mv_spd
-            self.images = self.pl_run_up  # player image = up facing
+            self.images = self.pl_run_up  # player image ^ up facing
         if (self.keys[pg.K_DOWN] or self.keys[pg.K_s]) and self.pos_y < (conf.WIN_SIZE[1] - 15):
             self.pos_y += conf.mv_spd
             self.images = self.pl_run_down  # player image = down facing
         if (self.keys[pg.K_LEFT] or self.keys[pg.K_a]) and (self.pos_x > 0):
             self.pos_x -= conf.mv_spd
-            self.images = self.pl_run_left  # player image = left facing
+            self.images = self.pl_run_left  # player image < left facing
         if (self.keys[pg.K_RIGHT] or self.keys[pg.K_d]) and self.pos_x < (conf.WIN_SIZE[0] - 15):
             self.pos_x += conf.mv_spd
-            self.images = self.pl_run_right  # player image = right facing
+            self.images = self.pl_run_right  # player image > right facing
         # Check if no movement keys are pressed and set animation to idle
         if not any(self.keys[key] for key in self.key_list):
             self.images = self.pl_idle  # Show idle
@@ -103,7 +112,7 @@ class Player:
 
         # Add the delta time to the anim_timer
         self.anim_timer += dt
-         #  Increment through the index after 70 ms.
+        #  Increment through the index after 70 ms.
         if self.anim_timer > 0.07:  # After 70 ms.
             self.anim_timer = 0  # Reset the timer.
             self.anim_index += 1  # Increment the index.
