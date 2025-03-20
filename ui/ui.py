@@ -15,6 +15,13 @@ from ui.high_scores_ui import HighScoresUI
 
 
 class UIElements:
+    """
+    Initialize the UIElements class with the provided screen.
+
+    Sets up the screen, key inputs, fonts, various UI components,
+    including buttons, player selection.
+    """
+
     def __init__(self, screen):
         # Set Variables
         self.screen = screen
@@ -185,7 +192,7 @@ class UIElements:
         """
         running = True
         while running:
-            self.high_scores_ui.draw()
+            self.high_scores_ui.print_high_scores_ui()
             pg.display.flip()
 
             # Let HighScoresUI handle its own events through its key_input method
@@ -298,7 +305,7 @@ class UIElements:
         Load Player
         Neither (Main Menu)
         """
-
+        # ----------------------------------
         # If IN player selection, draw player list
         if self.tgl_load_player:
             # Draw title
@@ -355,7 +362,8 @@ class UIElements:
             nav_rect = nav_text.get_rect(center=(self.screen.get_width() // 2, list_y + list_height + 30))
             self.screen.blit(nav_text, nav_rect)
 
-        # If NOT in player selection, (Main Menu), draw buttons
+        # ----------------------------------
+        # If NOT in player selection (so in Main Menu), draw buttons
         if not self.tgl_load_player:
             for i, button in enumerate(self.btns):
                 # Set colors based on state
@@ -374,6 +382,7 @@ class UIElements:
                 text_rect = text.get_rect(center=button["rect"].center)
                 self.screen.blit(text, text_rect)
 
+        # ----------------------------------
         # Create input box for New player name
         if self.new_player_active:
             # Center the input box

@@ -13,6 +13,12 @@ import conf
 
 class Player:
     def __init__(self, x, y):
+        """
+        Initialize the player object.
+
+        Set the players starting position and load the
+        player's images.
+        """
         # Load images once when the program starts.
         # Put them into lists, one for each direction.
         pgl = pg.image.load
@@ -43,6 +49,28 @@ class Player:
         self.anim_index = 0
         self.anim_timer = 0
 
+    # -------------------------------------------------------------------------
+    # Utilities
+    #
+
+    def update(self, dt):
+        """
+        Update the player's movement and image.
+        """
+        self.move_player()  # Move the player
+        self.animate(dt)  # Animate the player using delta time
+
+    def draw(self, screen):
+        """
+        Draw the player image onto the screen at the player's position.
+        """
+
+        screen.blit(self.image, self.rect)
+
+    # -------------------------------------------------------------------------
+    # Functions / Methods
+    #
+
     def move_player(self):
         self.keys = pg.key.get_pressed()
 
@@ -66,18 +94,18 @@ class Player:
         self.rect.center = self.pos_x, self.pos_y
 
     def animate(self, dt):
-        # Add the delta time to the anim_timer and increment the
-        # index after 70 ms.
+        """
+        Animate the player character by cycling through images.
+
+        This method rotates through the images in a loop.
+        Every 70ms increments to the next image.
+        """
+
+        # Add the delta time to the anim_timer
         self.anim_timer += dt
+         #  Increment through the index after 70 ms.
         if self.anim_timer > 0.07:  # After 70 ms.
             self.anim_timer = 0  # Reset the timer.
             self.anim_index += 1  # Increment the index.
             self.anim_index %= len(self.images)  # Modulo to cycle the index.
             self.image = self.images[self.anim_index]  # And switch the image.
-
-    def update(self, dt):
-        self.move_player()
-        self.animate(dt)
-
-    def draw(self, screen):
-        screen.blit(self.image, self.rect)

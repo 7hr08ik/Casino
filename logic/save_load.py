@@ -8,18 +8,74 @@
 import datetime
 import json
 
+# -------------------------------------------------------------------------
+# Utilities
+#
+
+
+def get_cash_score(player):
+    """
+    Return the High score of a player
+    """
+    return player["high_scores"]["cash"]
+
+
+def load_all_players():
+    """
+    Load all players data from the JSON file
+    """
+    try:
+        with open("data/players_database.json") as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        # Return empty dict if file doesn't exist or is invalid
+        return {}
+
+
+# -------------------------------------------------------------------------
+# Helpers
+#
+
+
+def get_players_display_data():
+    """
+    Get a list of player data for display in the UI
+    """
+    all_players = load_all_players()
+    display_data = []
+
+    for name, data in all_players.items():
+        # Create a display entry with name, cash balance, and last played date
+        display_data.append(
+            {
+                "name": name,
+                "cash_balance": data.get("cash_balance", 0),
+                "last_played": data.get("last_played", "Unknown"),
+            }
+        )
+
+    # Sort by most recently played
+    display_data.sort(key=lambda x: x["last_played"], reverse=True)
+
+    return display_data
+
+
+# -------------------------------------------------------------------------
+# Main Functions
+#
+
 
 def save_player_data(player_name, cash_balance, high_scores=None):
     """
-    Save player data to a JSON file, updating high score if applicable
+    Save player data to a JSON file
+    Assigned defaults if no data
+    Update high score if applicable
+    Limit the number of entries in the DB
     """
 
-    # Initialize some things
-    high_scores = high_scores or {}
+    # Initialize some things with defaults
+    high_scores = high_scores or {"cash": 0}
     cash_balance = cash_balance or 0
-    # Check high_scores has a "cash" key
-    if "cash" not in high_scores:
-        high_scores["cash"] = 0
 
     # Variables
     all_players = load_all_players()
@@ -47,19 +103,10 @@ def save_player_data(player_name, cash_balance, high_scores=None):
         json.dump(all_players, f, indent=4)
 
 
-def load_high_scores():
-    """Load and return sorted list of players by high score"""
-    all_players = load_all_players()
-    players = [p for p in all_players.values() if p is not None]
-
-    # Sort by high score (cash) in descending order
-    sorted_players = sorted(players, key=lambda x: x["high_scores"]["cash"], reverse=True)
-
-    return sorted_players
-
-
 def load_player_data(player_name):
-    """Load specific player data from the JSON file"""
+    """
+    Load specific players data from the JSON file
+    """
     all_players = load_all_players()
 
     # Return the requested player data if it exists
@@ -67,46 +114,6 @@ def load_player_data(player_name):
         return all_players[player_name]
 
     return None
-
-
-def load_all_players():
-    """Load all players data from the JSON file"""
-    try:
-        with open("data/players_database.json") as f:
-            data = json.load(f)
-            return data
-    except (FileNotFoundError, json.JSONDecodeError):
-        # Return empty dict if file doesn't exist or is invalid
-        return {}
-
-
-def get_player_names():
-    """Get a list of all saved player names"""
-    all_players = load_all_players()
-    return list(all_players.keys())
-
-
-def get_players_display_data():
-    """
-    Get a list of player data for display in the UI
-    """
-    all_players = load_all_players()
-    display_data = []
-
-    for name, data in all_players.items():
-        # Create a display entry with name, cash balance, and last played date
-        display_data.append(
-            {
-                "name": name,
-                "cash_balance": data.get("cash_balance", 0),
-                "last_played": data.get("last_played", "Unknown"),
-            }
-        )
-
-    # Sort by most recently played
-    display_data.sort(key=lambda x: x["last_played"], reverse=True)
-
-    return display_data
 
 
 def delete_player(player_name):
@@ -125,3 +132,19 @@ def delete_player(player_name):
         return True
 
     return False
+
+
+def load_all_high_scores():
+    """
+    Load and sort list of players by high score
+    """
+    # Variables
+    all_players = load_all_players()
+    players = [p for p in all_players.values() if p is not None]
+
+    sorted_players = sorted(players, key=get_cash_score, reverse=True)
+
+    return sorted_players
+
+
+# -------------------------------------------------------------------------

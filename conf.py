@@ -10,6 +10,9 @@ import sys
 
 import pygame as pg
 
+"""
+All, if not most of the games Variables are set here
+"""
 # ----------------------------------
 #
 # Game properties
@@ -17,7 +20,7 @@ GAME_NAME = "Casino Lobby"
 WIN_SIZE = (1280, 720)
 CLOCK = pg.time.Clock()
 LOAD_SCRN_DLY = 3000  # 3sec
-EXIT_DLY = 5000  # 7sec
+EXIT_DLY = 10000  # 10sec
 
 # Images
 LOAD_SCR_IMG = pg.image.load("img/loading.png")
