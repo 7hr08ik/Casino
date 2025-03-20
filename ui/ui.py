@@ -21,6 +21,9 @@ class UIElements:
         self.btn_width = 200
         self.btn_height = 50
         self.btn_space = 20
+        self.new_player_rect = pg.Rect(0, 0, 400, 50)
+        self.font = pg.font.Font(None, 36)
+        self.small_font = pg.font.Font(None, 24)
 
         # Initialize parts
         self.btns = []
@@ -29,14 +32,11 @@ class UIElements:
         self.current_player = None
         self.new_player_active = False
         self.input_text = ""
-        self.new_player_rect = pg.Rect(0, 0, 400, 50)
         self.new_player_prompt = ""
-        self.font = pg.font.Font(None, 36)
-        self.small_font = pg.font.Font(None, 24)
+        self.player_list = []
+        self.tgl_load_player = False
 
         # Player selection variables
-        self.tgl_saved_lst = False
-        self.player_list = []
         self.selected_player_index = 0
         self.player_list_scroll = 0
         self.max_list_size = 8
@@ -115,7 +115,7 @@ class UIElements:
         # Toggle player selection
         self.selected_player_index = 0
         self.player_list_scroll = 0
-        self.tgl_saved_lst = True
+        self.tgl_load_player = True
 
     # -------------------------------------------------------------------------
     # Helpers
@@ -153,7 +153,7 @@ class UIElements:
 
     def load_selected_player(self):
         """
-        Load the currently selected player
+        Load the selected player
         """
         # If player list is empty
         if not self.player_list:
@@ -172,14 +172,17 @@ class UIElements:
         print(f"Loaded player '{player_name}' with ${cash_balance}")
 
         # Exit player selection mode
-        self.tgl_saved_lst = False
+        self.tgl_load_player = False
 
     # -------------------------------------------------------------------------
     # Input Handling
     #
 
     def show_high_scores(self):
-        """Show high scores screen"""
+        """
+        Run the High scores screen
+        In a loop, as its just a showcase, and not interactable
+        """
         running = True
         while running:
             self.high_scores_ui.draw()
@@ -189,6 +192,7 @@ class UIElements:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     self.exit_game()
+                # If High scores key input returns true then stop high scores screen
                 elif self.high_scores_ui.key_input(event):
                     running = False
 
@@ -218,7 +222,7 @@ class UIElements:
         if event.type == pg.KEYDOWN:
             # Standard keyboard controls for menus
             if event.key == pg.K_ESCAPE:
-                self.tgl_saved_lst = False
+                self.tgl_load_player = False
             elif event.key == pg.K_UP:
                 self.selected_player_index = max(0, self.selected_player_index - 1)
                 # Stop at the top
@@ -229,6 +233,7 @@ class UIElements:
                 # Stop at the bottom
                 if self.selected_player_index >= self.player_list_scroll + self.max_list_size:
                     self.player_list_scroll = self.selected_player_index - self.max_list_size + 1
+            # Enter to run selection
             elif event.key == pg.K_RETURN and self.player_list:
                 self.load_selected_player()
         elif event.type == pg.MOUSEBUTTONDOWN:
@@ -237,7 +242,6 @@ class UIElements:
             list_height = 400
             list_x = (self.screen.get_width() - list_width) // 2
             list_y = 100
-
             # Check if click is within player list area
             mouse_pos = pg.mouse.get_pos()
             if list_x <= mouse_pos[0] <= list_x + list_width and list_y + 50 <= mouse_pos[1] <= list_y + list_height:
@@ -277,7 +281,7 @@ class UIElements:
         """
         if self.new_player_active:
             self.handle_text_input(event)
-        elif self.tgl_saved_lst:
+        elif self.tgl_load_player:
             self.handle_player_selection_input(event)
         else:
             self.handle_main_menu_input(event)
@@ -285,10 +289,18 @@ class UIElements:
     def draw_ui(self):
         """
         Draw the UI elements to the screen
+
+        Written in chunks that look for specific toggles
+        If that toggle has been set, then the game will react
+        and print the corresponding UI
+
+        New Player
+        Load Player
+        Neither (Main Menu)
         """
 
         # If IN player selection, draw player list
-        if self.tgl_saved_lst:
+        if self.tgl_load_player:
             # Draw title
             title_text = self.font.render("Select Player", True, (255, 255, 255))
             title_rect = title_text.get_rect(center=(self.screen.get_width() // 2, 50))
@@ -343,8 +355,8 @@ class UIElements:
             nav_rect = nav_text.get_rect(center=(self.screen.get_width() // 2, list_y + list_height + 30))
             self.screen.blit(nav_text, nav_rect)
 
-        # If NOT in player selection, draw buttons
-        if not self.tgl_saved_lst:
+        # If NOT in player selection, (Main Menu), draw buttons
+        if not self.tgl_load_player:
             for i, button in enumerate(self.btns):
                 # Set colors based on state
                 if i == self.selected_btn:
@@ -383,7 +395,7 @@ class UIElements:
 
     def main_menu(self):
         """
-        Show the player selection screen
+        Main loop for the Main Menu
         """
         clock = pg.time.Clock()
 

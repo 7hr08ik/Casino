@@ -68,7 +68,7 @@ class ExitUI:
         goodbye_rect3 = goodbye_text3.get_rect(center=(self.screen.get_width() // 2, 420))
         self.screen.blit(goodbye_text3, goodbye_rect3)
 
-        # Nav text in center screen below box
+        # Help ;) text in center screen below box
         leave_text = self.small_font.render("Press the 'ANY' key to continue ;)", True, (255, 255, 255))
         leave_rect = leave_text.get_rect(center=(self.screen.get_width() // 2, 650))
         self.screen.blit(leave_text, leave_rect)

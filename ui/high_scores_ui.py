@@ -22,23 +22,32 @@ class HighScoresUI:
     # Utilities
     #
     def back_btn(self):
-        """Draw the back button"""
+        """
+        Draw the back button
+        """
+        # Variables
         bg_color = (150, 150, 150) if self.back_button["hover"] else (100, 100, 100)
         pg.draw.rect(self.screen, bg_color, self.back_button["rect"])
         back_text = self.font.render(self.back_button["text"], True, (255, 255, 255))
         back_text_rect = back_text.get_rect(center=self.back_button["rect"].center)
+        # Draw
         self.screen.blit(back_text, back_text_rect)
         pg.draw.rect(self.screen, (200, 200, 200), self.back_button["rect"], 2)
 
     def key_input(self, event):
-        """Handle events for the High Scores screen"""
+        """
+        Handle events for the High Scores screen
+
+        Sends True signal to UI to inform it to close the High Scoers page
+        and return to the Main menu
+        """
         if event.type == pg.MOUSEMOTION:
             self.back_button["hover"] = self.back_button["rect"].collidepoint(pg.mouse.get_pos())
         elif event.type == pg.MOUSEBUTTONDOWN:
             if self.back_button["rect"].collidepoint(pg.mouse.get_pos()):
-                return True  # Return True to indicate we should go back
+                return True  # Go Back
         elif event.type == pg.KEYDOWN and (event.key == pg.K_q or event.key == pg.K_RETURN):
-            return True  # Return True to indicate we should go back
+            return True  # Go Back
 
         return False
 
@@ -46,13 +55,15 @@ class HighScoresUI:
     # Functions / Methods
     #
     def draw_high_scores(self):
-        """Draw the high scores list"""
+        """
+        Draw the high scores list
+        """
         # Highlight top player
         top_player = self.high_scores[0]
         top_box = pg.Rect(50, 80, self.screen.get_width() - 100, 150)
         pg.draw.rect(self.screen, (200, 200, 0), top_box, 2)
-
         top_name_text = self.font.render(f"Top Player: {top_player['player_name']}", True, (255, 255, 255))
+        # Draw
         self.screen.blit(top_name_text, (top_box.x + 20, top_box.y + 20))
 
         # Move score and balance to the right side
@@ -63,10 +74,12 @@ class HighScoresUI:
         current_balance_text = self.font.render(
             f"Current Balance: ${top_player['cash_balance']}", True, (255, 255, 255)
         )
+        # Draw
         self.screen.blit(current_balance_text, (right_side_x - 110, top_box.y + 60))
 
         # Display other players
         y_pos = 240
+        # For players in list of high scores, NOT 1st
         for index, player in enumerate(self.high_scores[1:], 1):
             box = pg.Rect(50, y_pos, self.screen.get_width() - 100, 60)
             pg.draw.rect(self.screen, (255, 255, 255), box, 1)
@@ -90,9 +103,10 @@ class HighScoresUI:
             if y_pos > self.screen.get_height() - 100:
                 break
 
-        # Nav text in center screen below box
+        # Help text in center screen below box
         leave_text = self.small_font.render("Press 'Q' or 'Enter to go back", True, (255, 255, 255))
         leave_rect = leave_text.get_rect(center=(self.screen.get_width() // 2, 650))
+        # Draw
         self.screen.blit(leave_text, leave_rect)
 
     def draw(self):

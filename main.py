@@ -122,12 +122,17 @@ def main():
         # Draw player on screen
         player.draw(screen)
 
-        # Draw player info (name and balance)
+        # Draw text on screen
         font = pg.font.Font(None, 24)
+        small_font = pg.font.Font(None, 24)
         player_info = font.render(
             f"Player: {player_data['player_name']} | Balance: ${player_data['cash_balance']}", True, (255, 255, 255)
         )
+        instruct_text = small_font.render("WASD, or Arrows keys to move", True, (255, 255, 255))
+        instruct_rect = instruct_text.get_rect(center=(screen.get_width() // 2, 650))
+
         screen.blit(player_info, (10, 10))
+        screen.blit(instruct_text, instruct_rect)
 
         # ----------------------------------
         # Exit_targets
