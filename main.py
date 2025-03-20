@@ -7,8 +7,10 @@
 # ===========================
 #
 # Main Imports
+import json
 import subprocess
 import sys
+from pathlib import Path
 
 import pygame as pg
 
@@ -22,6 +24,9 @@ from ui.ui import UIElements
 # Just needs something to be set to keep VSCode happy
 # Used in the activate_target function
 leave_game = True
+
+# For game_integration
+TEMP_FILE = Path("/tmp/current_player.json")  # Platform-agnostic temp file?
 
 
 def draw_target(screen, color, position, size, alpha=0):
@@ -43,13 +48,19 @@ def activate_target(screen, player_data, player_rect, target_rect, game_command=
     """
     When player reaches target, run given command
     """
+
+    # For game_integration
+    # Save player data to temp file to be opened by next game
+    with open(TEMP_FILE, "w") as f:
+        json.dump(player_data, f)
+
     if player_rect.colliderect(target_rect):
         if game_command == leave_game:
             exit_ui = ExitUI(screen)
             exit_ui.print_exit_ui(screen, player_data)
-        pg.quit()
         if game_command:
             subprocess.run(game_command, check=False)
+        pg.quit()
         sys.exit()
 
 
