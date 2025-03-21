@@ -1,15 +1,31 @@
 {
     "Major Pain": {
         "player_name": "Major Pain",
-        "cash_balance": 290,
+        "cash_balance": 10400,
         "high_scores": {
             "cash": 12345
         },
-        "last_played": "2025-03-21 19:23:42"
+        "last_played": "2025-03-21 19:58:57"
     },
     "Corporal Punishment": {
         "player_name": "Corporal Punishment",
         "cash_balance": 1000,
+        "high_scores": {
+            "cash": 3486
+        },
+        "last_played": "2025-03-18 13:24:32"
+    },
+    "General Waste": {
+        "player_name": "General Waste",
+        "cash_balance": 654,
+        "high_scores": {
+            "cash": 3486
+        },
+        "last_played": "2025-03-18 13:24:32"
+    },
+    "Graphic Design Passion": {
+        "player_name": "Corporal Punishment",
+        "cash_balance": 1200,
         "high_scores": {
             "cash": 3486
         },
