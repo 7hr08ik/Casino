@@ -7,6 +7,7 @@
 #
 # Main Imports
 import pygame as pg
+from game_integration import load_lobby_player_data
 
 # Local Imports
 import conf
@@ -22,7 +23,11 @@ class Ui:
         self.start_time = pg.time.get_ticks()
         self.current_time = self.start_time
         self.cost = 0
-        self.starting_balance = 50
+        # self.starting_balance = 50 # Original
+        # For game_integration
+        player_data = load_lobby_player_data()
+        # Replace original cash variable with:
+        self.starting_balance = player_data["cash_balance"]
         self.balance = self.starting_balance
 
         # UI styling
@@ -39,6 +44,9 @@ class Ui:
 
         # Update balance and best time
         self.balance = self.starting_balance - cost
+        # For game_integration
+        player_data = load_lobby_player_data()
+        self.balance = player_data["cash_balance"]
 
         # Create timer text
         timer_text = self.font.render(f"Time: {int(elapsed_time)}s", True, self.text_color)

@@ -20,6 +20,14 @@ class UIElements:
 
     Sets up the screen, key inputs, fonts, various UI components,
     including buttons, player selection.
+
+    NOTE:
+    I acknowledge that i did use an AI coding assitant to help me.
+    I asked the AI to build the basic framework for me, with a New player
+    button and a Load player button.
+    Using the basic framework, i then added the rest of the UI elements,
+    expanded on the code and made it my own. I then used this code as a
+    basis for the other 2 UI files
     """
 
     def __init__(self, screen):

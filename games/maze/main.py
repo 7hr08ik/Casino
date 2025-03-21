@@ -7,7 +7,11 @@
 #
 # Main Imports
 import sys
+
 import pygame as pg
+
+# For game_integration
+from game_integration import check_balance, load_lobby_player_data, save_and_exit
 
 # Local Imports
 import conf
@@ -20,6 +24,8 @@ def main():
     pg.init()
     pg.display.set_caption(conf.GAME_NAME)
     screen = pg.display.set_mode(conf.WINDOW_SIZE)
+
+    player_data = load_lobby_player_data()
 
     # 2 - Display loading screen
     screen.blit(conf.LOAD_SCR_IMG, (0, 0))
@@ -40,12 +46,15 @@ def main():
             if event.type == pg.QUIT:
                 running = False
 
+        # For game_integration
+        check_balance(screen, player_data)
+
         # Fill the screen - Makes carpet colour
         screen.fill("grey12")
 
         # Print Background images
         screen.blit(conf.FLOOR_IMG, (0, 0))
-        screen.blit(conf.BG_IMG, (0, 0)) # Collision only here
+        screen.blit(conf.BG_IMG, (0, 0))  # Collision only here
 
         # Draw UI elements
         ui.draw_ui(screen)
@@ -75,14 +84,17 @@ def main():
         #
         # Target 1
         if player.rect.colliderect(pg.Rect(conf.t_pos[0], conf.t_pos[1], conf.t_size, conf.t_size)):
-            # game_int.save_and_return()  # Save and return to lobby
+            # For game_integration
+            save_and_exit(screen, player_data)
+
             pg.quit()
             sys.exit()
 
         # Update the display
         pg.display.flip()
-        conf.CLOCK.tick(60) # Limit FPS to 60
-        dt = conf.CLOCK.tick(30) / 1000 # Delta-Time for animations
+        conf.CLOCK.tick(60)  # Limit FPS to 60
+        dt = conf.CLOCK.tick(30) / 1000  # Delta-Time for animations
+
 
 if __name__ == "__main__":
     main()

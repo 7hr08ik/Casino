@@ -56,10 +56,14 @@ def activate_target(screen, player_data, player_rect, target_rect, game_command=
 
     if player_rect.colliderect(target_rect):
         if game_command == leave_game:
+            pg.quit()
             exit_ui = ExitUI(screen)
             exit_ui.print_exit_ui(screen, player_data)
+            sys.exit()
         if game_command:
+            pg.quit()
             subprocess.run(game_command, check=False)
+            sys.exit()
         pg.quit()
         sys.exit()
 

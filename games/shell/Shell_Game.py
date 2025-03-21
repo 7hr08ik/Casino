@@ -19,22 +19,22 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Three Shell Game")
 
 # Pop image
-pop_image = pygame.image.load("game_shell/img/pop_up.png")
+pop_image = pygame.image.load("games/shell/img/pop_up.png")
 pop_image = pygame.transform.scale(pop_image, (1300, 800))
 screen.blit(pop_image, (0, 0))
 pygame.display.update()
 time.sleep(2)
 
 # Load images
-shell_image = pygame.image.load("game_shell/img/shell_empty_closed.png")
+shell_image = pygame.image.load("games/shell/img/shell_empty_closed.png")
 shell_image = pygame.transform.scale(shell_image, (200, 200))
-ball_image = pygame.image.load("game_shell/img/open_shell_full.png")
+ball_image = pygame.image.load("games/shell/img/open_shell_full.png")
 ball_image = pygame.transform.scale(ball_image, (250, 200))
-bg_image = pygame.image.load("game_shell/img/background.jpg")
+bg_image = pygame.image.load("games/shell/img/background.jpg")
 
 # Load character sprites
-player_sprite = pygame.image.load("game_shell/img/3.png")
-player_victory_sprite = pygame.image.load("game_shell/img/3_victory.png")
+player_sprite = pygame.image.load("games/shell/img/3.png")
+player_victory_sprite = pygame.image.load("games/shell/img/3_victory.png")
 player_victory_sprite = pygame.transform.scale(player_victory_sprite, (200, 350))
 
 # Define shell positions

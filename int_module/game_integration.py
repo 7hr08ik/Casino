@@ -1,3 +1,11 @@
+# ===========================
+# Python game suite
+# Mini-Game Integration module
+#
+# Author: Rob Hickling
+# 19/03/2025
+# ===========================
+
 import json
 import os
 import sys
@@ -6,10 +14,41 @@ from pathlib import Path
 import pygame as pg
 
 # Import your existing systems
-from logic.save_load import save_player_data
-from ui.exit_ui import ExitUI
+from Casino.logic.save_load import save_player_data
+from Casino.ui.exit_ui import ExitUI
 
 TEMP_FILE = Path("/tmp/current_player.json")  # Platform-agnostic temp file?
+
+"""
+All code additions commented with;
+    # For game_integration
+
+Notes on usage:
+    Use the load_lobby_player_data() function to load player data from the lobby
+    Use the save_and_exit() function to save player data and return to the lobby
+    Use the check_balance() function to check if player's balance is too low
+"""
+
+# -------------------------------------------------------------------------
+# Utilities
+#
+
+
+def return_to_lobby():
+    """Return control to the main lobby"""
+    pg.quit()
+    # Launch lobby process
+    if sys.platform == "win32":
+        os.system("start python main.py")
+    else:
+        os.system("python3 -m main")
+
+    sys.exit()
+
+
+# -------------------------------------------------------------------------
+# Functions
+#
 
 
 def load_lobby_player_data():
@@ -33,17 +72,6 @@ def check_balance(screen, player_data):
     if player_data["cash_balance"] < 1:
         exit_ui = ExitUI(screen)
         exit_ui.draw_exit_loser(screen, player_data["player_name"])
-
-
-def return_to_lobby():
-    """Return control to the main lobby"""
-    pg.quit()
-    # Launch lobby process
-    if sys.platform == "win32":
-        os.system("start python main.py")
-    else:
-        os.system("python3 main.py &")
-    sys.exit()
 
 
 def setup_game_window():
