@@ -8,6 +8,8 @@
 # 21/03/2025
 # Added functionality for saving and loading player data
 # required for integration into the lobby
+# all commented with;
+#    # For game_integration
 # ===========================
 
 import random
@@ -249,7 +251,7 @@ def play_round():
                 else:
                     outcome = "It's a tie!"
                     gambling_credits += bet  # Refund bet to player
-                    player_data["cash_balance"] += bet # For game_integration
+                    player_data["cash_balance"] += bet  # For game_integration
                 if dealer_score == 21:
                     outcome = "BlackJack"
                 if player_score == 21:
