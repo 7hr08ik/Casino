@@ -3,6 +3,11 @@
 #
 # Author: Paul Leanca
 # 07/02/2025
+#
+# Modified by: Rob Hickling
+# 21/03/2025
+# Added functionality for saving and loading player data
+# required for integration into the lobby
 # ===========================
 
 import random
@@ -10,6 +15,9 @@ import sys
 import time
 
 import pygame
+
+# For game_integration
+from game_integration import check_balance, load_player_data, save_and_exit
 
 # Initialize Pygame
 pygame.init()
@@ -116,8 +124,13 @@ class Player:
         return self.calculate_score() > 21
 
 
-# Betting system
-gambling_credits = 100
+# Betting system # Original
+# gambling_credits = 100 # Original
+# For game_integration
+player_data = load_player_data()
+balance = player_data["cash_balance"]
+gambling_credits = balance
+
 bet = 10
 
 bet_buttons = [
@@ -132,12 +145,13 @@ exit_button = Button("Exit", 1150, 600, 100, 50, (255, 0, 0), "exit")
 
 
 def play_round():
-    global gambling_credits, bet  # noqa: PLW0603
+    global gambling_credits, bet, player_data  # noqa: PLW0603
 
     if gambling_credits < bet:
         return False
 
     gambling_credits -= bet
+    player_data["cash_balance"] += bet  # For game_integration
     # Initialize a new deck and new players for each round
     deck = Deck()
     dealer = Player("Dealer")
@@ -158,6 +172,8 @@ def play_round():
         events = pygame.event.get()
         for event in events:
             if event.type == pygame.QUIT:
+                # For game_integration
+                save_and_exit(screen, player_data)
                 pygame.quit()
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -226,12 +242,14 @@ def play_round():
                 if dealer.is_busted() or player_score > dealer_score:
                     outcome = "Player wins!"
                     gambling_credits += bet * 2  # Player wins double the bet
+                    player_data["cash_balance"] += bet * 2  # For game_integration
                 elif player_score < dealer_score:
                     outcome = "Dealer wins!"
 
                 else:
                     outcome = "It's a tie!"
                     gambling_credits += bet  # Refund bet to player
+                    player_data["cash_balance"] += bet # For game_integration
                 if dealer_score == 21:
                     outcome = "BlackJack"
                 if player_score == 21:
@@ -242,6 +260,11 @@ def play_round():
 
         hit_button.draw(screen)
         stand_button.draw(screen)
+
+        # For game_integration
+        player_data = load_player_data()  # Load the data
+        player_data["cash_balance"] = gambling_credits
+        check_balance(screen, player_data)  # check for no money
 
         pygame.display.update()
         # Small delay to avoid a busy loop
@@ -280,6 +303,8 @@ def play_round():
     while waiting:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                # For game_integration
+                save_and_exit(screen, player_data)
                 pygame.quit()
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -293,12 +318,15 @@ def play_round():
 
 
 # Main loop: keep playing rounds until the player chooses to exit.
-def main():  # TODO: Add code for running out of money, and save/load
+def main():
     running = True
     while running:
         play_again = play_round()
         if not play_again or gambling_credits <= 0:
             running = False
+
+    # For game_integration
+    save_and_exit(screen, player_data)
     pygame.quit()
 
 

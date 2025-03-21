@@ -18,8 +18,7 @@ In each mini-game's main file, add these imports:
 from game_integration import (
     load_player_data,
     save_and_exit,
-    check_balance,
-    setup_game_window
+    check_balance
 )
 ```
 
@@ -38,6 +37,7 @@ def main():
         # For game_integration
         player_data = load_player_data() # Load the data
         # Other tweaks may be needed. To make sure the balance is upto date
+        player_data["cash_balance"] = ui_balance
         check_balance(screen, player_data) # check for no money
         # ... existing game logic
         
@@ -53,7 +53,7 @@ Replace all cash = starting_value with references to current_cash
 When modifying cash, update both the local variable AND player_data:
 
 # For game_integration
-player_data = load_lobby_player_data()
+player_data = load_player_data()
 self.balance = player_data["cash_balance"]
 
 player_data["cash_balance"] += amount  # or -= amount
