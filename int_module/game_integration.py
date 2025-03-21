@@ -13,9 +13,13 @@ from pathlib import Path
 
 import pygame as pg
 
+# Add Casino project root directory to Python path
+casino_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+sys.path.append(casino_root)
+
 # Import your existing systems
-from Casino.logic.save_load import save_player_data
-from Casino.ui.exit_ui import ExitUI
+from logic.save_load import save_player_data
+from ui.exit_ui import ExitUI
 
 TEMP_FILE = Path("/tmp/current_player.json")  # Platform-agnostic temp file?
 
@@ -46,12 +50,7 @@ def return_to_lobby():
     sys.exit()
 
 
-# -------------------------------------------------------------------------
-# Functions
-#
-
-
-def load_lobby_player_data():
+def load_player_data():
     """Load player data from lobby's temporary storage"""
     try:
         with open(TEMP_FILE) as f:
@@ -59,6 +58,11 @@ def load_lobby_player_data():
     except FileNotFoundError:
         print("No player data found! Returning to lobby...")
         return_to_lobby()
+
+
+# -------------------------------------------------------------------------
+# Functions
+#
 
 
 def save_and_exit(screen, player_data):
@@ -76,9 +80,19 @@ def check_balance(screen, player_data):
         exit_ui.draw_exit_loser(screen, player_data["player_name"])
 
 
-def setup_game_window():
-    """Standard game window setup"""
-    pg.init()
-    screen = pg.display.set_mode((800, 600))
-    pg.display.set_caption("Casino Game")
-    return screen
+def maze_exit(screen, player_data):
+    """
+    When exiting the maze:
+    1. Save player data to both files
+    2. Show exit UI
+    """
+    player_data = load_player_data()
+
+    # Save to main database
+    save_player_data(
+        player_data["player_name"], player_data["cash_balance"], player_data["high_scores"]
+    )
+
+    # Show exit UI
+    exit_ui = ExitUI(screen)
+    exit_ui.print_exit_ui(screen, player_data)

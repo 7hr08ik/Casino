@@ -6,6 +6,7 @@
 # ===========================
 #
 # Main Imports
+import json
 import sys
 from pathlib import Path
 
@@ -40,10 +41,6 @@ def main():
     dt = 0
     running = True
 
-    # For game_integration
-    player_data = load_player_data()
-    ui_balance = ui.get_balance()
-
     # ----------------------------------
     # 4 - Main game loop
     while running:
@@ -69,10 +66,10 @@ def main():
         player.update(dt)
 
         # For game_integration
-        check_balance(screen, player_data)
-        # Update the player balance
+        player_data = load_player_data()
         ui_balance = ui.get_balance()
         player_data["cash_balance"] = ui_balance
+        check_balance(screen, player_data)
 
         # ----------------------------------
         # Draw the target
@@ -93,7 +90,9 @@ def main():
         # Target 1
         if player.rect.colliderect(pg.Rect(conf.t_pos[0], conf.t_pos[1], conf.t_size, conf.t_size)):
             # For game_integration
-            maze_exit(screen, player_data)
+            with open(TEMP_FILE, "w") as f: # Save current data to tmp
+                json.dump(player_data, f)
+            maze_exit(screen, player_data) # run exit sequence with latest data
 
             pg.quit()
             sys.exit()

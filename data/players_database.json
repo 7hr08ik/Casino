@@ -1,11 +1,11 @@
 {
     "Major Pain": {
         "player_name": "Major Pain",
-        "cash_balance": 500,
+        "cash_balance": 391,
         "high_scores": {
             "cash": 12345
         },
-        "last_played": "2025-03-21 13:16:02"
+        "last_played": "2025-03-21 19:15:57"
     },
     "Corporal Punishment": {
         "player_name": "Corporal Punishment",
@@ -14,21 +14,5 @@
             "cash": 3486
         },
         "last_played": "2025-03-18 13:24:32"
-    },
-    "tester1": {
-        "player_name": "tester1",
-        "cash_balance": 100,
-        "high_scores": {
-            "cash": 3486
-        },
-        "last_played": "2025-03-20 22:03:40"
-    },
-    "testing": {
-        "player_name": "testing",
-        "cash_balance": 1000,
-        "high_scores": {
-            "cash": 1000
-        },
-        "last_played": "2025-03-21 17:46:00"
     }
 }
