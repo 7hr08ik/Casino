@@ -11,23 +11,31 @@ Call check_balance() regularly in the game loop
 Use save_and_exit() instead of normal exit procedures
 Remove any existing save/load systems
 
-In each mini-game's main file, add these imports:
--------------------------------------------------
+# Modified by: Rob Hickling
+# 21/03/2025
+# Added functionality for saving and loading player data
+# required for integration into the lobby
+# all commented with;
+#    # For game_integration
+# ===========================
+
+Add Imports:
+------------
 ```py
+
 # For game_integration
 from game_integration import (
     load_player_data,
     save_and_exit,
     check_balance
 )
+
 ```
 
-Replace the game's initialization with:
----------------------------------------
+Game Loop:
+----------
 ```py
 def main():
-    # If screen not exist
-    screen = setup_game_window() # ???
 
     # Replace original cash variable with:
     current_cash = player_data["cash_balance"]

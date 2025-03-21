@@ -1,7 +1,24 @@
+# ===========================
+# Dice
+#
+# Author: Sorin Sofronov
+# 07/02/2025
+#
+# Modified by: Rob Hickling
+# 21/03/2025
+# Added functionality for saving and loading player data
+# required for integration into the lobby
+# all commented with;
+#    # For game_integration
+# ===========================
+
 import random
 import sys
 
 import pygame
+
+# For game_integration
+from game_integration import check_balance, load_player_data, save_and_exit
 
 # Initialize pygame
 pygame.init()
@@ -103,6 +120,7 @@ def get_bet_amount(player_money):
     text = ""
     active = False
     clock = pygame.time.Clock()
+    player_data = load_player_data()  # For game_integration
 
     while True:
         screen.fill(GRAY)
@@ -119,6 +137,7 @@ def get_bet_amount(player_money):
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                save_and_exit(screen, player_data)  # For game_integration
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -170,6 +189,8 @@ def get_player_name():
     active = False
     clock = pygame.time.Clock()
 
+    player_data = load_player_data()  # Load the data
+
     while True:
         screen.fill(GRAY)
         display_text(
@@ -181,6 +202,8 @@ def get_player_name():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                save_and_exit(screen, player_data)  # For game_integration
+
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -200,7 +223,12 @@ def get_player_name():
 # Main game loop
 def game_loop(player_name):
     house_money = 1000
-    player_money = 100
+    # player_money = 100 # Original
+
+    # For game_integration
+    player_data = load_player_data()
+    player_money = player_data["cash_balance"]
+
     bet = 0
     player_roll_history = []
     house_roll_history = []
@@ -220,10 +248,13 @@ def game_loop(player_name):
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                save_and_exit(screen, player_data)  # For game_integration
+
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
+                    save_and_exit(screen, player_data)  # For game_integration
                     pygame.quit()
                     sys.exit()
                 if event.key == pygame.K_r:
@@ -256,10 +287,12 @@ def game_loop(player_name):
                     if player_sum > house_sum:
                         display_text(f"{player_name} Wins £{bet}", 300, 400, GREEN, 48)
                         player_money += bet
+                        player_data["cash_balance"] += bet
                         house_money -= bet
                     elif player_sum < house_sum:
                         display_text(f"The House Wins £{bet}", 300, 400, RED, 48)
                         player_money -= bet
+                        player_data["cash_balance"] -= bet
                         house_money += bet
                     else:
                         display_text("It's a Tie!", 300, 400, BLACK, 48)
@@ -268,6 +301,11 @@ def game_loop(player_name):
                     pygame.time.wait(2000)
                     bet = 0
 
+        # For game_integration
+        player_data = load_player_data()  # Load the data
+        # Other tweaks may be needed. To make sure the balance is upto date
+        player_data["cash_balance"] = player_money
+        check_balance(screen, player_data)  # check for no money
         pygame.display.update()
 
 
@@ -281,6 +319,8 @@ def main_menu():
     )
     clock = pygame.time.Clock()
 
+    player_data = load_player_data()  # For game_integration
+
     while True:
         screen.fill(BLACK)
         display_text(
@@ -292,13 +332,14 @@ def main_menu():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                save_and_exit(screen, player_data)  # For game_integration
                 pygame.quit()
                 sys.exit()
             if start_button.is_clicked(event):
                 player_name = get_player_name()
                 game_loop(player_name)
             if quit_button.is_clicked(event):
-                # TODO: add code to return to lobby
+                save_and_exit(screen, player_data)  # For game_integration
                 pygame.quit()
                 sys.exit()
 
