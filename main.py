@@ -29,6 +29,9 @@ leave_game = True
 TEMP_FILE = Path("/tmp/current_player.json")  # Platform-agnostic temp file?
 
 
+# -------------------------------------------------------------------------
+# Utilities
+#
 def draw_target(screen, color, position, size, alpha=0):
     """
     Draw target points on the screen.
@@ -73,13 +76,16 @@ def check_player_balance(screen, player_data):
     Check if player's cash balance has reached 0 or below.
     Display exit screen if player is broke.
     """
-    if player_data["cash_balance"] <= 10:  # 10 for testing
+    if player_data["cash_balance"] <= 0:  # 10 for testing
         exit_ui = ExitUI(screen)
         exit_ui.draw_exit_loser(screen, player_data["player_name"])
     else:
         pass
 
 
+# -------------------------------------------------------------------------
+# Main Loop
+#
 def main():
     """
     Main function to initialize and run the game loop.

@@ -16,7 +16,7 @@ In each mini-game's main file, add these imports:
 ```py
 # For game_integration
 from game_integration import (
-    load_lobby_player_data,
+    load_player_data,
     save_and_exit,
     check_balance,
     setup_game_window
@@ -30,15 +30,15 @@ def main():
     # If screen not exist
     screen = setup_game_window() # ???
 
-    # For game_integration
-    player_data = load_lobby_player_data()
     # Replace original cash variable with:
     current_cash = player_data["cash_balance"]
     
     # Add this to your game loop:
     while running:
         # For game_integration
-        check_balance(screen, player_data)
+        player_data = load_player_data() # Load the data
+        # Other tweaks may be needed. To make sure the balance is upto date
+        check_balance(screen, player_data) # check for no money
         # ... existing game logic
         
     # When exiting normally:
