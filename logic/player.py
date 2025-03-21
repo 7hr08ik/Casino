@@ -5,10 +5,10 @@
 # ===========================
 #
 # Main Imports
+# Local Imports
 import pygame as pg
 
-# Local Imports
-import conf
+import lobby_conf as conf
 
 
 class Player:
@@ -79,7 +79,7 @@ class Player:
             UP, DOWN, LEFT, RIGHT, W, A, S, D
 
         The player's image list is changed to reflect the direction of movement.
-        If no movement keys are pressed, the player's image is set to the idle image.
+        If no movement keys are pressed, player set to the idle image.
         """
         self.keys = pg.key.get_pressed()
 

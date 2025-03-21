@@ -7,16 +7,20 @@
 #
 # Main Imports
 import sys
-
-import pygame as pg
-
-# For game_integration
-from game_integration import check_balance, load_lobby_player_data, save_and_exit
+from pathlib import Path
 
 # Local Imports
 import conf
+import pygame as pg
+
+# For game_integration
+from game_integration import check_balance, load_player_data, maze_exit
+
 from logic.player import Player
 from logic.ui import Ui
+
+# For game_integration
+TEMP_FILE = Path("/tmp/current_player.json")  # Platform-agnostic temp file?
 
 
 def main():
@@ -24,8 +28,6 @@ def main():
     pg.init()
     pg.display.set_caption(conf.GAME_NAME)
     screen = pg.display.set_mode(conf.WINDOW_SIZE)
-
-    player_data = load_lobby_player_data()
 
     # 2 - Display loading screen
     screen.blit(conf.LOAD_SCR_IMG, (0, 0))
@@ -38,6 +40,10 @@ def main():
     dt = 0
     running = True
 
+    # For game_integration
+    player_data = load_player_data()
+    ui_balance = ui.get_balance()
+
     # ----------------------------------
     # 4 - Main game loop
     while running:
@@ -45,9 +51,6 @@ def main():
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 running = False
-
-        # For game_integration
-        check_balance(screen, player_data)
 
         # Fill the screen - Makes carpet colour
         screen.fill("grey12")
@@ -65,13 +68,18 @@ def main():
         # Update Player
         player.update(dt)
 
+        # For game_integration
+        check_balance(screen, player_data)
+        # Update the player balance
+        ui_balance = ui.get_balance()
+        player_data["cash_balance"] = ui_balance
+
         # ----------------------------------
         # Draw the target
         #
         # Create surface
         target_surface = pg.Surface((conf.t_pos[0], conf.t_pos[1]), pg.SRCALPHA)
-        # Make the surface transparent
-        target_surface.fill(conf.TRANSPARENT)
+        target_surface.fill(conf.TRANSPARENT)  # Make the surface transparent
         # Put surface in a rectangle
         pg.draw.rect(
             target_surface,
@@ -85,7 +93,7 @@ def main():
         # Target 1
         if player.rect.colliderect(pg.Rect(conf.t_pos[0], conf.t_pos[1], conf.t_size, conf.t_size)):
             # For game_integration
-            save_and_exit(screen, player_data)
+            maze_exit(screen, player_data)
 
             pg.quit()
             sys.exit()

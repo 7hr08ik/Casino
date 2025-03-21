@@ -1,7 +1,8 @@
-import pygame
-import sys
-import random
 import os
+import random
+import sys
+
+import pygame
 
 pygame.init()
 
@@ -50,6 +51,7 @@ editing_index = None
 pot = 500
 prize_won = 0
 
+
 # ---------------------------------------------------------------------------
 # File handling functions
 # ---------------------------------------------------------------------------
@@ -57,7 +59,7 @@ def load_history():
     """Load the last 5 draws from the history file into the history list."""
     global history
     if os.path.exists("history.txt"):
-        with open("history.txt", "r") as f:
+        with open("history.txt") as f:
             history = f.read().splitlines()[-5:]
     else:
         history = []
@@ -74,21 +76,22 @@ def load_favs():
     """Load favourite number sets from the 'favs.txt' file."""
     global favs
     if os.path.exists("games/lottery/logs/favs.txt"):
-        with open("games/lottery/logs/favs.txt", "r") as f:
+        with open("games/lottery/logs/favs.txt") as f:
             favs = [
                 list(map(int, line.strip().split(",")))
-                for line in f.read().splitlines() if line.strip()
+                for line in f.read().splitlines()
+                if line.strip()
             ]
     # else:
     #     favs = []
     #     print("favs load")
-        
 
 
 def save_favs():
     """Save the current favourite number sets to the 'favs.txt' file."""
     with open("games/lottery/logs/favs.txt", "w") as f:
         f.write("\n".join([",".join(map(str, fav)) for fav in favs]))
+
 
 # ---------------------------------------------------------------------------
 # Drawing helper functions
@@ -137,13 +140,14 @@ def nav(home, menu, exit):
     nav_btns = [
         {"l": "Home", "r": pygame.Rect(20, H - 60, 120, 40), "a": home, "c": ORANGE},
         {"l": "Menu", "r": pygame.Rect(160, H - 60, 120, 40), "a": menu, "c": BLUE},
-        {"l": "Exit", "r": pygame.Rect(W - 140, H - 60, 120, 40), "a": exit, "c": RED}
+        {"l": "Exit", "r": pygame.Rect(W - 140, H - 60, 120, 40), "a": exit, "c": RED},
     ]
     for b in nav_btns:
         pygame.draw.rect(SCREEN, b["c"], b["r"], border_radius=8)
         pygame.draw.rect(SCREEN, BLACK, b["r"], 2, border_radius=8)
         txt(b["l"], TEXT_FONT, BLACK, b["r"].centerx, b["r"].centery, True)
     return nav_btns
+
 
 # ---------------------------------------------------------------------------
 # Game action functions
@@ -194,6 +198,7 @@ def play_fav():
     else:
         msg, msg_t = "No Favs!", 120
 
+
 # ---------------------------------------------------------------------------
 # Screen functions
 # ---------------------------------------------------------------------------
@@ -203,17 +208,27 @@ def start_screen():
     # To solve error when no favs exisit (Rob)
     if os.path.exists("games/lottery/logs/favs.txt"):
         pass
-    else: save_favs()
+    else:
+        save_favs()
 
     load_history()
     load_favs()
     jackpot = "£10M"
     btns_list = [
         {"l": "Play", "r": pygame.Rect(20, 250, 200, 50), "a": selection_screen},
-        {"l": "Lucky Dip", "r": pygame.Rect(20, 320, 200, 50), "a": lambda: [reset(), lucky_dip(), run_lottery()]},
+        {
+            "l": "Lucky Dip",
+            "r": pygame.Rect(20, 320, 200, 50),
+            "a": lambda: [reset(), lucky_dip(), run_lottery()],
+        },
         {"l": "Favourites", "r": pygame.Rect(20, 390, 200, 50), "a": play_fav},
         {"l": "Rules", "r": pygame.Rect(20, 460, 200, 50), "a": rules_screen},
-        {"l": "Exit", "r": pygame.Rect(20, 530, 200, 50), "a": lambda: [pygame.quit(), sys.exit()], "c": RED}
+        {
+            "l": "Exit",
+            "r": pygame.Rect(20, 530, 200, 50),
+            "a": lambda: [pygame.quit(), sys.exit()],
+            "c": RED,
+        },
     ]
     while True:
         CLOCK.tick(60)
@@ -250,8 +265,12 @@ def selection_screen():
     extra = [
         {"l": "Lucky Dip", "r": pygame.Rect(20, 440, 160, 40), "a": lucky_dip},
         {"l": "Reset", "r": pygame.Rect(200, 440, 160, 40), "a": reset},
-        {"l": "Update Fav" if editing_index is not None else "Save Fav", "r": pygame.Rect(20, 500, 160, 40), "a": save_fav},
-        {"l": "Play Favs", "r": pygame.Rect(200, 500, 160, 40), "a": play_fav}
+        {
+            "l": "Update Fav" if editing_index is not None else "Save Fav",
+            "r": pygame.Rect(20, 500, 160, 40),
+            "a": save_fav,
+        },
+        {"l": "Play Favs", "r": pygame.Rect(200, 500, 160, 40), "a": play_fav},
     ]
     while True:
         CLOCK.tick(60)
@@ -320,7 +339,7 @@ def play_favs_screen():
             delete_rect = pygame.Rect(edit_rect.right + 10, base_rect.top, 60, 40)
             fav_btns.append((i, fav, base_rect, edit_rect, delete_rect))
         # Draw each favourite set and its Edit/Delete buttons
-        for (i, fav, base_rect, edit_rect, delete_rect) in fav_btns:
+        for i, fav, base_rect, edit_rect, delete_rect in fav_btns:
             btn(base_rect, f"Set {i + 1}: {', '.join(map(str, fav))}")
             pygame.draw.rect(SCREEN, ORANGE, edit_rect, border_radius=8)
             pygame.draw.rect(SCREEN, BLACK, edit_rect, 2, border_radius=8)
@@ -341,7 +360,7 @@ def play_favs_screen():
                         b["a"]()
                         return
                 # Check favourite set buttons
-                for (i, fav, base_rect, edit_rect, delete_rect) in fav_btns:
+                for i, fav, base_rect, edit_rect, delete_rect in fav_btns:
                     if base_rect.collidepoint(m):
                         u_nums = fav[:]
                         selection_screen()
@@ -391,7 +410,7 @@ def rules_screen():
         "4. Favourites: Save your number sets with 'Save Fav' and load with 'Play Favs'.",
         "5. History: Last 5 draws are shown on the start screen.",
         "6. Prizes: 2 matches = £50, 3 matches = £500, 5 matches = £10,000, 6 matches = £10M.",
-        "7. Navigation: Use the buttons to navigate between screens."
+        "7. Navigation: Use the buttons to navigate between screens.",
     ]
     while True:
         CLOCK.tick(60)
@@ -481,11 +500,32 @@ def game_screen():
         CLOCK.tick(60)
         bg(image=False)
         txt("Results", BIG_TITLE_FONT, BLACK, W // 2, 40, True)
-        txt(f"Your Numbers: {', '.join(map(str, sorted(u_nums)))}", TEXT_FONT, WHITE, W // 2, 120, True)
+        txt(
+            f"Your Numbers: {', '.join(map(str, sorted(u_nums)))}",
+            TEXT_FONT,
+            WHITE,
+            W // 2,
+            120,
+            True,
+        )
         txt(f"Drawn: {', '.join(map(str, d_nums))}", TEXT_FONT, WHITE, W // 2, 160, True)
-        txt(f"Matches: {', '.join(map(str, matches)) if matches else 'None'}", TEXT_FONT, WHITE, W // 2, 200, True)
-        txt(f"Prize Won: £{prize_won}", TEXT_FONT, GREEN if prize_won > 0 else RED, W // 2, 240, True)
-        txt(f"Ticket Cost: £10", TEXT_FONT, WHITE, W // 2, 280, True)
+        txt(
+            f"Matches: {', '.join(map(str, matches)) if matches else 'None'}",
+            TEXT_FONT,
+            WHITE,
+            W // 2,
+            200,
+            True,
+        )
+        txt(
+            f"Prize Won: £{prize_won}",
+            TEXT_FONT,
+            GREEN if prize_won > 0 else RED,
+            W // 2,
+            240,
+            True,
+        )
+        txt("Ticket Cost: £10", TEXT_FONT, WHITE, W // 2, 280, True)
         txt(f"Pot: £{pot}", TEXT_FONT, YELLOW, W - 100, 80, True)
         n_buttons = nav(start_screen, selection_screen, lambda: [pygame.quit(), sys.exit()])
         for e in pygame.event.get():

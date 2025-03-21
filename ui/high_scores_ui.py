@@ -16,7 +16,11 @@ class HighScoresUI:
         self.font = pg.font.Font(None, 36)
         self.small_font = pg.font.Font(None, 24)
         self.high_scores = load_all_high_scores()
-        self.back_button = {"rect": pg.Rect(20, self.screen.get_height() - 70, 100, 40), "text": "Back", "hover": False}
+        self.back_button = {
+            "rect": pg.Rect(20, self.screen.get_height() - 70, 100, 40),
+            "text": "Back",
+            "hover": False,
+        }
 
     # -------------------------------------------------------------------------
     # Utilities
@@ -67,9 +71,13 @@ class HighScoresUI:
         # Variables
         top_player = self.high_scores[0]
         top_box = pg.Rect(50, 80, self.screen.get_width() - 100, 150)
-        top_name_text = self.font.render(f"Top Player: {top_player['player_name']}", True, (255, 255, 255))
+        top_name_text = self.font.render(
+            f"Top Player: {top_player['player_name']}", True, (255, 255, 255)
+        )
         right_side_x = top_box.right - 200  # Position from the right edge
-        top_score_text = self.font.render(f"Highest Score: ${top_player['high_scores']['cash']}", True, (128, 128, 128))
+        top_score_text = self.font.render(
+            f"Highest Score: ${top_player['high_scores']['cash']}", True, (128, 128, 128)
+        )
         current_balance_text = self.font.render(
             f"Current Balance: ${top_player['cash_balance']}", True, (255, 255, 255)
         )
@@ -95,8 +103,12 @@ class HighScoresUI:
             rank_text = self.font.render(f"{index}.", True, (255, 255, 255))
             name_text = self.font.render(player["player_name"], True, (255, 255, 255))
             right_side_x = box.right - 200  # Position from the right edge
-            score_text = self.font.render(f"Highest: ${player['high_scores']['cash']}", True, (128, 128, 128))
-            balance_text = self.font.render(f"Current: ${player['cash_balance']}", True, (255, 255, 255))
+            score_text = self.font.render(
+                f"Highest: ${player['high_scores']['cash']}", True, (128, 128, 128)
+            )
+            balance_text = self.font.render(
+                f"Current: ${player['cash_balance']}", True, (255, 255, 255)
+            )
 
             # Draw Rectangle
             pg.draw.rect(self.screen, (255, 255, 255), box, 1)
@@ -128,7 +140,9 @@ class HighScoresUI:
         # Detect when there are no high scores
         if not self.high_scores:
             no_scores_text = self.font.render("No scores available", True, (255, 255, 255))
-            self.screen.blit(no_scores_text, (self.screen.get_width() / 2 - no_scores_text.get_width() / 2, 100))
+            self.screen.blit(
+                no_scores_text, (self.screen.get_width() / 2 - no_scores_text.get_width() / 2, 100)
+            )
         else:
             self.draw_high_scores()
 

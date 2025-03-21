@@ -81,7 +81,10 @@ class GameBoard:
         with the background or the flippers. Returns True if no collision.
         """
         # First, check background collision using mask
-        return not (not self.ball_bg_collision(new_x, new_y, radius) or self.ball_fl_collision(new_x, new_y, radius))
+        return not (
+            not self.ball_bg_collision(new_x, new_y, radius)
+            or self.ball_fl_collision(new_x, new_y, radius)
+        )
 
     def key_input(self):
         """

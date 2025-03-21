@@ -9,7 +9,7 @@ import sys
 
 import pygame as pg
 
-import conf
+import lobby_conf as conf
 from logic.save_load import delete_player, load_player_data, save_player_data
 
 
@@ -22,15 +22,22 @@ class ExitUI:
     Sets up the screen, various UI components, including buttons,
     and methods to draw the Exit screen.
     """
-    def __init__(self, screen):
 
+    def __init__(self, screen):
         self.screen = screen
         self.font = pg.font.Font(None, 36)
         self.small_font = pg.font.Font(None, 24)
         self.delete_player = delete_player
         self.save_player = save_player_data
         self.load_player = load_player_data
-        self.back_button = {"rect": pg.Rect(20, self.screen.get_height() - 70, 100, 40), "text": "Back", "hover": False}
+        self.back_button = {
+            "rect": pg.Rect(20, self.screen.get_height() - 70, 100, 40),
+            "text": "Back",
+            "hover": False,
+        }
+        # For game_integration
+        # Required to be in the file, not linked to the conf
+        self.exit_delay = 10000
 
     # -------------------------------------------------------------------------
     # Functions / Methods
@@ -60,13 +67,23 @@ class ExitUI:
 
         # Current players data
         current_player = self.load_player(player_data["player_name"])
-        player_name_text = self.font.render(f"Player: {current_player['player_name']}", True, ("white"))
+        player_name_text = self.font.render(
+            f"Player: {current_player['player_name']}", True, ("white")
+        )
 
         # Text
         title_text = self.font.render("Your Account Details:", True, ("white"))
-        high_score_text = self.font.render(f"Highest Score: ${current_player['high_scores']['cash']}", True, ("white"))
-        cash_balance_text = self.font.render(f"Current Balance: ${current_player['cash_balance']}", True, ("white"))
-        goodbye_lines = ["Thank you for visiting the Casino!", "We hope to see you again soon!", "Goodbye!"]
+        high_score_text = self.font.render(
+            f"Highest Score: ${current_player['high_scores']['cash']}", True, ("white")
+        )
+        cash_balance_text = self.font.render(
+            f"Current Balance: ${current_player['cash_balance']}", True, ("white")
+        )
+        goodbye_lines = [
+            "Thank you for visiting the Casino!",
+            "We hope to see you again soon!",
+            "Goodbye!",
+        ]
         goodbye_texts = [self.font.render(line, True, ("white")) for line in goodbye_lines]
         help_text = self.small_font.render("Press the 'ANY' key to continue ;)", True, ("white"))
         credits_text = self.small_font.render("Project Credits:", True, ("white"))
@@ -106,7 +123,9 @@ class ExitUI:
         # ----------------------------------
         # Finally
         # Save the current player data
-        self.save_player(player_data["player_name"], player_data["cash_balance"], player_data["high_scores"])
+        self.save_player(
+            player_data["player_name"], player_data["cash_balance"], player_data["high_scores"]
+        )
 
     def print_exit_ui(self, screen, player_data):
         """
@@ -121,11 +140,13 @@ class ExitUI:
 
             self.draw_main_exit(screen, player_data)
             pg.display.flip()
-            pg.time.wait(conf.EXIT_DLY)
+            pg.time.wait(self.exit_delay)
             running = False
 
         # Save player data and exit
-        self.save_player(player_data["player_name"], player_data["cash_balance"], player_data["high_scores"])
+        self.save_player(
+            player_data["player_name"], player_data["cash_balance"], player_data["high_scores"]
+        )
         print("Player data saved. Exiting game.")
         running = False
         pg.quit()
@@ -138,7 +159,7 @@ class ExitUI:
         # Load and display loser page
         screen.blit(conf.LOSER_IMG, (0, 0))
         pg.display.flip()
-        pg.time.wait(conf.EXIT_DLY)  # Wait for configured time
+        pg.time.wait(self.exit_delay)  # Wait for configured time
 
         # Delete the current player from the json file
         self.delete_player(player_name)

@@ -87,7 +87,9 @@ def display_text(text, x, y, color, font_size=24):
 def suspense_delay():
     for i in range(3, 0, -1):
         screen.fill(GRAY)
-        display_text(f"Rolling in {i}...", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 50, BLACK, 48)
+        display_text(
+            f"Rolling in {i}...", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 50, BLACK, 48
+        )
         pygame.display.update()
         pygame.time.wait(1000)
 
@@ -105,7 +107,11 @@ def get_bet_amount(player_money):
     while True:
         screen.fill(GRAY)
         display_text(
-            f"Enter your bet (Max: £{player_money}):", SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 - 100, BLACK, 32
+            f"Enter your bet (Max: £{player_money}):",
+            SCREEN_WIDTH // 2 - 150,
+            SCREEN_HEIGHT // 2 - 100,
+            BLACK,
+            32,
         )
         pygame.draw.rect(screen, color, input_box, 2)
         bet_text = pygame.font.SysFont("Arial", 32).render(text, True, color)
@@ -136,7 +142,13 @@ def get_bet_amount(player_money):
                             pygame.time.wait(1000)
                             text = ""
                     except ValueError:
-                        display_text("Invalid input! Please enter a number.", 150, SCREEN_HEIGHT // 2 + 100, RED, 32)
+                        display_text(
+                            "Invalid input! Please enter a number.",
+                            150,
+                            SCREEN_HEIGHT // 2 + 100,
+                            RED,
+                            32,
+                        )
                         pygame.display.update()
                         pygame.time.wait(1000)
                         text = ""
@@ -160,7 +172,9 @@ def get_player_name():
 
     while True:
         screen.fill(GRAY)
-        display_text(" What is your name?", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 60, BLACK, 32)
+        display_text(
+            " What is your name?", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 60, BLACK, 32
+        )
         pygame.draw.rect(screen, color, input_box, 2)
         name_text = pygame.font.SysFont("Arial", 32).render(text, True, color)
         screen.blit(name_text, (input_box.x + 5, input_box.y + 5))
@@ -259,13 +273,19 @@ def game_loop(player_name):
 
 # Menu function
 def main_menu():
-    start_button = Button("Start Game", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 60, 200, 50, GRAY, GREEN)
-    quit_button = Button("Quit Game", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 20, 200, 50, GRAY, RED)
+    start_button = Button(
+        "Start Game", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 60, 200, 50, GRAY, GREEN
+    )
+    quit_button = Button(
+        "Quit Game", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 20, 200, 50, GRAY, RED
+    )
     clock = pygame.time.Clock()
 
     while True:
         screen.fill(BLACK)
-        display_text("3 Dice Teesside Casino", SCREEN_WIDTH // 2 - 250, SCREEN_HEIGHT // 2 - 200, WHITE, 48)
+        display_text(
+            "3 Dice Teesside Casino", SCREEN_WIDTH // 2 - 250, SCREEN_HEIGHT // 2 - 200, WHITE, 48
+        )
 
         start_button.draw(screen)
         quit_button.draw(screen)

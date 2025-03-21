@@ -1,0 +1,56 @@
+
+Got maze to load the current players balance.
+
+Does NOT load when lobby starts.
+    Is it updating the cash_balance?
+    Is it saving when it finishes?
+    Print everywhere
+
+# ------------------------------------------------------------
+
+    Current player, and final balance
+    Access when exiting game from fire_exit
+    Access when leaving maze
+    Save results to json
+
+    For single mode game start
+        Starting balance = try:
+                                save_load
+                           else:
+                                              1000
+
+
+# ------------------------------------------------------------
+
+maze
+
+blackjack
+
+dice
+
+lottery
+
+shell
+
+
+# ------------------------------------------------------------
+
+Unified player 
+    After load Screen
+        Player name
+            Create txt file (named) containing Money
+            Starting amount
+        Load Player?
+    Each game will read the player session?
+    Get everybody to create a variable for each game starting cash
+        Can then link this variable to the global cash amount???
+
+# ----------------------------------------------------------------------------------------
+
+add text to high scores screen for buttons
+
+add exit screen to the maze "thank you for comming. your balance is....."
+or
+if money reaches zero then bouncers kick you out
+
+-------------

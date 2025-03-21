@@ -63,7 +63,9 @@ def load_lobby_player_data():
 
 def save_and_exit(screen, player_data):
     """Save player data and return to lobby"""
-    save_player_data(player_data["player_name"], player_data["cash_balance"], player_data["high_scores"])
+    save_player_data(
+        player_data["player_name"], player_data["cash_balance"], player_data["high_scores"]
+    )
     return_to_lobby()
 
 

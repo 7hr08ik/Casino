@@ -9,7 +9,7 @@ import sys
 
 import pygame as pg
 
-import conf
+import lobby_conf as conf
 from logic.save_load import get_players_display_data, load_player_data, save_player_data
 from ui.high_scores_ui import HighScoresUI
 
@@ -80,7 +80,11 @@ class UIElements:
         # Save the player data in the db
         save_player_data(player_name, cash_balance, high_scores)
         # Set as current player
-        self.current_player = {"player_name": player_name, "cash_balance": cash_balance, "high_scores": high_scores}
+        self.current_player = {
+            "player_name": player_name,
+            "cash_balance": cash_balance,
+            "high_scores": high_scores,
+        }
         print(f"New player '{player_name}' created with ${cash_balance}")
 
     def mouse_hover(self, pos):
@@ -244,7 +248,9 @@ class UIElements:
                 if self.selected_player_index < self.player_list_scroll:
                     self.player_list_scroll = self.selected_player_index
             elif event.key == pg.K_DOWN:
-                self.selected_player_index = min(len(self.player_list) - 1, self.selected_player_index + 1)
+                self.selected_player_index = min(
+                    len(self.player_list) - 1, self.selected_player_index + 1
+                )
                 # Stop at the bottom
                 if self.selected_player_index >= self.player_list_scroll + self.max_list_size:
                     self.player_list_scroll = self.selected_player_index - self.max_list_size + 1
@@ -259,10 +265,15 @@ class UIElements:
             list_y = 100
             # Check if click is within player list area
             mouse_pos = pg.mouse.get_pos()
-            if list_x <= mouse_pos[0] <= list_x + list_width and list_y + 50 <= mouse_pos[1] <= list_y + list_height:
+            if (
+                list_x <= mouse_pos[0] <= list_x + list_width
+                and list_y + 50 <= mouse_pos[1] <= list_y + list_height
+            ):
                 # Calculate which player was clicked
                 entry_height = 40
-                player_clicked = (mouse_pos[1] - (list_y + 50)) // entry_height + self.player_list_scroll
+                player_clicked = (
+                    mouse_pos[1] - (list_y + 50)
+                ) // entry_height + self.player_list_scroll
 
                 if 0 <= player_clicked < len(self.player_list):
                     self.selected_player_index = player_clicked
@@ -334,7 +345,12 @@ class UIElements:
 
             # Draw column headers
             header_y = list_y + 10
-            pg.draw.line(self.screen, (200, 200, 200), (list_x, header_y + 30), (list_x + list_width, header_y + 30))
+            pg.draw.line(
+                self.screen,
+                (200, 200, 200),
+                (list_x, header_y + 30),
+                (list_x + list_width, header_y + 30),
+            )
             name_header = self.small_font.render("Player Name", True, (255, 255, 255))
             balance_header = self.small_font.render("Cash Balance", True, (255, 255, 255))
             date_header = self.small_font.render("Last Played", True, (255, 255, 255))
@@ -345,7 +361,8 @@ class UIElements:
             # Draw player entries
             entry_height = 40
             visible_range = range(
-                self.player_list_scroll, min(self.player_list_scroll + self.max_list_size, len(self.player_list))
+                self.player_list_scroll,
+                min(self.player_list_scroll + self.max_list_size, len(self.player_list)),
             )
             for i, idx in enumerate(visible_range):
                 player = self.player_list[idx]
@@ -357,7 +374,9 @@ class UIElements:
 
                 # Draw player info
                 name_text = self.small_font.render(player["name"], True, (255, 255, 255))
-                balance_text = self.small_font.render(f"${player['cash_balance']}", True, (255, 255, 255))
+                balance_text = self.small_font.render(
+                    f"${player['cash_balance']}", True, (255, 255, 255)
+                )
                 date_text = self.small_font.render(player["last_played"], True, (255, 255, 255))
                 self.screen.blit(name_text, (list_x + 20, entry_y + 10))
                 self.screen.blit(balance_text, (list_x + 250, entry_y + 10))
@@ -367,7 +386,9 @@ class UIElements:
             nav_text = self.small_font.render(
                 "Use arrow keys to navigate, Enter to select, Esc to cancel", True, (255, 255, 255)
             )
-            nav_rect = nav_text.get_rect(center=(self.screen.get_width() // 2, list_y + list_height + 30))
+            nav_rect = nav_text.get_rect(
+                center=(self.screen.get_width() // 2, list_y + list_height + 30)
+            )
             self.screen.blit(nav_text, nav_rect)
 
         # ----------------------------------
@@ -394,7 +415,10 @@ class UIElements:
         # Create input box for New player name
         if self.new_player_active:
             # Center the input box
-            self.new_player_rect.center = (self.screen.get_width() // 2, self.screen.get_height() // 2)
+            self.new_player_rect.center = (
+                self.screen.get_width() // 2,
+                self.screen.get_height() // 2,
+            )
 
             # Draw prompt text
             prompt_text = self.font.render(self.new_player_prompt, True, (255, 255, 255))
@@ -408,7 +432,9 @@ class UIElements:
 
             # Draw input text
             text_surface = self.font.render(self.input_text, True, (255, 255, 255))
-            self.screen.blit(text_surface, (self.new_player_rect.x + 10, self.new_player_rect.y + 10))
+            self.screen.blit(
+                text_surface, (self.new_player_rect.x + 10, self.new_player_rect.y + 10)
+            )
 
     def main_menu(self):
         """

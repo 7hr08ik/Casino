@@ -15,7 +15,7 @@ from pathlib import Path
 import pygame as pg
 
 # Local Imports
-import conf
+import lobby_conf as conf
 from logic.player import Player
 from logic.save_load import save_player_data
 from ui.exit_ui import ExitUI
@@ -141,7 +141,9 @@ def main():
         font = pg.font.Font(None, 24)
         small_font = pg.font.Font(None, 24)
         player_info = font.render(
-            f"Player: {player_data['player_name']} | Balance: ${player_data['cash_balance']}", True, (255, 255, 255)
+            f"Player: {player_data['player_name']} | Balance: ${player_data['cash_balance']}",
+            True,
+            (255, 255, 255),
         )
         instruct_text = small_font.render("WASD, or Arrows keys to move", True, (255, 255, 255))
         instruct_rect = instruct_text.get_rect(center=(screen.get_width() // 2, 650))
@@ -157,16 +159,38 @@ def main():
             (conf.e_pos, conf.e_size, leave_game),  # Exit Target
             # (conf.t_pos, conf.t_size, conf.GAME_PINBALL),  # Target 1 - Pinball
             (conf.t2_pos, conf.t2_size, conf.GAME_MAZE),  # Target 2 - Maze
-            (conf.t3_pos, conf.t3_size, conf.GAME_LOTTERY),  # Target 3 - Lottery
-            (conf.t4_pos, conf.t4_size, conf.GAME_BLACKJACK),  # Target 4 - Blackjack
+            (
+                conf.t3_pos,
+                conf.t3_size,
+                conf.GAME_LOTTERY,
+            ),  # Target 3 - Lottery
+            (
+                conf.t4_pos,
+                conf.t4_size,
+                conf.GAME_BLACKJACK,
+            ),  # Target 4 - Blackjack
             (conf.t5_pos, conf.t5_size, conf.GAME_DICE),  # Target 5 - Dice game
-            (conf.t6_pos, conf.t6_size, conf.GAME_ROULETTE),  # Target 6 - Roulette
-            (conf.t7_pos, conf.t7_size, conf.GAME_SHELL),  # Target 7 - Shell Game
+            (
+                conf.t6_pos,
+                conf.t6_size,
+                conf.GAME_ROULETTE,
+            ),  # Target 6 - Roulette
+            (
+                conf.t7_pos,
+                conf.t7_size,
+                conf.GAME_SHELL,
+            ),  # Target 7 - Shell Game
         ]
 
         for pos, size, command in targets:
             draw_target(screen, conf.t_color, pos, size)
-            activate_target(screen, player_data, player.rect, pg.Rect(*pos, size, size), command)
+            activate_target(
+                screen,
+                player_data,
+                player.rect,
+                pg.Rect(*pos, size, size),
+                command,
+            )
 
         # Update the display
         pg.display.flip()
@@ -174,7 +198,11 @@ def main():
         dt = clock.tick(60) / 1000  # Delta Time - subFPS for the animations
 
     # Save player data before exiting
-    save_player_data(player_data["player_name"], player_data["cash_balance"], player_data["high_scores"])
+    save_player_data(
+        player_data["player_name"],
+        player_data["cash_balance"],
+        player_data["high_scores"],
+    )
     pg.quit()
     sys.exit()
 

@@ -50,12 +50,7 @@ def return_to_lobby():
     sys.exit()
 
 
-# -------------------------------------------------------------------------
-# Functions
-#
-
-
-def load_lobby_player_data():
+def load_player_data():
     """Load player data from lobby's temporary storage"""
     try:
         with open(TEMP_FILE) as f:
@@ -65,9 +60,16 @@ def load_lobby_player_data():
         return_to_lobby()
 
 
+# -------------------------------------------------------------------------
+# Functions
+#
+
+
 def save_and_exit(screen, player_data):
     """Save player data and return to lobby"""
-    save_player_data(player_data["player_name"], player_data["cash_balance"], player_data["high_scores"])
+    save_player_data(
+        player_data["player_name"], player_data["cash_balance"], player_data["high_scores"]
+    )
     return_to_lobby()
 
 
@@ -76,3 +78,21 @@ def check_balance(screen, player_data):
     if player_data["cash_balance"] < 1:
         exit_ui = ExitUI(screen)
         exit_ui.draw_exit_loser(screen, player_data["player_name"])
+
+
+def maze_exit(screen, player_data):
+    """
+    When exiting the maze:
+    1. Save player data to both files
+    2. Show exit UI
+    """
+    player_data = load_player_data()
+
+    # Save to main database
+    save_player_data(
+        player_data["player_name"], player_data["cash_balance"], player_data["high_scores"]
+    )
+
+    # Show exit UI
+    exit_ui = ExitUI(screen)
+    exit_ui.print_exit_ui(screen, player_data)

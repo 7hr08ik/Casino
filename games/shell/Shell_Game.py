@@ -77,7 +77,14 @@ def draw_game(show_ball=False, message=None, victory=False):
     pygame.draw.rect(screen, (200, 0, 0), quit_button, border_radius=10)
     pygame.draw.rect(screen, (0, 200, 0), play_again_button, border_radius=10)
     draw_text("Quit", font, (255, 255, 255), screen, quit_button.centerx, quit_button.centery)
-    draw_text("Play Again", font, (255, 255, 255), screen, play_again_button.centerx, play_again_button.centery)
+    draw_text(
+        "Play Again",
+        font,
+        (255, 255, 255),
+        screen,
+        play_again_button.centerx,
+        play_again_button.centery,
+    )
 
     if message:
         draw_text(message, message_font, (255, 215, 0), screen, WIDTH // 2, HEIGHT // 2 - 100)
@@ -87,8 +94,22 @@ def draw_game(show_ball=False, message=None, victory=False):
 
     pygame.draw.rect(screen, (0, 200, 200), increase_bet_button, border_radius=5)
     pygame.draw.rect(screen, (200, 100, 0), decrease_bet_button, border_radius=5)
-    draw_text("+£10", font, (255, 255, 255), screen, increase_bet_button.centerx, increase_bet_button.centery)
-    draw_text("-£10", font, (255, 255, 255), screen, decrease_bet_button.centerx, decrease_bet_button.centery)
+    draw_text(
+        "+£10",
+        font,
+        (255, 255, 255),
+        screen,
+        increase_bet_button.centerx,
+        increase_bet_button.centery,
+    )
+    draw_text(
+        "-£10",
+        font,
+        (255, 255, 255),
+        screen,
+        decrease_bet_button.centerx,
+        decrease_bet_button.centery,
+    )
 
     pygame.display.update()
 

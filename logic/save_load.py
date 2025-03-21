@@ -94,7 +94,8 @@ def save_player_data(player_name, cash_balance, high_scores=None):
     # Keep only top 20 players
     if len(all_players) > 20:
         sorted_players = sorted(
-            all_players.items(), key=lambda x: datetime.datetime.strptime(x[1]["last_played"], "%Y-%m-%d %H:%M:%S")
+            all_players.items(),
+            key=lambda x: datetime.datetime.strptime(x[1]["last_played"], "%Y-%m-%d %H:%M:%S"),
         )
         del all_players[sorted_players[0][0]]
 

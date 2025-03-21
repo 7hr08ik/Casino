@@ -27,7 +27,7 @@ l_flipper = pg.image.load("pinball/res/left_flipper.png")
 r_flipper = pg.image.load("pinball/res/right_flipper.png")
 
 # Time settings
-MAX_DT = 1/60  # Prevent spiral of death on slow frames
+MAX_DT = 1 / 60  # Prevent spiral of death on slow frames
 
 # ----------------------------------
 # Environment Settings
