@@ -4,19 +4,12 @@
 #
 # Author: Rob Hickling
 # 19/03/2025
-#
-# Modified by: Rob Hickling
-# 21/03/2025
-# Added functionality for saving and loading player data
-# required for integration into the lobby
-# all commented with;
-#    # For game_integration
 # ===========================
 
 import json
 import os
 import sys
-from pathlib import Path
+import tempfile
 
 import pygame as pg
 
@@ -28,7 +21,7 @@ sys.path.append(casino_root)
 from logic.save_load import save_player_data
 from ui.exit_ui import ExitUI
 
-TEMP_FILE = Path("/tmp/current_player.json")  # Platform-agnostic temp file?
+TEMP_FILE = os.path.join(tempfile.gettempdir(), "current_player.json")
 
 """
 All code additions commented with;
@@ -74,9 +67,7 @@ def load_player_data():
 
 def save_and_exit(screen, player_data):
     """Save player data and return to lobby"""
-    save_player_data(
-        player_data["player_name"], player_data["cash_balance"], player_data["high_scores"]
-    )
+    save_player_data(player_data["player_name"], player_data["cash_balance"], player_data["high_scores"])
     return_to_lobby()
 
 
@@ -96,9 +87,7 @@ def maze_exit(screen, player_data):
     player_data = load_player_data()
 
     # Save to main database
-    save_player_data(
-        player_data["player_name"], player_data["cash_balance"], player_data["high_scores"]
-    )
+    save_player_data(player_data["player_name"], player_data["cash_balance"], player_data["high_scores"])
 
     # Show exit UI
     exit_ui = ExitUI(screen)

@@ -8,9 +8,10 @@
 #
 # Main Imports
 import json
+import os
 import subprocess
 import sys
-from pathlib import Path
+import tempfile
 
 import pygame as pg
 
@@ -26,7 +27,7 @@ from ui.ui import UIElements
 leave_game = True
 
 # For game_integration
-TEMP_FILE = Path("/tmp/current_player.json")  # Platform-agnostic temp file?
+TEMP_FILE = os.path.join(tempfile.gettempdir(), "current_player.json")
 
 
 # -------------------------------------------------------------------------
