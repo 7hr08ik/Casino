@@ -23,11 +23,13 @@ class UIElements:
 
     NOTE:
     I acknowledge that i did use an AI coding assitant to help me.
-    I asked the AI to build the basic framework for me, with a New player
-    button and a Load player button.
-    Using the basic framework, i then added the rest of the UI elements,
-    expanded on the code and made it my own. I then used this code as a
-    basis for the other 2 UI files
+    I tried finding a guide online, but i couldnt find one that would work
+    for what I was trying to make.
+    I asked the AI coding assitant to build the basic framework for me,
+    with a New player button and a Load player button, and an Exit button.
+    Using this as a  framework, I then added the rest of the UI elements,
+    expanded on the code and made it my own. The 2 other UI files, grew from this
+    into their own seperate classes.
     """
 
     def __init__(self, screen):
