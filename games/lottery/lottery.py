@@ -1,8 +1,25 @@
+# ===========================
+# BlackJack
+#
+# Author: Viorica Anghel
+# 07/02/2025
+#
+# Modified by: Rob Hickling
+# 21/03/2025
+# Added functionality for saving and loading player data
+# required for integration into the lobby
+# all commented with;
+#    # For game_integration
+# ===========================
+
 import os
 import random
 import sys
 
 import pygame
+
+# For game_integration
+from game_integration import check_balance, load_player_data, save_and_exit
 
 pygame.init()
 
@@ -48,7 +65,11 @@ msg, msg_t = "", 0
 editing_index = None
 
 # Game pot and prize won values
-pot = 500
+# pot = 500 # Original
+# For game_integration
+player_data = load_player_data()
+pot = player_data["cash_balance"]
+
 prize_won = 0
 
 
@@ -58,8 +79,8 @@ prize_won = 0
 def load_history():
     """Load the last 5 draws from the history file into the history list."""
     global history
-    if os.path.exists("history.txt"):
-        with open("history.txt") as f:
+    if os.path.exists("games/lottery/logs/history.txt"):
+        with open("games/lottery/logs/history.txt") as f:
             history = f.read().splitlines()[-5:]
     else:
         history = []
@@ -67,7 +88,7 @@ def load_history():
 
 def save_history(draw):
     """Append a new draw to the history file and reload the history list."""
-    with open("history.txt", "a") as f:
+    with open("games/lottery/logs/history.txt", "a") as f:
         f.write(draw + "\n")
     load_history()
 
@@ -219,14 +240,19 @@ def start_screen():
         {
             "l": "Lucky Dip",
             "r": pygame.Rect(20, 320, 200, 50),
-            "a": lambda: [reset(), lucky_dip(), run_lottery()],
+            "a": lambda: [reset(), lucky_dip(), run_lottery(SCREEN)],
         },
         {"l": "Favourites", "r": pygame.Rect(20, 390, 200, 50), "a": play_fav},
         {"l": "Rules", "r": pygame.Rect(20, 460, 200, 50), "a": rules_screen},
         {
             "l": "Exit",
             "r": pygame.Rect(20, 530, 200, 50),
-            "a": lambda: [pygame.quit(), sys.exit()],
+            "a": lambda: [
+                # For game_integration
+                save_and_exit(SCREEN, player_data),
+                pygame.quit(),
+                sys.exit(),
+            ],
             "c": RED,
         },
     ]
@@ -245,6 +271,8 @@ def start_screen():
             txt(b["l"], TEXT_FONT, WHITE, b["r"].centerx, b["r"].centery, True)
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
+                # For game_integration
+                save_and_exit(SCREEN, player_data)
                 pygame.quit()
                 sys.exit()
             if e.type == pygame.MOUSEBUTTONDOWN and e.button == 1:
@@ -253,6 +281,12 @@ def start_screen():
                     if b["r"].collidepoint(m):
                         b["a"]()
                         return
+
+        # For game_integration
+        player_data = load_player_data()  # Load it
+        player_data["cash_balance"] = pot  # Override it
+        check_balance(SCREEN, player_data)  # Save it? I hope...
+
         pygame.display.update()
 
 
@@ -295,7 +329,16 @@ def selection_screen():
             txt(msg, TEXT_FONT, ORANGE, W // 2, H - 100, True)
             msg_t -= 1
         # Navigation buttons at the bottom
-        n_buttons = nav(start_screen, selection_screen, lambda: [pygame.quit(), sys.exit()])
+        n_buttons = nav(
+            start_screen,
+            selection_screen,
+            lambda: [
+                # For game_integration
+                save_and_exit(SCREEN, player_data),
+                pygame.quit(),
+                sys.exit(),
+            ],
+        )
         for e in pygame.event.get():
             if e.type == pygame.MOUSEBUTTONDOWN and e.button == 1:
                 m = pygame.mouse.get_pos()
@@ -316,7 +359,7 @@ def selection_screen():
                             break
                 # If Draw button is clicked, run the lottery draw
                 if draw_button_rect and draw_button_rect.collidepoint(m):
-                    run_lottery()
+                    run_lottery(SCREEN)
                     return
         pygame.display.update()
 
@@ -347,9 +390,20 @@ def play_favs_screen():
             pygame.draw.rect(SCREEN, RED, delete_rect, border_radius=8)
             pygame.draw.rect(SCREEN, BLACK, delete_rect, 2, border_radius=8)
             txt("Delete", TEXT_FONT, BLACK, delete_rect.centerx, delete_rect.centery, True)
-        n_buttons = nav(start_screen, selection_screen, lambda: [pygame.quit(), sys.exit()])
+        n_buttons = nav(
+            start_screen,
+            selection_screen,
+            lambda: [
+                # For game_integration
+                save_and_exit(SCREEN, player_data),
+                pygame.quit(),
+                sys.exit(),
+            ],
+        )
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
+                # For game_integration
+                save_and_exit(SCREEN, player_data)
                 pygame.quit()
                 sys.exit()
             if e.type == pygame.MOUSEBUTTONDOWN and e.button == 1:
@@ -454,9 +508,20 @@ def rules_screen():
             else:
                 current_y += line_spacing
             current_y += 5
-        n_buttons = nav(start_screen, selection_screen, lambda: [pygame.quit(), sys.exit()])
+        n_buttons = nav(
+            start_screen,
+            selection_screen,
+            lambda: [
+                # For game_integration
+                save_and_exit(SCREEN, player_data),
+                pygame.quit(),
+                sys.exit(),
+            ],
+        )
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
+                # For game_integration
+                save_and_exit(SCREEN, player_data)
                 pygame.quit()
                 sys.exit()
             if e.type == pygame.MOUSEBUTTONDOWN and e.button == 1:
@@ -468,25 +533,32 @@ def rules_screen():
         pygame.display.update()
 
 
-def run_lottery():
+def run_lottery(screen):
     """
     Execute a lottery draw:
     Deduct ticket cost, randomly draw numbers, compare with user-selected numbers,
     add any prize to the pot, and then show the results screen.
     """
     global d_nums, matches, pot, prize_won, msg, msg_t
+    # For game_integration
+    player_data = load_player_data()  # Load data
+    check_balance(SCREEN, player_data)  # check for no money
+
     ticket_cost = 10
     if pot < ticket_cost:
         msg, msg_t = "Not enough money!", 120
         selection_screen()
         return
     pot -= ticket_cost
+    player_data["cash_balance"] -= ticket_cost  # For game_integration
     d_nums = sorted(random.sample(range(1, 60), N))
     matches = list(set(u_nums) & set(d_nums))
     save_history(", ".join(map(str, d_nums)))
     prize_dict = {2: 50, 3: 500, 5: 10000, 6: 10000000}
     prize_won = prize_dict.get(len(matches), 0)
     pot += prize_won
+    player_data["cash_balance"] += prize_won  # For game_integration
+
     game_screen()
 
 
@@ -496,6 +568,10 @@ def game_screen():
     the prize won, the ticket cost, and the updated pot.
     """
     global prize_won, pot
+
+    # For game_integration
+    check_balance(SCREEN, player_data)  # check for no money
+
     while True:
         CLOCK.tick(60)
         bg(image=False)
@@ -527,9 +603,20 @@ def game_screen():
         )
         txt("Ticket Cost: £10", TEXT_FONT, WHITE, W // 2, 280, True)
         txt(f"Pot: £{pot}", TEXT_FONT, YELLOW, W - 100, 80, True)
-        n_buttons = nav(start_screen, selection_screen, lambda: [pygame.quit(), sys.exit()])
+        n_buttons = nav(
+            start_screen,
+            selection_screen,
+            lambda: [
+                # For game_integration
+                save_and_exit(SCREEN, player_data),
+                pygame.quit(),
+                sys.exit(),
+            ],
+        )
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
+                # For game_integration
+                save_and_exit(SCREEN, player_data)
                 pygame.quit()
                 sys.exit()
             if e.type == pygame.MOUSEBUTTONDOWN and e.button == 1:
