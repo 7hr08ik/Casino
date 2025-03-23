@@ -2,9 +2,13 @@ Teesside Casino - Game Suite
 ============================
 
 Authors: R Hickling,
+
          P Leanca,
+
          S Sofronov,
+
          J Young,
+
          V Anghel
 
 Product Description
@@ -23,7 +27,9 @@ Development Environment
 -----------------------
 
 Operating System : Manjaro Linux 
+
 Python Version : 3.12.3
+
 IDE : Visual Studio Code
         Plugins
             Codeium. Coding Autocomplete assistant.
@@ -33,8 +39,9 @@ IDE : Visual Studio Code
 Requirements
 ------------
 
-Python => 3.6
-Pygame => 2.6.1
+Python >= 3.6
+
+Pygame >= 2.6.1
 
 
 Install Instructions
