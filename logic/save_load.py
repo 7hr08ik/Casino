@@ -75,7 +75,8 @@ def save_player_data(player_name, cash_balance, high_scores=None):
 
     # Initialize some things with defaults
     high_scores = high_scores or {"cash": 0}
-    cash_balance = cash_balance or 0
+    # Convert cash balance to integer if it's a string
+    cash_balance = int(cash_balance) if cash_balance else 0
 
     # Variables
     all_players = load_all_players()
@@ -88,7 +89,9 @@ def save_player_data(player_name, cash_balance, high_scores=None):
     }
 
     # Update high score if current balance is higher
-    if cash_balance > high_scores["cash"]:
+    # Ensure we're comparing integers
+    high_scores_cash = int(high_scores["cash"])
+    if cash_balance > high_scores_cash:
         high_scores["cash"] = cash_balance
 
     # Keep only top 20 players

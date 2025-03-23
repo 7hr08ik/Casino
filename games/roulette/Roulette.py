@@ -1,7 +1,24 @@
+# ===========================
+# Roulette
+#
+# Author: James Young
+# 07/02/2025
+#
+# Modified by: Rob Hickling
+# 23/03/2025
+# Added functionality for saving and loading player data
+# required for integration into the lobby
+# all commented with;
+#    # For game_integration
+# ===========================
+
 import os
 import random
 
 import pygame
+
+# For game_integration
+from game_integration import check_balance, load_player_data, save_and_exit
 
 # Constants
 pygame.init()
@@ -54,7 +71,13 @@ rotations = [
 
 # variables
 var_Running = True
-var_Money = 50
+
+# For game_integration
+# var_Money = 50 # Original
+# Replace original cash variable:
+player_data = load_player_data()  # Load the data
+var_Money = player_data["cash_balance"]
+
 var_BetType = ""
 var_BetEquals = ""
 var_BetValue = 0
@@ -97,6 +120,10 @@ leave_table_button = pygame.Rect(1070, 670, 200, 40)
 
 def betting():
     global var_Money, var_Bet, active_2
+
+    # For game_integration
+    player_data = load_player_data()  # Load the data
+
     active_2 = False
     if var_Bet.lower() == "half":
         try:
@@ -104,6 +131,7 @@ def betting():
         except:
             # allows for the bet to be rounded up
             var_Money += 1
+            player_data["cash_balance"] += 1  # For game_integration
             var_Bet = var_Money / 2
         var_Money = int(var_Money) - int(var_Bet)
     elif var_Bet.lower() == "all in":
@@ -139,18 +167,30 @@ def randomiser():
 
 def wincheck():
     global var_Bet, var_Money, var_BetType, var_BetEquals, var_Ball, var_BallColour, var_BallQuarter
+
+    # For game_integration
+    player_data = load_player_data()  # Load the data
+
     if var_BetType.lower() == "number":
         if var_BetEquals == var_Ball:
             var_Money = int(var_Money) + (int(var_Bet) * 28)
+            # For game_integration
+            player_data["cash_balance"] = int(var_Money) + (int(var_Bet) * 28)
     elif var_BetType.lower() == "colour":
         if var_BetEquals == var_BallColour:
             if var_BallColour == "Green" and var_BetEquals == "Green":
                 var_Money = int(var_Money) + (int(var_Bet) * 50)
+                # For game_integration
+                player_data["cash_balance"] = int(var_Money) + (int(var_Bet) * 50)
             else:
                 var_Money = int(var_Money) + (int(var_Bet) * 2)
+                # For game_integration
+                player_data["cash_balance"] = int(var_Money) + (int(var_Bet) * 2)
     elif var_BetType.lower() == "third":
         if var_BallQuarter == var_BetEquals:
             var_Money = int(var_Money) + (int(var_Bet) * 12)
+            # For game_integration
+            player_data["cash_balance"] = int(var_Money) + (int(var_Bet) * 12)
     var_BetEquals = ""
     var_Bet = ""
     return ()
@@ -160,10 +200,16 @@ def wincheck():
 def LeaveTable():
     global var_Leave, var_Running, var_Money
     var_Money = str(var_Money)
-    file = open("Payout.txt", "w")
+    file = open("games/roulette/Payout.txt", "w")
     file.write("You Made: ")
     file.write(var_Money)
     file.close()
+
+    # For game_integration
+    player_data = load_player_data()  # Load the data
+    player_data["cash_balance"] = var_Money
+    save_and_exit(Window, player_data)
+
     var_Running = False
     pygame.display.quit()
     pygame.quit()
@@ -224,6 +270,12 @@ def drawLeaveTable():
 # Main Game Loop
 while var_Running == True:
     drawWindow()
+
+    # For game_integration
+    player_data = load_player_data()  # Load the data
+    player_data["cash_balance"] = var_Money
+    check_balance(Window, player_data)  # check for no money
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             var_Running = False
