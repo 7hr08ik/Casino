@@ -22,41 +22,39 @@ The lobby is modular in the mini games available. In the 'integration_module' fo
 Development Environment
 -----------------------
 
-Operating System : Manjaro Linux 
+    Operating System : Manjaro Linux 
 
-Python Version : 3.12.3
+    Python Version : 3.12.3
 
-IDE : Visual Studio Code
-
-    Plugins
-        Codeium. Coding Autocomplete assistant.
-        Ruff Extension. Formatting and error highlighting.
+    IDE : Visual Studio Code
+        Plugins
+            Codeium. Coding Autocomplete assistant.
+            Ruff Extension. Formatting and error highlighting.
 
 
 Requirements
 ------------
 
-Python >= 3.6
-
-Pygame >= 2.6.1
+    Python >= 3.6
+    Pygame >= 2.6.1
 
 
 Install Instructions
 --------------------
 
-PyGame: in a terminal run 'pip install pygame'
+    PyGame: in a terminal run 'pip install pygame'
 
-Download the project. Unpack/place the folder 'Casino' in the required location.
-Run Casino/main.py
+    Download the project. Unpack/place the folder 'Casino' in the required location.
+    Run Casino/main.py
 
 Usage Instructions
 ------------------
 
-Windows
+Windows:
 
     Run the 'Casino/main.py'
 
-Linux
+Linux:
 
     CD inside the /Casino directory
     
@@ -100,7 +98,7 @@ Json save Files
 Noted Bugs and missing features
 -------------------------------
 
-For the lobby i would like to have the main lobby stay open in the background, and reload the players data when the window becomes active. Currently the only feature implemented is, the ability for each game to return to the lobby, but this simplly closes the game, then runs the main.py again.
+    For the lobby i would like to have the main lobby stay open in the background, and reload the players data when the window becomes active. Currently the only feature implemented is, the ability for each game to return to the lobby, but this simplly closes the game, then runs the main.py again.
 
-Audio would have been nice to get in, but due to deadline constraints it was not done.
+    Audio would have been nice to get in, but due to deadline constraints it was not done.
 
