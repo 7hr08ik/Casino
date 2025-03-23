@@ -1,14 +1,10 @@
 Teesside Casino - Game Suite
 ============================
 
-Authors: R Hickling,
-
-         P Leanca,
-
-         S Sofronov,
-
-         J Young,
-
+Authors: R Hickling, 
+         P Leanca, 
+         S Sofronov, 
+         J Young, 
          V Anghel
 
 Product Description
@@ -31,9 +27,10 @@ Operating System : Manjaro Linux
 Python Version : 3.12.3
 
 IDE : Visual Studio Code
-        Plugins
-            Codeium. Coding Autocomplete assistant.
-            Ruff Extension. Formatting and error highlighting.
+
+    Plugins
+        Codeium. Coding Autocomplete assistant.
+        Ruff Extension. Formatting and error highlighting.
 
 
 Requirements
@@ -51,7 +48,6 @@ PyGame: in a terminal run 'pip install pygame'
 
 Download the project. Unpack/place the folder 'Casino' in the required location.
 Run Casino/main.py
-
 
 Usage Instructions
 ------------------
@@ -81,7 +77,7 @@ Guide found through simple Google search
 Guide used to get initial animation settings
     https://stackoverflow.com/questions/49352990/how-do-i-get-my-images-to-work-as-an-animation-in-pygame
 
-Background image generated with online AI.
+Background image generated with free online AI image generator.
 
 Image Files
     https://aske4.itch.io/antihero-character
