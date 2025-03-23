@@ -37,7 +37,8 @@ Game Loop:
 ```py
 def main():
 
-    # Replace original cash variable with:
+    # For game_integration
+    # Replace original cash variable:
     current_cash = player_data["cash_balance"]
     
     # Add this to your game loop:

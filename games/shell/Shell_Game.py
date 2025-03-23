@@ -10,6 +10,14 @@ import time
 
 import pygame
 
+
+# For game_integration
+from game_integration import (
+    load_player_data,
+    save_and_exit,
+    check_balance
+)
+
 # Initialize Pygame
 pygame.init()
 
@@ -47,7 +55,12 @@ quit_button = pygame.Rect(500, 500, BUTTON_WIDTH, BUTTON_HEIGHT)
 play_again_button = pygame.Rect(700, 500, BUTTON_WIDTH, BUTTON_HEIGHT)
 
 # Betting System
-cash_credit = 100  # Starting credit
+# For game_integration
+# Replace original cash variable:
+player_data = load_player_data() # Load the data
+# cash_credit = 100  # Starting credit # Original
+cash_credit = player_data["cash_balance"]
+
 bet = 10  # Minimum bet
 increase_bet_button = pygame.Rect(1050, 500, 80, 50)
 decrease_bet_button = pygame.Rect(1150, 500, 80, 50)
@@ -126,6 +139,7 @@ def adjust_bet(amount):
     global bet  # noqa: PLW0603
     if 10 <= bet + amount <= cash_credit:
         bet += amount
+        player_data["cash_balance"] += amount
 
 
 while running:
@@ -133,10 +147,14 @@ while running:
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
+            # For game_integration
+            save_and_exit(screen, player_data)
             running = False
         elif event.type == pygame.MOUSEBUTTONDOWN:
             x, y = event.pos
             if quit_button.collidepoint((x, y)):
+                # For game_integration
+                save_and_exit(screen, player_data)
                 running = False
             elif play_again_button.collidepoint((x, y)):
                 ball_position = random.choice([0, 1, 2])
@@ -154,10 +172,12 @@ while running:
                         selected_shell = i
                         if selected_shell == ball_position:
                             cash_credit += bet
+                            player_data["cash_balance"] += bet
                             result_message = "You Won!"
                             victory_animation = True
                         else:
                             cash_credit -= bet
+                            player_data["cash_balance"] -= bet
                             result_message = "You Lost!"
                             victory_animation = False
                         result_timer = pygame.time.get_ticks()
@@ -169,6 +189,7 @@ while running:
         result_timer = None
         victory_animation = False
         ball_position = random.choice([0, 1, 2])
-    if cash_credit <= 0:
-        break  # TODO: Put code in here for finishing the game
+    if cash_credit < 1:
+        # For game_integration
+        check_balance(screen, player_data) # check for no money
 pygame.quit()
