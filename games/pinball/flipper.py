@@ -1,6 +1,5 @@
-import pygame as pg
-
 import conf
+import pygame as pg
 
 
 class Flipper:
@@ -33,15 +32,6 @@ class Flipper:
     def rotate(self, surface, angle, pivot, offset):
         """
         Rotate the surface around the pivot point.
-
-        Args:
-            surface (pygame.Surface): The surface that is to be rotated.
-            angle (float): The rotation angle in degrees.
-            pivot (tuple, list, or pygame.math.Vector2): The pivot point in world space.
-            offset (pygame.math.Vector2): The pivot point within the surface (local coordinates).
-        Returns:
-            A tuple of (rotated_image, new_rect) where new_rect is adjusted so that
-            the rotation occurs around the pivot point.
         """
         # Get the rect of the original surface
         original_rect = surface.get_rect()

@@ -21,10 +21,10 @@ clock = pg.time.Clock()
 game_lobby = [sys.executable, os.path.abspath("main.py")]
 
 # Images
-bg = pg.image.load("pinball/res/blank_background.png")
-ball = pg.image.load("pinball/res/ball.png")
-l_flipper = pg.image.load("pinball/res/left_flipper.png")
-r_flipper = pg.image.load("pinball/res/right_flipper.png")
+bg = pg.image.load("games/pinball/res/blank_background.png")
+ball = pg.image.load("games/pinball/res/ball.png")
+l_flipper = pg.image.load("games/pinball/res/left_flipper.png")
+r_flipper = pg.image.load("games/pinball/res/right_flipper.png")
 
 # Time settings
 MAX_DT = 1 / 60  # Prevent spiral of death on slow frames

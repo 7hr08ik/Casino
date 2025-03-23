@@ -5,11 +5,13 @@
 # ===========================
 
 # Imports
+import conf
 import pygame as pg
 from ball import PlayerBall
 from flipper import Flipper
 
-import conf
+# For game_integration
+from game_integration import save_and_exit
 
 
 class GameBoard:
@@ -24,16 +26,6 @@ class GameBoard:
         self.ball = PlayerBall(conf.b_size, conf.pos)
 
         self.keys = None
-        self.key_list = (
-            pg.K_UP,
-            pg.K_w,
-            pg.K_DOWN,
-            pg.K_s,
-            pg.K_LEFT,
-            pg.K_a,
-            pg.K_RIGHT,
-            pg.K_d,
-        )
 
     def ball_fl_mask_overlap(self, flipper, new_x, new_y, radius, ball_mask):
         """
@@ -86,7 +78,7 @@ class GameBoard:
             or self.ball_fl_collision(new_x, new_y, radius)
         )
 
-    def key_input(self):
+    def key_input(self, screen, player_data):
         """
         Updates the angle of the flippers.
         Only need to set the target angle for the Flipper class to handle the rest.
@@ -106,6 +98,10 @@ class GameBoard:
         elif self.keys[pg.K_DOWN] or self.keys[pg.K_s] or self.keys[pg.K_SPACE]:
             # TODO: Handle ball launch here
             pass
+        elif self.keys[pg.K_ESCAPE] or self.keys[pg.K_q]:
+            # For game_integration
+            save_and_exit(screen, player_data)
+            pg.quit()
         else:
             # Revert to resting positions
             self.left_flipper.target_angle = conf.start_angle

@@ -6,11 +6,13 @@
 # # ===========================
 # #
 # # Imports
+import conf
 import pygame as pg
 from ball import PlayerBall
 from board import GameBoard
 
-import conf
+# For game_integration
+from game_integration import check_balance, load_player_data, save_and_exit
 
 
 def main():
@@ -23,6 +25,8 @@ def main():
     # Variables
     board = GameBoard()
     ball = PlayerBall(conf.b_size, conf.pos)
+    # For game_integration
+    player_data = load_player_data()  # Load the data
 
     # ----------------------------------
     # Main game loop
@@ -30,12 +34,15 @@ def main():
     while running:
         for event in pg.event.get():
             if event.type == pg.QUIT:
+                # For game_integration
+                save_and_exit(screen, player_data)
                 running = False
 
         # Input handling. Update flippers
-        board.key_input()
+        board.key_input(screen, player_data)
 
         # Update the board.
+        check_balance(screen, player_data)  # check for no money
         board.update_board()
 
         # Set screen fill

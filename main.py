@@ -162,30 +162,22 @@ def main():
         #
         # Draw exit and targets
         targets = [
-            (conf.e_pos, conf.e_size, leave_game),  # Exit Target
-            # (conf.t_pos, conf.t_size, conf.GAME_PINBALL),  # Target 1 - Pinball
-            (conf.t2_pos, conf.t2_size, conf.GAME_MAZE),  # Target 2 - Maze
-            (
-                conf.t3_pos,
-                conf.t3_size,
-                conf.GAME_LOTTERY,
-            ),  # Target 3 - Lottery
-            (
-                conf.t4_pos,
-                conf.t4_size,
-                conf.GAME_BLACKJACK,
-            ),  # Target 4 - Blackjack
-            (conf.t5_pos, conf.t5_size, conf.GAME_DICE),  # Target 5 - Dice game
-            (
-                conf.t6_pos,
-                conf.t6_size,
-                conf.GAME_ROULETTE,
-            ),  # Target 6 - Roulette
-            (
-                conf.t7_pos,
-                conf.t7_size,
-                conf.GAME_SHELL,
-            ),  # Target 7 - Shell Game
+            # Exit Target
+            (conf.e_pos, conf.e_size, leave_game),
+            # Target 1 - Pinball
+            (conf.t_pos, conf.t_size, conf.GAME_PINBALL),
+            # Target 2 - Maze
+            (conf.t2_pos, conf.t2_size, conf.GAME_MAZE),
+            # Target 3 - Lottery
+            (conf.t3_pos, conf.t3_size, conf.GAME_LOTTERY),
+            # Target 4 - Blackjack
+            (conf.t4_pos, conf.t4_size, conf.GAME_BLACKJACK),
+            # Target 5 - Dice game
+            (conf.t5_pos, conf.t5_size, conf.GAME_DICE),
+            # Target 6 - Roulette
+            (conf.t6_pos, conf.t6_size, conf.GAME_ROULETTE),
+            # Target 7 - Shell Game
+            (conf.t7_pos, conf.t7_size, conf.GAME_SHELL),
         ]
 
         for pos, size, command in targets:
