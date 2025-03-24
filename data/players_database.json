@@ -24,19 +24,11 @@
         "last_played": "2025-03-21 20:20:30"
     },
     "Graphic Design Passion": {
-        "player_name": "Corporal Punishment",
+        "player_name": "Graphic Design Passion",
         "cash_balance": 1200,
         "high_scores": {
             "cash": 3486
         },
         "last_played": "2025-03-18 13:24:32"
-    },
-    "": {
-        "player_name": "",
-        "cash_balance": 1000,
-        "high_scores": {
-            "cash": 1000
-        },
-        "last_played": "2025-03-24 13:43:16"
     }
 }
