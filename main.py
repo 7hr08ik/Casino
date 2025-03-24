@@ -7,6 +7,7 @@
 # ===========================
 #
 # Main Imports
+import contextlib
 import json
 import os
 import subprocess
@@ -21,7 +22,6 @@ from logic.player import Player
 from logic.save_load import save_player_data
 from ui.exit_ui import ExitUI
 from ui.ui import UIElements
-import contextlib
 
 # Just needs something to be set to keep VSCode happy
 # Used in the activate_target function
