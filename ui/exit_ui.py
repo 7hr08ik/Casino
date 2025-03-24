@@ -32,6 +32,7 @@ class ExitUI:
 
     def __init__(self, screen):
         self.screen = screen
+        pg.font.init()  # Initialize pygame font module
         self.font = pg.font.Font(None, 36)
         self.small_font = pg.font.Font(None, 24)
         self.delete_player = delete_player

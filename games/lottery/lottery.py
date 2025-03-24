@@ -24,8 +24,8 @@ from game_integration import check_balance, load_player_data, save_and_exit
 pygame.init()
 
 # Global constants for screen dimensions
-W = 900
-H = 700
+W = 1280
+H = 720
 SCREEN = pygame.display.set_mode((W, H))
 pygame.display.set_caption("Teesside Lottery")
 CLOCK = pygame.time.Clock()

@@ -1,11 +1,11 @@
 {
     "Major Pain": {
         "player_name": "Major Pain",
-        "cash_balance": 10119,
+        "cash_balance": 13419,
         "high_scores": {
-            "cash": 12345
+            "cash": 13419
         },
-        "last_played": "2025-03-24 12:50:09"
+        "last_played": "2025-03-24 13:10:13"
     },
     "Corporal Punishment": {
         "player_name": "Corporal Punishment",
@@ -13,7 +13,7 @@
         "high_scores": {
             "cash": 3486
         },
-        "last_played": "2025-03-23 15:16:39"
+        "last_played": "2025-03-24 13:10:32"
     },
     "General Waste": {
         "player_name": "General Waste",
@@ -30,5 +30,13 @@
             "cash": 3486
         },
         "last_played": "2025-03-18 13:24:32"
+    },
+    "": {
+        "player_name": "",
+        "cash_balance": 1000,
+        "high_scores": {
+            "cash": 1000
+        },
+        "last_played": "2025-03-24 13:43:16"
     }
 }

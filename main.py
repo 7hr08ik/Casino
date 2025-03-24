@@ -45,7 +45,7 @@ def draw_target(screen, color, position, size, alpha=0):
     # 2 - Make the surface transparent
     target_surface.fill((color[0], color[1], color[2], alpha))
     # 3 - Put surface in a rectangle
-    pg.draw.rect(target_surface, color, (0, 0, size, size), 1)
+    pg.draw.rect(target_surface, color, (0, 0, size, size), 3)
     # 4 - Print screen with transparent surface in position
     screen.blit(target_surface, position)
 
@@ -62,13 +62,13 @@ def activate_target(screen, player_data, player_rect, target_rect, game_command=
 
     if player_rect.colliderect(target_rect):
         if game_command == leave_game:
-            pg.quit()
             exit_ui = ExitUI(screen)
             exit_ui.print_exit_ui(screen, player_data)
+            pg.quit()
             sys.exit()
         if game_command:
-            pg.quit()
             subprocess.run(game_command, check=False)
+            pg.quit()
             sys.exit()
         pg.quit()
         sys.exit()
@@ -95,6 +95,7 @@ def main():
     """
     # 1 - Initialize Pygame - Set window name and size
     pg.init()
+    pg.font.init()  # Explicitly initialize font module
     pg.display.set_caption(conf.GAME_NAME)
     screen = pg.display.set_mode(conf.WIN_SIZE)
 
@@ -116,10 +117,12 @@ def main():
     print(f"Welcome, {player_data['player_name']}! Balance: ${player_data['cash_balance']}")
 
     # 4 - Initialize game elements
+    running = True
     player = Player(conf.p_pos[0], conf.p_pos[1])
     clock = conf.CLOCK
     dt = 0
-    running = True
+    font = pg.font.Font(None, 24)
+    small_font = pg.font.Font(None, 24)
 
     # ----------------------------------
     # 5 - Main game loop
@@ -147,8 +150,6 @@ def main():
         player.draw(screen)
 
         # Draw text on screen
-        font = pg.font.Font(None, 24)
-        small_font = pg.font.Font(None, 24)
         player_info = font.render(
             f"Player: {player_data['player_name']} | Balance: ${player_data['cash_balance']}",
             True,

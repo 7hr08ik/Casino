@@ -44,12 +44,12 @@ mv_spd = 7  # Movement speed
 starting_cash = 1000
 
 #  Define targets
-t_color = (0, 0, 0)  # RGB
+t_color = (255, 0, 0)  # RGB
 # Exit Target
 e_pos = [782, 295]
 e_size = 20
 # Target 1 - Pinball
-t_pos = [1099, 569]
+t_pos = [1054, 587]
 t_size = 20
 # Target 2 - Maze
 t2_pos = [1090, 655]
