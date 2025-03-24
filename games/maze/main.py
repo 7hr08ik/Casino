@@ -9,6 +9,8 @@
 import json
 import sys
 from pathlib import Path
+import os
+import tempfile
 
 # Local Imports
 import conf
@@ -21,7 +23,8 @@ from logic.player import Player
 from logic.ui import Ui
 
 # For game_integration
-TEMP_FILE = Path("/tmp/current_player.json")  # Platform-agnostic temp file?
+# Platform agnostic temp file
+TEMP_FILE = os.path.join(tempfile.gettempdir(), "current_player.json")
 
 
 def main():

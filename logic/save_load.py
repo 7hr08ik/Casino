@@ -8,11 +8,12 @@
 import datetime
 import json
 import os
-import tempfile
 
 # For game_integration
 # Platform agnostic temp file
-TEMP_FILE = os.path.join(tempfile.gettempdir(), "current_player.json")
+# TODO: Fix this shit. Needs to point to the correct location
+casino_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+USR_FILE = os.path.join(casino_root, "data", "players_database.json")
 
 # -------------------------------------------------------------------------
 # Utilities
@@ -23,10 +24,6 @@ def get_cash_score(player):
     """
     Return the High score of a player
     """
-    # Add check to ensure value are integers
-    if not isinstance(player["high_scores"]["cash"], int):
-        return 0
-
     return player["high_scores"]["cash"]
 
 
@@ -35,10 +32,10 @@ def load_all_players():
     Load all players data from the JSON file
     """
     try:
-        with open(TEMP_FILE) as f:
+        with open(USR_FILE) as f:
             return json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
-        # Return empty dict if file doesn't exist or is invalid
+        # Return empty dict if file doesn't exist or is corrupted
         return {}
 
 
@@ -113,7 +110,7 @@ def save_player_data(player_name, cash_balance, high_scores=None):
         del all_players[sorted_players[0][0]]
 
     # Save to main data file
-    with open("data/players_database.json", "w") as f:
+    with open(USR_FILE, "w") as f:
         json.dump(all_players, f, indent=4)
 
 
@@ -140,7 +137,7 @@ def delete_player(player_name):
         del all_players[player_name]
 
         # Save the updated players data
-        with open("data/players_database.json", "w") as f:
+        with open(USR_FILE, "w") as f:
             json.dump(all_players, f, indent=4)
 
         return True
@@ -152,13 +149,27 @@ def load_all_high_scores():
     """
     Load and sort list of players by high score
     """
-    # Variables
-    all_players = load_all_players()
-    players = [p for p in all_players.values() if p is not None]
+    try:
+        # Load all players data
+        all_players = load_all_players()
 
-    sorted_players = sorted(players, key=get_cash_score, reverse=True)
+        # If no players exist, return empty list
+        if not all_players:
+            return []
 
-    return sorted_players
+        # Extract valid players with high scores
+        players = []
+        for player_name, player_data in all_players.items():
+            if player_data is not None and "high_scores" in player_data:
+                players.append(player_data)
+
+        # Sort by cash high score
+        sorted_players = sorted(players, key=get_cash_score, reverse=True)
+
+        return sorted_players
+    except Exception:
+        # Return empty list if any error occurs
+        return []
 
 
 # -------------------------------------------------------------------------

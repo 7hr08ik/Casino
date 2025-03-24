@@ -203,7 +203,6 @@ def get_player_name():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 save_and_exit(screen, player_data)  # For game_integration
-
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:

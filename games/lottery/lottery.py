@@ -30,7 +30,6 @@ SCREEN = pygame.display.set_mode((W, H))
 pygame.display.set_caption("Teesside Lottery")
 CLOCK = pygame.time.Clock()
 
-# Fonts using Arial for a consistent, light appearance
 TITLE_FONT = pygame.font.SysFont("Arial", 48, True)
 BIG_TITLE_FONT = pygame.font.SysFont("Arial", 72, True)
 TEXT_FONT = pygame.font.SysFont("Arial", 28)
@@ -52,11 +51,7 @@ BG_IMAGE = pygame.transform.scale(BG_IMAGE, (W, H))
 
 # Lottery setup: number of picks and grid for number buttons
 N = 6
-# The grid now starts at y = 115 so that "Select 6 Numbers" can be placed above
-btns = [
-    (i, pygame.Rect(20 + ((i - 1) % 10) * 50, 115 + ((i - 1) // 10) * 50, 45, 45))
-    for i in range(1, 60)
-]
+btns = [(i, pygame.Rect(20 + ((i - 1) % 10) * 50, 115 + ((i - 1) // 10) * 50, 45, 45)) for i in range(1, 60)]
 
 # Global game state variables
 u_nums, d_nums, matches = [], [], []
@@ -98,11 +93,7 @@ def load_favs():
     global favs
     if os.path.exists("games/lottery/logs/favs.txt"):
         with open("games/lottery/logs/favs.txt") as f:
-            favs = [
-                list(map(int, line.strip().split(",")))
-                for line in f.read().splitlines()
-                if line.strip()
-            ]
+            favs = [list(map(int, line.strip().split(","))) for line in f.read().splitlines() if line.strip()]
     # else:
     #     favs = []
     #     print("favs load")

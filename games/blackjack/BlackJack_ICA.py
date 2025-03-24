@@ -135,7 +135,10 @@ gambling_credits = balance
 
 bet = 10
 
-bet_buttons = [Button(f"Bet £{i}", 1050, 50 + (i // 10) * 50, 150, 40, (0, 255, 0), i) for i in range(10, 101, 10)]
+bet_buttons = [
+    Button(f"Bet £{i}", 1050, 50 + (i // 10) * 50, 150, 40, (0, 255, 0), i)
+    for i in range(10, 101, 10)
+]
 # Create buttons used during gameplay.
 hit_button = Button("Hit", 1000, 600, 100, 50, (255, 0, 0), "hit")
 stand_button = Button("Stand", 1150, 600, 100, 50, (255, 0, 0), "stand")
@@ -201,9 +204,13 @@ def play_round():
                 screen.blit(card.image, (200 + i * 170, 400))
 
         # Display player's current hand score
-        player_score_text = font.render("Player Score: " + str(player.calculate_score()), True, (255, 255, 255))
+        player_score_text = font.render(
+            "Player Score: " + str(player.calculate_score()), True, (255, 255, 255)
+        )
         screen.blit(player_score_text, (10, 500))
-        credits_text = font.render(f"Credits: £{gambling_credits}  Bet: £{bet}", True, (255, 255, 255))
+        credits_text = font.render(
+            f"Credits: £{gambling_credits}  Bet: £{bet}", True, (255, 255, 255)
+        )
         screen.blit(credits_text, (900, 20))
         # Draw action buttons only during player's turn
         if player_turn:
@@ -282,7 +289,9 @@ def play_round():
     screen.blit(outcome_text, (500, 50))
 
     # Display player's final hand score
-    final_score_text = font.render("Player Score: " + str(player.calculate_score()), True, (255, 255, 255))
+    final_score_text = font.render(
+        "Player Score: " + str(player.calculate_score()), True, (255, 255, 255)
+    )
     screen.blit(final_score_text, (200, 370))
 
     # Draw the Play Again and Exit buttons

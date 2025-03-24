@@ -14,8 +14,6 @@ import tempfile
 
 import pygame as pg
 
-import lobby_conf as conf
-
 # Add Casino project root directory to Python path
 casino_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 sys.path.append(casino_root)
