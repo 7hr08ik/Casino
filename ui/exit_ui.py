@@ -88,7 +88,7 @@ class ExitUI:
         goodbye_texts = [self.font.render(line, True, ("white")) for line in goodbye_lines]
         help_text = self.small_font.render("Press the 'ANY' key to continue ;)", True, ("white"))
         credits_text = self.small_font.render("Project Credits:", True, ("white"))
-        names = ["Rob Hickling", "Paul Leanka", "Viorica Anghel", "Sorin Sofronov", "James Young"]
+        names = ["Rob Hickling", "Paul Leanca", "Viorica Anghel", "Sorin Sofronov", "James Young"]
         names_texts = [self.small_font.render(name, True, ("white")) for name in names]
         help_rect = help_text.get_rect(topleft=(50, 680))
 
