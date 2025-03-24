@@ -21,12 +21,14 @@ from logic.player import Player
 from logic.save_load import save_player_data
 from ui.exit_ui import ExitUI
 from ui.ui import UIElements
+import contextlib
 
 # Just needs something to be set to keep VSCode happy
 # Used in the activate_target function
 leave_game = True
 
 # For game_integration
+# Platform agnostic temp file
 TEMP_FILE = os.path.join(tempfile.gettempdir(), "current_player.json")
 
 
@@ -196,12 +198,15 @@ def main():
         clock.tick(60)  # Limit FPS to 60
         dt = clock.tick(60) / 1000  # Delta Time - subFPS for the animations
 
-    # Save player data before exiting
+    # Save player data before exiting = remove temp file
     save_player_data(
         player_data["player_name"],
         player_data["cash_balance"],
         player_data["high_scores"],
     )
+    # Try to delete the TEMP_FILE if it exists
+    with contextlib.suppress(OSError):
+        os.remove(TEMP_FILE)
     pg.quit()
     sys.exit()
 

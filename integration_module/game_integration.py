@@ -6,12 +6,15 @@
 # 19/03/2025
 # ===========================
 
+import contextlib
 import json
 import os
 import sys
 import tempfile
 
 import pygame as pg
+
+import lobby_conf as conf
 
 # Add Casino project root directory to Python path
 casino_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
@@ -68,6 +71,10 @@ def load_player_data():
 def save_and_exit(screen, player_data):
     """Save player data and return to lobby"""
     save_player_data(player_data["player_name"], player_data["cash_balance"], player_data["high_scores"])
+    # Try to delete the TEMP_FILE if it exists
+    # Contextlib suggested by Ruff
+    with contextlib.suppress(OSError):
+        os.remove(TEMP_FILE)
     return_to_lobby()
 
 
