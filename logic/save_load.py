@@ -23,6 +23,10 @@ def get_cash_score(player):
     """
     Return the High score of a player
     """
+    # Add check to ensure value are integers
+    if not isinstance(player["high_scores"]["cash"], int):
+        return 0
+
     return player["high_scores"]["cash"]
 
 
