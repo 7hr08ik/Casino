@@ -82,7 +82,7 @@ class HighScoresUI:
             f"Current Balance: ${top_player['cash_balance']}", True, (255, 255, 255)
         )
         help_text = self.small_font.render("Press 'Q' or 'Enter to go back", True, (255, 255, 255))
-        help_text = help_text.get_rect(center=(self.screen.get_width() // 2, 650))
+        help_box = help_text.get_rect(center=(self.screen.get_width() // 2, 650))
 
         # Draw Rectangles
         pg.draw.rect(self.screen, (200, 200, 0), top_box, 2)
@@ -91,7 +91,7 @@ class HighScoresUI:
         self.screen.blit(top_name_text, (top_box.x + 20, top_box.y + 20))
         self.screen.blit(top_score_text, (right_side_x - 110, top_box.y + 20))
         self.screen.blit(current_balance_text, (right_side_x - 110, top_box.y + 60))
-        self.screen.blit(help_text, help_text)
+        self.screen.blit(help_text, help_box)
 
         # ----------------------------------
         # Display other players
