@@ -75,12 +75,18 @@ class ExitUI:
 
         # Current players data
         current_player = self.load_player(player_data["player_name"])
-        player_name_text = self.font.render(f"Player: {current_player['player_name']}", True, ("white"))
+        player_name_text = self.font.render(
+            f"Player: {current_player['player_name']}", True, ("white")
+        )
 
         # Text
         title_text = self.font.render("Your Account Details:", True, ("white"))
-        high_score_text = self.font.render(f"Highest Score: ${current_player['high_scores']['cash']}", True, ("white"))
-        cash_balance_text = self.font.render(f"Current Balance: ${current_player['cash_balance']}", True, ("white"))
+        high_score_text = self.font.render(
+            f"Highest Score: ${current_player['high_scores']['cash']}", True, ("white")
+        )
+        cash_balance_text = self.font.render(
+            f"Current Balance: ${current_player['cash_balance']}", True, ("white")
+        )
         goodbye_lines = [
             "Thank you for visiting the Casino!",
             "We hope to see you again soon!",
@@ -125,7 +131,9 @@ class ExitUI:
         # ----------------------------------
         # Finally
         # Save the current player data
-        self.save_player(player_data["player_name"], player_data["cash_balance"], player_data["high_scores"])
+        self.save_player(
+            player_data["player_name"], player_data["cash_balance"], player_data["high_scores"]
+        )
 
     def print_exit_ui(self, screen, player_data):
         """
@@ -144,12 +152,16 @@ class ExitUI:
             running = False
 
         # Save player data and exit
-        self.save_player(player_data["player_name"], player_data["cash_balance"], player_data["high_scores"])
+        self.save_player(
+            player_data["player_name"], player_data["cash_balance"], player_data["high_scores"]
+        )
         print("Player data saved. Exiting game.")
+
         # Try to delete the TEMP_FILE if it exists
         # Contextlib suggested by Ruff
         with contextlib.suppress(OSError):
             os.remove(TEMP_FILE)
+
         running = False
         pg.quit()
         sys.exit()

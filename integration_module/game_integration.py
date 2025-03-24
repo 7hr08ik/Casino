@@ -6,7 +6,6 @@
 # 19/03/2025
 # ===========================
 
-import contextlib
 import json
 import os
 import sys
@@ -40,7 +39,9 @@ Notes on usage:
 
 
 def return_to_lobby():
-    """Return control to the main lobby"""
+    """
+    Return control to the main lobby
+    """
     pg.quit()
     # Launch lobby process
     if sys.platform == "win32":
@@ -52,7 +53,9 @@ def return_to_lobby():
 
 
 def load_player_data():
-    """Load player data from lobby's temporary storage"""
+    """
+    Load player data from lobby's temporary storage
+    """
     try:
         with open(TEMP_FILE) as f:
             return json.load(f)
@@ -67,17 +70,26 @@ def load_player_data():
 
 
 def save_and_exit(screen, player_data):
-    """Save player data and return to lobby"""
-    save_player_data(player_data["player_name"], player_data["cash_balance"], player_data["high_scores"])
-    # Try to delete the TEMP_FILE if it exists
-    # Contextlib suggested by Ruff
-    with contextlib.suppress(OSError):
-        os.remove(TEMP_FILE)
+    """
+    Save player data and return to lobby
+    """
+
+    # Save player data to temp file for the lobby
+    with open(TEMP_FILE, "w") as f:
+        json.dump(player_data, f)
+
+    # Save to full database as well
+    save_player_data(
+        player_data["player_name"], player_data["cash_balance"], player_data["high_scores"]
+    )
+
     return_to_lobby()
 
 
 def check_balance(screen, player_data):
-    """Check if player's balance is too low"""
+    """
+    Check if player's balance is too low
+    """
     if player_data["cash_balance"] < 1:
         exit_ui = ExitUI(screen)
         exit_ui.draw_exit_loser(screen, player_data["player_name"])
@@ -92,7 +104,9 @@ def maze_exit(screen, player_data):
     player_data = load_player_data()
 
     # Save to main database
-    save_player_data(player_data["player_name"], player_data["cash_balance"], player_data["high_scores"])
+    save_player_data(
+        player_data["player_name"], player_data["cash_balance"], player_data["high_scores"]
+    )
 
     # Show exit UI
     exit_ui = ExitUI(screen)

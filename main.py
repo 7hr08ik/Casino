@@ -64,11 +64,11 @@ def activate_target(screen, player_data, player_rect, target_rect, game_command=
         if game_command == leave_game:
             exit_ui = ExitUI(screen)
             exit_ui.print_exit_ui(screen, player_data)
-            pg.quit()
+            # pg.quit()
             sys.exit()
         if game_command:
-            subprocess.run(game_command, check=False)
             pg.quit()
+            subprocess.run(game_command, check=False)
             sys.exit()
         pg.quit()
         sys.exit()
@@ -105,16 +105,22 @@ def main():
     pg.time.wait(conf.LOAD_SCRN_DLY)  # Wait for X seconds
 
     # 3 - Player data elements
-    # Show player selection screen and create/load player data
+    # Check if TEMP_FILE exists and load player data
     ui = UIElements(screen)
-    player_data = ui.main_menu()
-    # Handle exceptions where no player selected at menu.
-    if not player_data:
-        print("No player selected. Exiting game.")
-        pg.quit()
-        sys.exit()
-    # Print player info, to check things are working
-    print(f"Welcome, {player_data['player_name']}! Balance: ${player_data['cash_balance']}")
+    if os.path.exists(TEMP_FILE):
+        with open(TEMP_FILE, "r") as f:
+            player_data = json.load(f)
+        print(f"Resuming game for player: {player_data['player_name']}")
+    else:
+        # Show player selection screen and create/load player data
+        player_data = ui.main_menu()
+        # Handle exceptions where no player selected at menu.
+        if not player_data:
+            print("No player selected. Exiting game.")
+            pg.quit()
+            sys.exit()
+        # Print player info, to check things are working
+        print(f"Welcome, {player_data['player_name']}! Balance: ${player_data['cash_balance']}")
 
     # 4 - Initialize game elements
     running = True
