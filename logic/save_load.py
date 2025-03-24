@@ -7,6 +7,12 @@
 # Main Imports
 import datetime
 import json
+import os
+import tempfile
+
+# For game_integration
+# Platform agnostic temp file
+TEMP_FILE = os.path.join(tempfile.gettempdir(), "current_player.json")
 
 # -------------------------------------------------------------------------
 # Utilities
@@ -25,7 +31,7 @@ def load_all_players():
     Load all players data from the JSON file
     """
     try:
-        with open("data/players_database.json") as f:
+        with open(TEMP_FILE) as f:
             return json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         # Return empty dict if file doesn't exist or is invalid
