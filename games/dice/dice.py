@@ -28,6 +28,7 @@ SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("3 Dice Casino Game")
+BG_IMG = pygame.image.load("games/dice/img/dice_bg.png")
 
 # Colors
 WHITE = (255, 255, 255)
@@ -104,9 +105,7 @@ def display_text(text, x, y, color, font_size=24):
 def suspense_delay():
     for i in range(3, 0, -1):
         screen.fill(GRAY)
-        display_text(
-            f"Rolling in {i}...", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 50, BLACK, 48
-        )
+        display_text(f"Rolling in {i}...", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 50, BLACK, 48)
         pygame.display.update()
         pygame.time.wait(1000)
 
@@ -179,44 +178,48 @@ def get_bet_amount(player_money):
         clock.tick(30)
 
 
-# Function to prompt for player's name
-def get_player_name():
-    input_box = pygame.Rect(SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2, 300, 50)
-    color_inactive = pygame.Color("lightskyblue3")
-    color_active = pygame.Color("dodgerblue2")
-    color = color_inactive
-    text = ""
-    active = False
-    clock = pygame.time.Clock()
+# #--------------------------------------------------
+# For game_integration
+# Replaced the player name function by pulling player name from load_player_data
+# Making this function redundant. See line 336
+#
+# # Function to prompt for player's name
+# def get_player_name():
+#     player_data = load_player_data()  # For game_integration
 
-    player_data = load_player_data()  # Load the data
+#     input_box = pygame.Rect(SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2, 300, 50)
+#     color_inactive = pygame.Color("lightskyblue3")
+#     color_active = pygame.Color("dodgerblue2")
+#     color = color_inactive
+#     text = ""
+#     active = False
+#     clock = pygame.time.Clock()
 
-    while True:
-        screen.fill(GRAY)
-        display_text(
-            " What is your name?", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 60, BLACK, 32
-        )
-        pygame.draw.rect(screen, color, input_box, 2)
-        name_text = pygame.font.SysFont("Arial", 32).render(text, True, color)
-        screen.blit(name_text, (input_box.x + 5, input_box.y + 5))
+#     while True:
+#         screen.fill(GRAY)
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                save_and_exit(screen, player_data)  # For game_integration
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                active = not active if input_box.collidepoint(event.pos) else False
-                color = color_active if active else color_inactive
-            if event.type == pygame.KEYDOWN and active:
-                if event.key == pygame.K_RETURN and text != "":
-                    return text
-                elif event.key == pygame.K_BACKSPACE:
-                    text = text[:-1]
-                else:
-                    text += event.unicode
-        pygame.display.update()
-        clock.tick(30)
+#         display_text(" What is your name?", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 60, BLACK, 32)
+#         pygame.draw.rect(screen, color, input_box, 2)
+#         name_text = pygame.font.SysFont("Arial", 32).render(text, True, color)
+#         screen.blit(name_text, (input_box.x + 5, input_box.y + 5))
+
+#         for event in pygame.event.get():
+#             if event.type == pygame.QUIT:
+#                 save_and_exit(screen, player_data)  # For game_integration
+#                 pygame.quit()
+#                 sys.exit()
+#             if event.type == pygame.MOUSEBUTTONDOWN:
+#                 active = not active if input_box.collidepoint(event.pos) else False
+#                 color = color_active if active else color_inactive
+#             if event.type == pygame.KEYDOWN and active:
+#                 if event.key == pygame.K_RETURN and text != "":
+#                     return text
+#                 elif event.key == pygame.K_BACKSPACE:
+#                     text = text[:-1]
+#                 else:
+#                     text += event.unicode
+#         pygame.display.update()
+#         clock.tick(30)
 
 
 # Main game loop
@@ -237,13 +240,13 @@ def game_loop(player_name):
         display_text(f"{player_name} Money: £{player_money}", 20, 20, BLACK, 32)
         display_text(f"House Money: £{house_money}", SCREEN_WIDTH - 300, 20, BLACK, 32)
         display_text(f"Bet: £{bet}", 20, 60, BLACK, 32)
-        display_text("Press 'Q' to Quit or 'R' to Roll", 20, 100, BLACK, 32)
+        display_text("Press 'Q' to Quit or 'R' to Roll", 420, 680, BLACK, 32)
         display_text(f"{player_name}'s Last Rolls:", 20, 140, BLUE, 24)
         for i, roll in enumerate(player_roll_history[-5:], 1):
             display_text(f"{i}. {roll}", 20, 140 + i * 30, BLUE, 24)
-        display_text("House's Last Rolls:", SCREEN_WIDTH - 350, 140, RED, 22)
+        display_text("House's Last Rolls:", SCREEN_WIDTH - 400, 140, RED, 22)
         for i, roll in enumerate(house_roll_history[-5:], 1):
-            display_text(f"{i}. {roll}", SCREEN_WIDTH - 200, 140 + i * 30, RED, 24)
+            display_text(f"{i}. {roll}", SCREEN_WIDTH - 400, 140 + i * 30, RED, 24)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -310,21 +313,17 @@ def game_loop(player_name):
 
 # Menu function
 def main_menu():
-    start_button = Button(
-        "Start Game", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 60, 200, 50, GRAY, GREEN
-    )
-    quit_button = Button(
-        "Quit Game", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 20, 200, 50, GRAY, RED
-    )
+    start_button = Button("Start Game", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 60, 200, 50, GRAY, GREEN)
+    quit_button = Button("Quit Game", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 20, 200, 50, GRAY, RED)
     clock = pygame.time.Clock()
 
     player_data = load_player_data()  # For game_integration
 
     while True:
         screen.fill(BLACK)
-        display_text(
-            "3 Dice Teesside Casino", SCREEN_WIDTH // 2 - 250, SCREEN_HEIGHT // 2 - 200, WHITE, 48
-        )
+        
+        screen.blit(BG_IMG, (0, 0))
+        display_text("3 Dice Teesside Casino", SCREEN_WIDTH // 2 - 250, SCREEN_HEIGHT // 2 - 200, WHITE, 48)
 
         start_button.draw(screen)
         quit_button.draw(screen)
@@ -335,8 +334,9 @@ def main_menu():
                 pygame.quit()
                 sys.exit()
             if start_button.is_clicked(event):
-                player_name = get_player_name()
-                game_loop(player_name)
+                # player_name = get_player_name()
+                # game_loop(player_name)
+                game_loop(player_data["player_name"])
             if quit_button.is_clicked(event):
                 save_and_exit(screen, player_data)  # For game_integration
                 pygame.quit()
