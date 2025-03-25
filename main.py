@@ -79,7 +79,11 @@ def check_player_balance(screen, player_data):
     Check if player's cash balance has reached 0 or below.
     Display exit screen if player is broke.
     """
-    if player_data["cash_balance"] <= 0:  # 10 for testing
+    # Ensure cash_balance is an integer to prevent type errors
+    if not isinstance(player_data["cash_balance"], int):
+        player_data["cash_balance"] = int(player_data["cash_balance"])
+
+    if player_data["cash_balance"] < 1:  # 10 for testing
         exit_ui = ExitUI(screen)
         exit_ui.draw_exit_loser(screen, player_data["player_name"])
     else:
@@ -108,7 +112,7 @@ def main():
     # Check if TEMP_FILE exists and load player data
     ui = UIElements(screen)
     if os.path.exists(TEMP_FILE):
-        with open(TEMP_FILE, "r") as f:
+        with open(TEMP_FILE) as f:
             player_data = json.load(f)
         print(f"Resuming game for player: {player_data['player_name']}")
     else:
