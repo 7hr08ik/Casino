@@ -177,6 +177,10 @@ class ExitUI:
 
         # Delete the current player from the json file
         self.delete_player(player_name)
+        # Try to delete the TEMP_FILE if it exists
+        # Contextlib suggested by Ruff
+        with contextlib.suppress(OSError):
+            os.remove(TEMP_FILE)
         pg.quit()
         sys.exit()
 
