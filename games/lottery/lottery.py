@@ -250,7 +250,7 @@ def start_screen():
     while True:
         CLOCK.tick(60)
         bg(image=True)
-        txt("LOTTERY", BIG_TITLE_FONT, WHITE, W // 2, 80, True)
+        # txt("LOTTERY", BIG_TITLE_FONT, WHITE, W // 2, 80, True)
         txt(f"Jackpot: {jackpot}", TEXT_FONT, RED, int(W / 1.3), 100, True)
         txt("Last Draws:", TEXT_FONT, RED, 1000, 200, True)
         for i, d in enumerate(history):

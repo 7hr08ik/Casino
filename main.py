@@ -13,6 +13,7 @@ import os
 import subprocess
 import sys
 import tempfile
+import time
 
 import pygame as pg
 
@@ -109,13 +110,32 @@ def main():
     pg.time.wait(conf.LOAD_SCRN_DLY)  # Wait for X seconds
 
     # 3 - Player data elements
-    # Check if TEMP_FILE exists and load player data
     ui = UIElements(screen)
-    if os.path.exists(TEMP_FILE):
-        with open(TEMP_FILE) as f:
-            player_data = json.load(f)
-        print(f"Resuming game for player: {player_data['player_name']}")
-    else:
+    # Check if TEMP_FILE exists and load player data
+    try:
+        # If temp exists but is older than 60s, delete
+        # If it is there, its probably becuase the game crashed.
+        if os.path.exists(TEMP_FILE):
+            file_age_limit = 60
+            st = os.stat(TEMP_FILE)
+            if (time.time() - st.st_mtime) > file_age_limit:
+                print(f"Removing outdated temp file: {TEMP_FILE}")
+                os.remove(TEMP_FILE)
+                # No player data to load, will create new below
+                player_data = None
+            else:
+                # File exists and is recent, load player data
+                with open(TEMP_FILE) as f:
+                    player_data = json.load(f)
+                print(f"Resuming game for player: {player_data['player_name']}")
+        else:
+            # No temp file exists
+            player_data = None
+    except Exception as e:
+        print(f"Error handling temp file: {e}")
+        player_data = None
+    # If no player data was loaded, show player selection screen
+    if player_data is None:
         # Show player selection screen and create/load player data
         player_data = ui.main_menu()
         # Handle exceptions where no player selected at menu.
