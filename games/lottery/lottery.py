@@ -252,9 +252,9 @@ def start_screen():
         bg(image=True)
         txt("LOTTERY", BIG_TITLE_FONT, WHITE, W // 2, 80, True)
         txt(f"Jackpot: {jackpot}", TEXT_FONT, RED, int(W / 1.3), 100, True)
-        txt("Last Draws:", TEXT_FONT, RED, 700, 200, True)
+        txt("Last Draws:", TEXT_FONT, RED, 1000, 200, True)
         for i, d in enumerate(history):
-            txt(d, SMALL_FONT, ORANGE, 700, 240 + i * 30, True)
+            txt(d, SMALL_FONT, ORANGE, 1000, 240 + i * 30, True)
         txt(f"Pot: £{pot}", TEXT_FONT, YELLOW, W - 100, 40, True)
         for b in btns_list:
             pygame.draw.rect(SCREEN, b.get("c", BLUE), b["r"], border_radius=8)

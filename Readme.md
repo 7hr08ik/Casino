@@ -94,6 +94,8 @@ UI Help
 Json save Files
     https://www.geeksforgeeks.org/reading-and-writing-json-to-a-file-in-python/
 
+Delete aged files
+    https://stackoverflow.com/questions/3345953/python-deleting-files-of-a-certain-age
 
  
 Noted Bugs and missing features
