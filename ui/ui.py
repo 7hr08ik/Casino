@@ -8,10 +8,14 @@
 import sys
 
 import pygame as pg
+from high_scores_ui import HighScoresUI
 
 import lobby_conf as conf
-from logic.save_load import get_players_display_data, load_player_data, save_player_data
-from ui.high_scores_ui import HighScoresUI
+from logic.save_load import (
+    get_players_display_data,
+    load_player_data,
+    save_player_data,
+)
 
 
 class UIElements:
@@ -22,14 +26,14 @@ class UIElements:
     including buttons, player selection.
 
     NOTE:
-    I acknowledge that i did use an AI coding assitant to help me.
+    I acknowledge that i did use an AI coding assistant to help me.
     I tried finding a guide online, but i couldnt find one that would work
     for what I was trying to make.
-    I asked the AI coding assitant to build the basic framework for me,
+    I asked the AI coding assistant to build the basic framework for me,
     with a New player button and a Load player button, and an Exit button.
     Using this as a  framework, I then added the rest of the UI elements,
-    expanded on the code and made it my own. The 2 other UI files, grew from this
-    into their own seperate classes.
+    expanded on the code and made it my own. The 2 other UI files,
+    grew from this, and were split into their own separate classes.
     """
 
     def __init__(self, screen):
@@ -155,7 +159,10 @@ class UIElements:
             ("Exit", self.exit_game),
         ]
         start_x = (self.screen.get_width() - self.btn_width) / 2
-        start_y = (self.screen.get_height() - (self.btn_height + self.btn_space) * len(buttons)) / 2
+        start_y = (
+            self.screen.get_height()
+            - (self.btn_height + self.btn_space) * len(buttons)
+        ) / 2
 
         # Create buttons
         for i, (text, command) in enumerate(buttons):
@@ -183,7 +190,9 @@ class UIElements:
             return
 
         # Variables
-        selected_player_name = self.player_list[self.selected_player_index]["name"]
+        selected_player_name = self.player_list[self.selected_player_index][
+            "name"
+        ]
         player_data = load_player_data(selected_player_name)
         self.current_player = player_data
 
@@ -209,11 +218,10 @@ class UIElements:
             self.high_scores_ui.print_high_scores_ui()
             pg.display.flip()
 
-            # Let HighScoresUI handle its own events through its key_input method
+            # Let HighScoresUI handle its own eventsd
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     self.exit_game()
-                # If High scores key input returns true then stop high scores screen
                 elif self.high_scores_ui.key_input(event):
                     running = False
 
@@ -233,7 +241,9 @@ class UIElements:
                 self.input_text = ""
             else:
                 # Process input
-                if len(self.input_text) < 20:  # Limit input length to prevent overflow
+                if (
+                    len(self.input_text) < 20
+                ):  # Limit input length to prevent overflow
                     self.input_text += event.unicode
 
     def handle_player_selection_input(self, event):
@@ -245,7 +255,9 @@ class UIElements:
             if event.key == pg.K_ESCAPE:
                 self.tgl_load_player = False
             elif event.key == pg.K_UP:
-                self.selected_player_index = max(0, self.selected_player_index - 1)
+                self.selected_player_index = max(
+                    0, self.selected_player_index - 1
+                )
                 # Stop at the top
                 if self.selected_player_index < self.player_list_scroll:
                     self.player_list_scroll = self.selected_player_index
@@ -254,13 +266,18 @@ class UIElements:
                     len(self.player_list) - 1, self.selected_player_index + 1
                 )
                 # Stop at the bottom
-                if self.selected_player_index >= self.player_list_scroll + self.max_list_size:
-                    self.player_list_scroll = self.selected_player_index - self.max_list_size + 1
+                if (
+                    self.selected_player_index
+                    >= self.player_list_scroll + self.max_list_size
+                ):
+                    self.player_list_scroll = (
+                        self.selected_player_index - self.max_list_size + 1
+                    )
             # Enter to run selection
             elif event.key == pg.K_RETURN and self.player_list:
                 self.load_selected_player()
         elif event.type == pg.MOUSEBUTTONDOWN:
-            # List dimentions
+            # List dimensions
             list_width = 600
             list_height = 400
             list_x = (self.screen.get_width() - list_width) // 2
@@ -330,8 +347,12 @@ class UIElements:
         # If IN player selection, draw player list
         if self.tgl_load_player:
             # Draw title
-            title_text = self.font.render("Select Player", True, (255, 255, 255))
-            title_rect = title_text.get_rect(center=(self.screen.get_width() // 2, 50))
+            title_text = self.font.render(
+                "Select Player", True, (255, 255, 255)
+            )
+            title_rect = title_text.get_rect(
+                center=(self.screen.get_width() // 2, 50)
+            )
             self.screen.blit(title_text, title_rect)
 
             # Draw player list
@@ -353,9 +374,15 @@ class UIElements:
                 (list_x, header_y + 30),
                 (list_x + list_width, header_y + 30),
             )
-            name_header = self.small_font.render("Player Name", True, (255, 255, 255))
-            balance_header = self.small_font.render("Cash Balance", True, (255, 255, 255))
-            date_header = self.small_font.render("Last Played", True, (255, 255, 255))
+            name_header = self.small_font.render(
+                "Player Name", True, (255, 255, 255)
+            )
+            balance_header = self.small_font.render(
+                "Cash Balance", True, (255, 255, 255)
+            )
+            date_header = self.small_font.render(
+                "Last Played", True, (255, 255, 255)
+            )
             self.screen.blit(name_header, (list_x + 20, header_y))
             self.screen.blit(balance_header, (list_x + 250, header_y))
             self.screen.blit(date_header, (list_x + 400, header_y))
@@ -364,29 +391,40 @@ class UIElements:
             entry_height = 40
             visible_range = range(
                 self.player_list_scroll,
-                min(self.player_list_scroll + self.max_list_size, len(self.player_list)),
+                min(
+                    self.player_list_scroll + self.max_list_size,
+                    len(self.player_list),
+                ),
             )
             for i, idx in enumerate(visible_range):
                 player = self.player_list[idx]
                 entry_y = list_y + 50 + (i * entry_height)
                 # Highlight selected player
                 if idx == self.selected_player_index:
-                    highlight_rect = pg.Rect(list_x + 2, entry_y, list_width - 4, entry_height)
+                    highlight_rect = pg.Rect(
+                        list_x + 2, entry_y, list_width - 4, entry_height
+                    )
                     pg.draw.rect(self.screen, (100, 100, 255), highlight_rect)
 
                 # Draw player info
-                name_text = self.small_font.render(player["name"], True, (255, 255, 255))
+                name_text = self.small_font.render(
+                    player["name"], True, (255, 255, 255)
+                )
                 balance_text = self.small_font.render(
                     f"${player['cash_balance']}", True, (255, 255, 255)
                 )
-                date_text = self.small_font.render(player["last_played"], True, (255, 255, 255))
+                date_text = self.small_font.render(
+                    player["last_played"], True, (255, 255, 255)
+                )
                 self.screen.blit(name_text, (list_x + 20, entry_y + 10))
                 self.screen.blit(balance_text, (list_x + 250, entry_y + 10))
                 self.screen.blit(date_text, (list_x + 400, entry_y + 10))
 
             # Nav text in center screen below box
             nav_text = self.small_font.render(
-                "Use arrow keys to navigate, Enter to select, Esc to cancel", True, (255, 255, 255)
+                "Use arrow keys to navigate, Enter to select, Esc to cancel",
+                True,
+                (255, 255, 255),
             )
             nav_rect = nav_text.get_rect(
                 center=(self.screen.get_width() // 2, list_y + list_height + 30)
@@ -423,9 +461,14 @@ class UIElements:
             )
 
             # Draw prompt text
-            prompt_text = self.font.render(self.new_player_prompt, True, (255, 255, 255))
+            prompt_text = self.font.render(
+                self.new_player_prompt, True, (255, 255, 255)
+            )
             prompt_rect = prompt_text.get_rect(
-                center=(self.screen.get_width() // 2, self.screen.get_height() // 2 - 50)
+                center=(
+                    self.screen.get_width() // 2,
+                    self.screen.get_height() // 2 - 50,
+                )
             )
             self.screen.blit(prompt_text, prompt_rect)
 
@@ -433,9 +476,12 @@ class UIElements:
             pg.draw.rect(self.screen, (255, 255, 255), self.new_player_rect, 2)
 
             # Draw input text
-            text_surface = self.font.render(self.input_text, True, (255, 255, 255))
+            text_surface = self.font.render(
+                self.input_text, True, (255, 255, 255)
+            )
             self.screen.blit(
-                text_surface, (self.new_player_rect.x + 10, self.new_player_rect.y + 10)
+                text_surface,
+                (self.new_player_rect.x + 10, self.new_player_rect.y + 10),
             )
 
     def main_menu(self):

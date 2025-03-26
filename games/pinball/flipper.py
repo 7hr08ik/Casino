@@ -11,14 +11,18 @@ class Flipper:
         if is_left:
             self.rotated_image = conf.l_flipper
             self.original_image = conf.l_flipper.convert_alpha()
-            self.pivot = pg.math.Vector2(20, 20)  # Is (20, 20) but offset from the center
+            self.pivot = pg.math.Vector2(
+                20, 20
+            )  # Is (20, 20) but offset from the center
             self.pivot_world = conf.left_start
             self.angle = conf.start_angle
             self.target_angle = conf.target_angle
         else:
             self.rotated_image = conf.r_flipper
             self.original_image = conf.r_flipper.convert_alpha()
-            self.pivot = pg.math.Vector2(112, 20)  # Is (112, 20) but offset from the center
+            self.pivot = pg.math.Vector2(
+                112, 20
+            )  # Is (112, 20) but offset from the center
             self.pivot_world = conf.right_start
             # Mirror angles for right flipper
             self.angle = -conf.start_angle
@@ -35,8 +39,10 @@ class Flipper:
         """
         # Get the rect of the original surface
         original_rect = surface.get_rect()
-        # Compute the offset vector from the image center to the pivot point (within the image)
-        pivot_vector = pg.math.Vector2(offset) - pg.math.Vector2(original_rect.center)
+        # Get the offset vector from the image center to the pivot point
+        pivot_vector = pg.math.Vector2(offset) - pg.math.Vector2(
+            original_rect.center
+        )
         # Rotate the image
         rotated_image = pg.transform.rotozoom(surface, -angle, 1)
         # Rotate the pivot vector by the given angle
@@ -62,11 +68,16 @@ class Flipper:
         """
         # Approach target angle smoothly
         if self.angle < self.target_angle:
-            self.angle = min(self.angle + self.rotation_speed, self.target_angle)
+            self.angle = min(
+                self.angle + self.rotation_speed, self.target_angle
+            )
         elif self.angle > self.target_angle:
-            self.angle = max(self.angle - self.rotation_speed, self.target_angle)
+            self.angle = max(
+                self.angle - self.rotation_speed, self.target_angle
+            )
 
-        # Create a new rect with the rotated image and adjust it to keep the pivot point fixed
+        # Create a new rect with the rotated image and adjust
+        # # to keep the pivot point fixed
         rotated_image, new_rect = self.rotate(
             self.original_image,  # Thing to get rotated
             self.angle,  # Angle to rotate to

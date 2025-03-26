@@ -11,7 +11,6 @@ import os
 
 # For game_integration
 # Platform agnostic temp file
-# TODO: Fix this shit. Needs to point to the correct location
 casino_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 USR_FILE = os.path.join(casino_root, "data", "players_database.json")
 
@@ -105,7 +104,9 @@ def save_player_data(player_name, cash_balance, high_scores=None):
     if len(all_players) > 20:
         sorted_players = sorted(
             all_players.items(),
-            key=lambda x: datetime.datetime.strptime(x[1]["last_played"], "%Y-%m-%d %H:%M:%S"),
+            key=lambda x: datetime.datetime.strptime(
+                x[1]["last_played"], "%Y-%m-%d %H:%M:%S"
+            ),
         )
         del all_players[sorted_players[0][0]]
 
@@ -159,7 +160,7 @@ def load_all_high_scores():
 
         # Extract valid players with high scores
         players = []
-        for player_name, player_data in all_players.items():
+        for player_data in all_players.items():
             if player_data is not None and "high_scores" in player_data:
                 players.append(player_data)
 

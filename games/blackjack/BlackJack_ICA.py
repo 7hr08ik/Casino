@@ -51,7 +51,9 @@ card_images = {}
 for suit in suits:
     for value in range(2, 15):  # 2 to Ace (14)
         try:
-            image = pygame.image.load(f"games/blackjack/img/cards/{value}_of_{suit}.png")
+            image = pygame.image.load(
+                f"games/blackjack/img/cards/{value}_of_{suit}.png"
+            )
             image = pygame.transform.scale(image, (111, 200))
             card_images[(value, suit)] = image
         except pygame.error:
@@ -97,7 +99,9 @@ class Card:
 # Deck class
 class Deck:
     def __init__(self):
-        self.cards = [Card(value, suit) for suit in suits for value in range(2, 15)]
+        self.cards = [
+            Card(value, suit) for suit in suits for value in range(2, 15)
+        ]
         random.shuffle(self.cards)
 
     def draw_card(self):
@@ -142,7 +146,9 @@ bet_buttons = [
 # Create buttons used during gameplay.
 hit_button = Button("Hit", 1000, 600, 100, 50, (255, 0, 0), "hit")
 stand_button = Button("Stand", 1150, 600, 100, 50, (255, 0, 0), "stand")
-play_again_button = Button("Play Again", 900, 600, 200, 50, (255, 0, 0), "play again")
+play_again_button = Button(
+    "Play Again", 900, 600, 200, 50, (255, 0, 0), "play again"
+)
 exit_button = Button("Exit", 1150, 600, 100, 50, (255, 0, 0), "exit")
 
 
@@ -205,7 +211,9 @@ def play_round():
 
         # Display player's current hand score
         player_score_text = font.render(
-            "Player Score: " + str(player.calculate_score()), True, (255, 255, 255)
+            "Player Score: " + str(player.calculate_score()),
+            True,
+            (255, 255, 255),
         )
         screen.blit(player_score_text, (10, 500))
         credits_text = font.render(
@@ -244,7 +252,9 @@ def play_round():
                 if dealer.is_busted() or player_score > dealer_score:
                     outcome = "Player wins!"
                     gambling_credits += bet * 2  # Player wins double the bet
-                    player_data["cash_balance"] += bet * 2  # For game_integration
+                    player_data["cash_balance"] += (
+                        bet * 2
+                    )  # For game_integration
                 elif player_score < dealer_score:
                     outcome = "Dealer wins!"
 

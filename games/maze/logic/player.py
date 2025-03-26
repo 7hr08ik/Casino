@@ -5,22 +5,37 @@
 # ===========================
 #
 # Main Imports
-import pygame as pg
-
 # Local Imports
 import conf
+import pygame as pg
 
 
 class Player:
     def __init__(self, x, y):
         # Load images once when the program starts.
         # Put them into lists, one for each direction.
-        self.pl_idle = [pg.image.load("games/maze/img/Idle/Idle.png").convert_alpha()]
-        self.pl_run_up = [pg.image.load(f"games/maze/img/Walk/Up/{i}.png").convert_alpha() for i in range(1, 5)]
-        self.pl_run_down = [pg.image.load(f"games/maze/img/Walk/Down/{i}.png").convert_alpha() for i in range(1, 5)]
-        self.pl_run_left = [pg.image.load(f"games/maze/img/Walk/Left/{i}.png").convert_alpha() for i in range(1, 5)]
-        self.pl_run_right = [pg.image.load(f"games/maze/img/Walk/Right/{i}.png").convert_alpha() for i in range(1, 5)]
-        self.bg_image = conf.BG_IMG.convert_alpha()  # Must stay in main.py Fails if moved to conf.py
+        self.pl_idle = [
+            pg.image.load("games/maze/img/Idle/Idle.png").convert_alpha()
+        ]
+        self.pl_run_up = [
+            pg.image.load(f"games/maze/img/Walk/Up/{i}.png").convert_alpha()
+            for i in range(1, 5)
+        ]
+        self.pl_run_down = [
+            pg.image.load(f"games/maze/img/Walk/Down/{i}.png").convert_alpha()
+            for i in range(1, 5)
+        ]
+        self.pl_run_left = [
+            pg.image.load(f"games/maze/img/Walk/Left/{i}.png").convert_alpha()
+            for i in range(1, 5)
+        ]
+        self.pl_run_right = [
+            pg.image.load(f"games/maze/img/Walk/Right/{i}.png").convert_alpha()
+            for i in range(1, 5)
+        ]
+        self.bg_image = (
+            conf.BG_IMG.convert_alpha()
+        )  # Must stay in main.py Fails if moved to conf.py
 
         self.images = self.pl_idle
         self.image = self.images[0]
@@ -48,15 +63,23 @@ class Player:
         # Check the actual non-transparent pixels of the player's image
         for x in range(self.image.get_width()):
             for y in range(self.image.get_height()):
-                if self.image.get_at((x, y)).a != 0:  # Check if pixel is not transparent
+                if (
+                    self.image.get_at((x, y)).a != 0
+                ):  # Check if pixel is not transparent
                     # Calculate the new position of this pixel
                     new_pixel_x = new_x + x
                     new_pixel_y = new_y + y
                     # Check boundaries
-                    if new_pixel_x >= self.bg_image.get_width() or new_pixel_y >= self.bg_image.get_height():
+                    if (
+                        new_pixel_x >= self.bg_image.get_width()
+                        or new_pixel_y >= self.bg_image.get_height()
+                    ):
                         return False
                     # Check collision with walls
-                    if self.bg_image.get_at((new_pixel_x, new_pixel_y)) != conf.TRANSPARENT:
+                    if (
+                        self.bg_image.get_at((new_pixel_x, new_pixel_y))
+                        != conf.TRANSPARENT
+                    ):
                         return False
         return True
 

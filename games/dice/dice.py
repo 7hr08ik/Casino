@@ -49,7 +49,10 @@ DICE_IMAGES = {
 }
 
 # Resize the dice images to 100x100
-DICE_IMAGES = {key: pygame.transform.scale(image, (60, 60)) for key, image in DICE_IMAGES.items()}
+DICE_IMAGES = {
+    key: pygame.transform.scale(image, (60, 60))
+    for key, image in DICE_IMAGES.items()
+}
 
 # Font setup
 font = pygame.font.SysFont("Arial", 24)
@@ -81,7 +84,10 @@ class Button:
         screen.blit(text_surface, text_rect)
 
     def is_clicked(self, event):
-        return bool(event.type == pygame.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos))
+        return bool(
+            event.type == pygame.MOUSEBUTTONDOWN
+            and self.rect.collidepoint(event.pos)
+        )
 
 
 # Function to roll 3 dice
@@ -105,14 +111,22 @@ def display_text(text, x, y, color, font_size=24):
 def suspense_delay():
     for i in range(3, 0, -1):
         screen.fill(GRAY)
-        display_text(f"Rolling in {i}...", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 50, BLACK, 48)
+        display_text(
+            f"Rolling in {i}...",
+            SCREEN_WIDTH // 2 - 100,
+            SCREEN_HEIGHT // 2 - 50,
+            BLACK,
+            48,
+        )
         pygame.display.update()
         pygame.time.wait(1000)
 
 
 # Function to get player's bet amount
 def get_bet_amount(player_money):
-    input_box = pygame.Rect(SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 - 50, 300, 50)
+    input_box = pygame.Rect(
+        SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 - 50, 300, 50
+    )
     color_inactive = pygame.Color("lightskyblue3")
     color_active = pygame.Color("dodgerblue2")
     color = color_inactive
@@ -140,7 +154,9 @@ def get_bet_amount(player_money):
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                active = not active if input_box.collidepoint(event.pos) else False
+                active = (
+                    not active if input_box.collidepoint(event.pos) else False
+                )
                 color = color_active if active else color_inactive
             if event.type == pygame.KEYDOWN and active:
                 if event.key == pygame.K_RETURN:
@@ -179,8 +195,10 @@ def get_bet_amount(player_money):
 
 
 # #--------------------------------------------------
+#
 # For game_integration
-# Replaced the player name function by pulling player name from load_player_data
+#
+# Replaced this function by pulling player name from load_player_data
 # Making this function redundant. See line 336
 #
 # # Function to prompt for player's name
@@ -198,7 +216,9 @@ def get_bet_amount(player_money):
 #     while True:
 #         screen.fill(GRAY)
 
-#         display_text(" What is your name?", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 60, BLACK, 32)
+#         display_text(" What is your name?", SCREEN_WIDTH // 2 - 100, \
+#                        SCREEN_HEIGHT // 2 - 60, BLACK, 32
+#                       )
 #         pygame.draw.rect(screen, color, input_box, 2)
 #         name_text = pygame.font.SysFont("Arial", 32).render(text, True, color)
 #         screen.blit(name_text, (input_box.x + 5, input_box.y + 5))
@@ -238,7 +258,9 @@ def game_loop(player_name):
     while True:
         screen.fill(GRAY)
         display_text(f"{player_name} Money: £{player_money}", 20, 20, BLACK, 32)
-        display_text(f"House Money: £{house_money}", SCREEN_WIDTH - 300, 20, BLACK, 32)
+        display_text(
+            f"House Money: £{house_money}", SCREEN_WIDTH - 300, 20, BLACK, 32
+        )
         display_text(f"Bet: £{bet}", 20, 60, BLACK, 32)
         display_text("Press 'Q' to Quit or 'R' to Roll", 420, 680, BLACK, 32)
         display_text(f"{player_name}'s Last Rolls:", 20, 140, BLUE, 24)
@@ -246,7 +268,9 @@ def game_loop(player_name):
             display_text(f"{i}. {roll}", 20, 140 + i * 30, BLUE, 24)
         display_text("House's Last Rolls:", SCREEN_WIDTH - 400, 140, RED, 22)
         for i, roll in enumerate(house_roll_history[-5:], 1):
-            display_text(f"{i}. {roll}", SCREEN_WIDTH - 400, 140 + i * 30, RED, 24)
+            display_text(
+                f"{i}. {roll}", SCREEN_WIDTH - 400, 140 + i * 30, RED, 24
+            )
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -273,26 +297,36 @@ def game_loop(player_name):
                     house_dice = roll_dice()
                     player_sum = sum_dice(player_dice)
                     house_sum = sum_dice(house_dice)
-                    player_roll_history.append(f"{player_dice} (Sum: {player_sum})")
-                    house_roll_history.append(f"{house_dice} (Sum: {house_sum})")
+                    player_roll_history.append(
+                        f"{player_dice} (Sum: {player_sum})"
+                    )
+                    house_roll_history.append(
+                        f"{house_dice} (Sum: {house_sum})"
+                    )
 
                     screen.fill(WHITE)
                     screen.blit(DICE_IMAGES[player_dice[0]], (200, 200))
                     screen.blit(DICE_IMAGES[player_dice[1]], (250, 200))
                     screen.blit(DICE_IMAGES[player_dice[2]], (300, 200))
-                    display_text(f"{player_name}'s Dice: {player_dice}", 200, 300, BLUE)
+                    display_text(
+                        f"{player_name}'s Dice: {player_dice}", 200, 300, BLUE
+                    )
                     screen.blit(DICE_IMAGES[house_dice[0]], (500, 200))
                     screen.blit(DICE_IMAGES[house_dice[1]], (550, 200))
                     screen.blit(DICE_IMAGES[house_dice[2]], (600, 200))
                     display_text(f"House Dice: {house_dice}", 500, 300, RED)
 
                     if player_sum > house_sum:
-                        display_text(f"{player_name} Wins £{bet}", 300, 400, GREEN, 48)
+                        display_text(
+                            f"{player_name} Wins £{bet}", 300, 400, GREEN, 48
+                        )
                         player_money += bet
                         player_data["cash_balance"] += bet
                         house_money -= bet
                     elif player_sum < house_sum:
-                        display_text(f"The House Wins £{bet}", 300, 400, RED, 48)
+                        display_text(
+                            f"The House Wins £{bet}", 300, 400, RED, 48
+                        )
                         player_money -= bet
                         player_data["cash_balance"] -= bet
                         house_money += bet
@@ -313,17 +347,39 @@ def game_loop(player_name):
 
 # Menu function
 def main_menu():
-    start_button = Button("Start Game", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 60, 200, 50, GRAY, GREEN)
-    quit_button = Button("Quit Game", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 20, 200, 50, GRAY, RED)
+    start_button = Button(
+        "Start Game",
+        SCREEN_WIDTH // 2 - 100,
+        SCREEN_HEIGHT // 2 - 60,
+        200,
+        50,
+        GRAY,
+        GREEN,
+    )
+    quit_button = Button(
+        "Quit Game",
+        SCREEN_WIDTH // 2 - 100,
+        SCREEN_HEIGHT // 2 + 20,
+        200,
+        50,
+        GRAY,
+        RED,
+    )
     clock = pygame.time.Clock()
 
     player_data = load_player_data()  # For game_integration
 
     while True:
         screen.fill(BLACK)
-        
+
         screen.blit(BG_IMG, (0, 0))
-        display_text("3 Dice Teesside Casino", SCREEN_WIDTH // 2 - 250, SCREEN_HEIGHT // 2 - 200, WHITE, 48)
+        display_text(
+            "3 Dice Teesside Casino",
+            SCREEN_WIDTH // 2 - 250,
+            SCREEN_HEIGHT // 2 - 200,
+            WHITE,
+            48,
+        )
 
         start_button.draw(screen)
         quit_button.draw(screen)

@@ -7,9 +7,8 @@
 #
 # Main Imports
 import json
-import sys
-from pathlib import Path
 import os
+import sys
 import tempfile
 
 # Local Imports
@@ -91,11 +90,13 @@ def main():
         # Give Targets an action
         #
         # Target 1
-        if player.rect.colliderect(pg.Rect(conf.t_pos[0], conf.t_pos[1], conf.t_size, conf.t_size)):
+        if player.rect.colliderect(
+            pg.Rect(conf.t_pos[0], conf.t_pos[1], conf.t_size, conf.t_size)
+        ):
             # For game_integration
-            with open(TEMP_FILE, "w") as f: # Save current data to tmp
+            with open(TEMP_FILE, "w") as f:  # Save current data to tmp
                 json.dump(player_data, f)
-            maze_exit(screen, player_data) # run exit sequence with latest data
+            maze_exit(screen, player_data)  # run exit sequence with latest data
 
             pg.quit()
             sys.exit()

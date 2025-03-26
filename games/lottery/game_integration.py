@@ -14,7 +14,9 @@ import tempfile
 import pygame as pg
 
 # Add Casino project root directory to Python path
-casino_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+casino_root = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..", "..")
+)
 sys.path.append(casino_root)
 
 # Import your existing systems
@@ -80,7 +82,9 @@ def save_and_exit(screen, player_data):
 
     # Save to full database as well
     save_player_data(
-        player_data["player_name"], player_data["cash_balance"], player_data["high_scores"]
+        player_data["player_name"],
+        player_data["cash_balance"],
+        player_data["high_scores"],
     )
 
     return_to_lobby()
@@ -105,7 +109,9 @@ def maze_exit(screen, player_data):
 
     # Save to main database
     save_player_data(
-        player_data["player_name"], player_data["cash_balance"], player_data["high_scores"]
+        player_data["player_name"],
+        player_data["cash_balance"],
+        player_data["high_scores"],
     )
 
     # Show exit UI

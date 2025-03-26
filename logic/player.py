@@ -23,10 +23,18 @@ class Player:
         # Put them into lists, one for each direction.
         pgl = pg.image.load
         self.pl_idle = [pgl("img/Idle/Idle.png").convert_alpha()]
-        self.pl_run_up = [pgl(f"img/Walk/Up/{i}.png").convert_alpha() for i in range(1, 5)]
-        self.pl_run_down = [pgl(f"img/Walk/Down/{i}.png").convert_alpha() for i in range(1, 5)]
-        self.pl_run_left = [pgl(f"img/Walk/Left/{i}.png").convert_alpha() for i in range(1, 5)]
-        self.pl_run_right = [pgl(f"img/Walk/Right/{i}.png").convert_alpha() for i in range(1, 5)]
+        self.pl_run_up = [
+            pgl(f"img/Walk/Up/{i}.png").convert_alpha() for i in range(1, 5)
+        ]
+        self.pl_run_down = [
+            pgl(f"img/Walk/Down/{i}.png").convert_alpha() for i in range(1, 5)
+        ]
+        self.pl_run_left = [
+            pgl(f"img/Walk/Left/{i}.png").convert_alpha() for i in range(1, 5)
+        ]
+        self.pl_run_right = [
+            pgl(f"img/Walk/Right/{i}.png").convert_alpha() for i in range(1, 5)
+        ]
         self.keys = None
         self.key_list = (
             pg.K_UP,
@@ -86,13 +94,17 @@ class Player:
         if (self.keys[pg.K_UP] or self.keys[pg.K_w]) and self.pos_y > 0:
             self.pos_y -= conf.mv_spd
             self.images = self.pl_run_up  # player image ^ up facing
-        if (self.keys[pg.K_DOWN] or self.keys[pg.K_s]) and self.pos_y < (conf.WIN_SIZE[1] - 15):
+        if (self.keys[pg.K_DOWN] or self.keys[pg.K_s]) and self.pos_y < (
+            conf.WIN_SIZE[1] - 15
+        ):
             self.pos_y += conf.mv_spd
             self.images = self.pl_run_down  # player image = down facing
         if (self.keys[pg.K_LEFT] or self.keys[pg.K_a]) and (self.pos_x > 0):
             self.pos_x -= conf.mv_spd
             self.images = self.pl_run_left  # player image < left facing
-        if (self.keys[pg.K_RIGHT] or self.keys[pg.K_d]) and self.pos_x < (conf.WIN_SIZE[0] - 15):
+        if (self.keys[pg.K_RIGHT] or self.keys[pg.K_d]) and self.pos_x < (
+            conf.WIN_SIZE[0] - 15
+        ):
             self.pos_x += conf.mv_spd
             self.images = self.pl_run_right  # player image > right facing
         # Check if no movement keys are pressed and set animation to idle

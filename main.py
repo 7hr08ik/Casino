@@ -29,7 +29,7 @@ from ui.ui import UIElements
 leave_game = True
 
 # For game_integration
-# Platform agnostic temp file
+# Platform agnostic temp file, does NOT work when linking to conf file???
 TEMP_FILE = os.path.join(tempfile.gettempdir(), "current_player.json")
 
 
@@ -51,7 +51,9 @@ def draw_target(screen, color, position, size, alpha=0):
     screen.blit(target_surface, position)
 
 
-def activate_target(screen, player_data, player_rect, target_rect, game_command=None):
+def activate_target(
+    screen, player_data, player_rect, target_rect, game_command=None
+):
     """
     When player reaches target, run given command
     """
@@ -114,7 +116,7 @@ def main():
     # Check if TEMP_FILE exists and load player data
     try:
         # If temp exists but is older than 60s, delete
-        # If it is there, its probably becuase the game crashed.
+        # If it is there, its probably because the game crashed.
         if os.path.exists(TEMP_FILE):
             file_age_limit = 60
             st = os.stat(TEMP_FILE)
@@ -144,7 +146,11 @@ def main():
             pg.quit()
             sys.exit()
         # Print player info, to check things are working
-        print(f"Welcome, {player_data['player_name']}! Balance: ${player_data['cash_balance']}")
+        print(
+            f"Welcome, {player_data['player_name']}! Balance: ${
+                player_data['cash_balance']
+            }"
+        )
 
     # 4 - Initialize game elements
     running = True
@@ -181,12 +187,18 @@ def main():
 
         # Draw text on screen
         player_info = font.render(
-            f"Player: {player_data['player_name']} | Balance: ${player_data['cash_balance']}",
+            f"Player: {player_data['player_name']} | Balance: ${
+                player_data['cash_balance']
+            }",
             True,
             (255, 255, 255),
         )
-        instruct_text = small_font.render("WASD, or Arrows keys to move", True, (255, 255, 255))
-        instruct_rect = instruct_text.get_rect(center=(screen.get_width() // 2, 650))
+        instruct_text = small_font.render(
+            "WASD, or Arrows keys to move", True, (255, 255, 255)
+        )
+        instruct_rect = instruct_text.get_rect(
+            center=(screen.get_width() // 2, 650)
+        )
 
         screen.blit(player_info, (10, 10))
         screen.blit(instruct_text, instruct_rect)
@@ -238,6 +250,7 @@ def main():
     # Try to delete the TEMP_FILE if it exists
     with contextlib.suppress(OSError):
         os.remove(TEMP_FILE)
+
     pg.quit()
     sys.exit()
 

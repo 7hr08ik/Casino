@@ -46,12 +46,22 @@ YELLOW = (255, 215, 0)
 ORANGE = (255, 165, 0)
 
 # Load and scale the background image (Rob)
-BG_IMAGE = pygame.image.load("games/lottery/img/background_image.png").convert_alpha()
+BG_IMAGE = pygame.image.load(
+    "games/lottery/img/background_image.png"
+).convert_alpha()
 BG_IMAGE = pygame.transform.scale(BG_IMAGE, (W, H))
 
 # Lottery setup: number of picks and grid for number buttons
 N = 6
-btns = [(i, pygame.Rect(20 + ((i - 1) % 10) * 50, 115 + ((i - 1) // 10) * 50, 45, 45)) for i in range(1, 60)]
+btns = [
+    (
+        i,
+        pygame.Rect(
+            20 + ((i - 1) % 10) * 50, 115 + ((i - 1) // 10) * 50, 45, 45
+        ),
+    )
+    for i in range(1, 60)
+]
 
 # Global game state variables
 u_nums, d_nums, matches = [], [], []
@@ -93,7 +103,11 @@ def load_favs():
     global favs
     if os.path.exists("games/lottery/logs/favs.txt"):
         with open("games/lottery/logs/favs.txt") as f:
-            favs = [list(map(int, line.strip().split(","))) for line in f.read().splitlines() if line.strip()]
+            favs = [
+                list(map(int, line.strip().split(",")))
+                for line in f.read().splitlines()
+                if line.strip()
+            ]
     # else:
     #     favs = []
     #     print("favs load")
@@ -150,9 +164,24 @@ def nav(home, menu, exit):
     Returns the list of navigation buttons.
     """
     nav_btns = [
-        {"l": "Home", "r": pygame.Rect(20, H - 60, 120, 40), "a": home, "c": ORANGE},
-        {"l": "Menu", "r": pygame.Rect(160, H - 60, 120, 40), "a": menu, "c": BLUE},
-        {"l": "Exit", "r": pygame.Rect(W - 140, H - 60, 120, 40), "a": exit, "c": RED},
+        {
+            "l": "Home",
+            "r": pygame.Rect(20, H - 60, 120, 40),
+            "a": home,
+            "c": ORANGE,
+        },
+        {
+            "l": "Menu",
+            "r": pygame.Rect(160, H - 60, 120, 40),
+            "a": menu,
+            "c": BLUE,
+        },
+        {
+            "l": "Exit",
+            "r": pygame.Rect(W - 140, H - 60, 120, 40),
+            "a": exit,
+            "c": RED,
+        },
     ]
     for b in nav_btns:
         pygame.draw.rect(SCREEN, b["c"], b["r"], border_radius=8)
@@ -227,7 +256,11 @@ def start_screen():
     load_favs()
     jackpot = "£10M"
     btns_list = [
-        {"l": "Play", "r": pygame.Rect(20, 250, 200, 50), "a": selection_screen},
+        {
+            "l": "Play",
+            "r": pygame.Rect(20, 250, 200, 50),
+            "a": selection_screen,
+        },
         {
             "l": "Lucky Dip",
             "r": pygame.Rect(20, 320, 200, 50),
@@ -370,17 +403,33 @@ def play_favs_screen():
         for i, fav in enumerate(favs):
             base_rect = pygame.Rect((W - 300) // 2, 200 + i * 50, 300, 40)
             edit_rect = pygame.Rect(base_rect.right + 10, base_rect.top, 60, 40)
-            delete_rect = pygame.Rect(edit_rect.right + 10, base_rect.top, 60, 40)
+            delete_rect = pygame.Rect(
+                edit_rect.right + 10, base_rect.top, 60, 40
+            )
             fav_btns.append((i, fav, base_rect, edit_rect, delete_rect))
         # Draw each favourite set and its Edit/Delete buttons
         for i, fav, base_rect, edit_rect, delete_rect in fav_btns:
             btn(base_rect, f"Set {i + 1}: {', '.join(map(str, fav))}")
             pygame.draw.rect(SCREEN, ORANGE, edit_rect, border_radius=8)
             pygame.draw.rect(SCREEN, BLACK, edit_rect, 2, border_radius=8)
-            txt("Edit", TEXT_FONT, BLACK, edit_rect.centerx, edit_rect.centery, True)
+            txt(
+                "Edit",
+                TEXT_FONT,
+                BLACK,
+                edit_rect.centerx,
+                edit_rect.centery,
+                True,
+            )
             pygame.draw.rect(SCREEN, RED, delete_rect, border_radius=8)
             pygame.draw.rect(SCREEN, BLACK, delete_rect, 2, border_radius=8)
-            txt("Delete", TEXT_FONT, BLACK, delete_rect.centerx, delete_rect.centery, True)
+            txt(
+                "Delete",
+                TEXT_FONT,
+                BLACK,
+                delete_rect.centerx,
+                delete_rect.centery,
+                True,
+            )
         n_buttons = nav(
             start_screen,
             selection_screen,
@@ -463,7 +512,9 @@ def rules_screen():
         txt("Rules", BIG_TITLE_FONT, BLACK, W // 2, 30, True)
         # Create a semi-transparent panel for rule text
         panel_margin = 10
-        panel_rect = pygame.Rect(panel_margin, 60, W - 2 * panel_margin, H - 100)
+        panel_rect = pygame.Rect(
+            panel_margin, 60, W - 2 * panel_margin, H - 100
+        )
         panel_surface = pygame.Surface((panel_rect.width, panel_rect.height))
         panel_surface.set_alpha(200)
         panel_surface.fill(GREY)
@@ -493,8 +544,12 @@ def rules_screen():
                 SCREEN.blit(first_line_surface, (start_x + indent, current_y))
                 current_y += line_spacing
                 for extra_line in lines[1:]:
-                    extra_line_surface = TEXT_FONT.render(extra_line, True, WHITE)
-                    SCREEN.blit(extra_line_surface, (start_x + indent, current_y))
+                    extra_line_surface = TEXT_FONT.render(
+                        extra_line, True, WHITE
+                    )
+                    SCREEN.blit(
+                        extra_line_surface, (start_x + indent, current_y)
+                    )
                     current_y += line_spacing
             else:
                 current_y += line_spacing
@@ -575,7 +630,14 @@ def game_screen():
             120,
             True,
         )
-        txt(f"Drawn: {', '.join(map(str, d_nums))}", TEXT_FONT, WHITE, W // 2, 160, True)
+        txt(
+            f"Drawn: {', '.join(map(str, d_nums))}",
+            TEXT_FONT,
+            WHITE,
+            W // 2,
+            160,
+            True,
+        )
         txt(
             f"Matches: {', '.join(map(str, matches)) if matches else 'None'}",
             TEXT_FONT,

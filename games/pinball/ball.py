@@ -33,10 +33,11 @@ class PlayerBall:
 
         The function applies gravity, then checks if the new position is
         valid on the game board. If a collision is detected on the board,
-        the appropriate velocity component is reversed by multiplying by the bounce factor.
-        Additionally, if a collision with any of the flippers is detected,
-        a separate bounce with additional offset is applied, and the ball is
-        repositioned to avoid slipping through the flipper.
+        the appropriate velocity component is reversed by multiplying by
+        the bounce factor. Additionally, if a collision with any of the
+        flippers is detected, a separate bounce with additional offset
+        is applied, and the ball is repositioned to avoid slipping through
+        the flipper.
         """
         # Apply gravity to vertical movement.
         self.moveY += self.gravity
@@ -57,7 +58,8 @@ class PlayerBall:
             if not board.can_move(self.x, self.y + self.moveY, self.sizeX):
                 self.moveY *= self.bounce_factor
 
-        # Detect when ball and flipper collide, and increase bounce factor by adding fl_bounce_factor
+        # Detect when ball and flipper collide
+        # and increase bounce factor by adding fl_bounce_factor
         if board.ball_fl_collision(self.x, self.y, self.sizeX):
             self.moveX *= self.fl_bounce_factor
             self.moveY *= self.fl_bounce_factor

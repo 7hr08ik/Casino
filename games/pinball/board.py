@@ -16,7 +16,7 @@ from game_integration import save_and_exit
 
 class GameBoard:
     def __init__(self):
-        # Setup images and masks
+        # Setup images
         self.bg_image = conf.bg.convert_alpha()
         self.bg_mask = pg.mask.from_surface(self.bg_image)
         # Initialize flippers
@@ -24,6 +24,8 @@ class GameBoard:
         self.right_flipper = Flipper(is_left=False)
         # Initialize ball
         self.ball = PlayerBall(conf.b_size, conf.pos)
+
+        self.small_font = pg.font.Font(None, 24)
 
         self.keys = None
 
@@ -35,7 +37,10 @@ class GameBoard:
         flipper_mask = pg.mask.from_surface(flipper.image)
 
         # Calculate offset for ball vs. the flipper’s top-left rect
-        offset = (int(new_x - radius - flipper.rect.x), int(new_y - radius - flipper.rect.y))
+        offset = (
+            int(new_x - radius - flipper.rect.x),
+            int(new_y - radius - flipper.rect.y),
+        )
 
         return flipper_mask.overlap(ball_mask, offset) is not None
 
@@ -45,14 +50,20 @@ class GameBoard:
         """
         # Temporary ball surface and mask
         ball_surface = pg.Surface((radius * 2, radius * 2))
-        pg.draw.circle(ball_surface, (255, 255, 255, 255), (radius, radius), radius)
+        pg.draw.circle(
+            ball_surface, (255, 255, 255, 255), (radius, radius), radius
+        )
         ball_mask = pg.mask.from_surface(ball_surface)
 
         # TODO: If the ball collides with the flipper increase bounce factor by variable
         # Check overlap with the left flipper
         return bool(
-            self.ball_fl_mask_overlap(self.left_flipper, new_x, new_y, radius, ball_mask)
-            or self.ball_fl_mask_overlap(self.right_flipper, new_x, new_y, radius, ball_mask)
+            self.ball_fl_mask_overlap(
+                self.left_flipper, new_x, new_y, radius, ball_mask
+            )
+            or self.ball_fl_mask_overlap(
+                self.right_flipper, new_x, new_y, radius, ball_mask
+            )
         )
 
     def ball_bg_collision(self, new_x, new_y, radius):
@@ -60,7 +71,9 @@ class GameBoard:
         Returns False if there's a collision with the background.
         """
         ball_surface = pg.Surface((radius * 2, radius * 2))
-        pg.draw.circle(ball_surface, (255, 255, 255, 255), (radius, radius), radius)
+        pg.draw.circle(
+            ball_surface, (255, 255, 255, 255), (radius, radius), radius
+        )
         ball_mask = pg.mask.from_surface(ball_surface)
 
         offset = (int(new_x - radius), int(new_y - radius))
@@ -81,7 +94,7 @@ class GameBoard:
     def key_input(self, screen, player_data):
         """
         Updates the angle of the flippers.
-        Only need to set the target angle for the Flipper class to handle the rest.
+        Only need to set target angle so the Flipper class will handle the rest.
 
         Left Flipper - Clockwise
         Right Flipper - Counter-clockwise
@@ -125,9 +138,20 @@ class GameBoard:
     def draw_background(self, screen):
         screen.blit(self.bg_image, (0, 0))
 
+        # Nav text in center screen below box
+        nav_text = self.small_font.render(
+            "Press 'Esc or Q' to return to the Lobby",
+            True,
+            (255, 255, 255),
+        )
+        nav_rect = nav_text.get_rect(
+            center=(screen.get_width() // 2, screen.get_height() - 60)
+        )
+        screen.blit(nav_text, nav_rect)
+
     def draw_flippers(self, screen):
         """
-        Draws the flippers on the board using their rotated image and anchored rect.
+        Draws the flippers on the board with the rotated image and anchor.
         This ensures the rotation happens around the fixed pivot point.
         """
         screen.blit(self.left_flipper.image, self.left_flipper.rect)

@@ -24,7 +24,9 @@ class Ui:
         self.cost = 0
         # self.starting_balance = 50 # Original
         player_data = load_player_data()  # For game_integration
-        self.starting_balance = player_data["cash_balance"]  # Replace original cash variable
+        self.starting_balance = player_data[
+            "cash_balance"
+        ]  # Replace original cash variable
         self.balance = self.starting_balance
 
         # UI styling
@@ -43,22 +45,30 @@ class Ui:
     def draw_ui(self, screen):
         # Update timer and cost
         current_time = pg.time.get_ticks()
-        elapsed_time = (current_time - self.start_time) / 1000  # Convert to seconds
+        elapsed_time = (
+            current_time - self.start_time
+        ) / 1000  # Convert to seconds
         self.cost = int(elapsed_time * conf.cost_per_second)
 
         # Update balance
         self.balance = self.starting_balance - self.cost
 
         # Create timer text
-        timer_text = self.font.render(f"Time: {int(elapsed_time)}s", True, self.text_color)
+        timer_text = self.font.render(
+            f"Time: {int(elapsed_time)}s", True, self.text_color
+        )
         timer_rect = timer_text.get_rect(topleft=(1080, 70))
 
         # Create cost text
-        cost_text = self.font.render(f"Cost: ${self.cost}", True, self.text_color)
+        cost_text = self.font.render(
+            f"Cost: ${self.cost}", True, self.text_color
+        )
         cost_rect = cost_text.get_rect(topleft=(1080, 110))
 
         # Create balance text
-        balance_text = self.font.render(f"Balance: ${self.balance}", True, self.text_color)
+        balance_text = self.font.render(
+            f"Balance: ${self.balance}", True, self.text_color
+        )
         balance_rect = balance_text.get_rect(topleft=(1080, 630))
 
         # Draw background
@@ -68,8 +78,12 @@ class Ui:
         pg.draw.rect(screen, self.background_color, background_rect_1)
 
         # Draw border
-        pg.draw.rect(screen, self.border_color, background_rect, self.border_width)
-        pg.draw.rect(screen, self.border_color, background_rect_1, self.border_width)
+        pg.draw.rect(
+            screen, self.border_color, background_rect, self.border_width
+        )
+        pg.draw.rect(
+            screen, self.border_color, background_rect_1, self.border_width
+        )
 
         # Draw UI elements
         screen.blit(timer_text, timer_rect)

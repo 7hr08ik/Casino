@@ -122,7 +122,7 @@ leave_table_button = pygame.Rect(1070, 670, 200, 40)
 
 
 def betting():
-    global var_money, var_bet, active_2
+    global active_2
 
     # For game_integration
     player_data = load_player_data()  # Load the data
@@ -141,22 +141,24 @@ def betting():
         var_bet = var_money
         var_money = int(var_money) - int(var_bet)
     else:
-        if var_money < int(var_bet):  # prevents var_Bet from not being an integer
+        if var_money < int(
+            var_bet
+        ):  # prevents var_Bet from not being an integer
             print("Insufficient Funds")
         var_money = var_money - int(var_bet)
     roulettewheelspin()
 
 
 def randomiser():
-    global var_ball, var_ballcolour, var_BallQuarter
+    global var_ball, var_ballcolour, var_ballquarter
     black = [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35]
     var_ball = random.randint(0, 36)
     if var_ball < 12:
-        var_BallQuarter = "1st Third"
+        var_ballquarter = "1st Third"
     elif var_ball < 24:
-        var_BallQuarter = "2nd Third"
+        var_ballquarter = "2nd Third"
     elif var_ball <= 36:
-        var_BallQuarter = "3rd Third"
+        var_ballquarter = "3rd Third"
     else:
         print("wtf")
     if var_ball == 0:
@@ -169,7 +171,14 @@ def randomiser():
 
 
 def wincheck():
-    global var_bet, var_money, var_bettype, var_betequals, var_ball, var_ballcolour, var_BallQuarter
+    global \
+        var_bet, \
+        var_money, \
+        var_bettype, \
+        var_betequals, \
+        var_ball, \
+        var_ballcolour, \
+        var_ballquarter
 
     # For game_integration
     player_data = load_player_data()  # Load the data
@@ -184,16 +193,19 @@ def wincheck():
             if var_ballcolour == "Green" and var_betequals == "Green":
                 var_money = int(var_money) + (int(var_bet) * 50)
                 # For game_integration
-                player_data["cash_balance"] = int(var_money) + (int(var_bet) * 50)
+                player_data["cash_balance"] = int(var_money) + (
+                    int(var_bet) * 50
+                )
             else:
                 var_money = int(var_money) + (int(var_bet) * 2)
                 # For game_integration
-                player_data["cash_balance"] = int(var_money) + (int(var_bet) * 2)
-    elif var_bettype.lower() == "third":
-        if var_BallQuarter == var_betequals:
-            var_money = int(var_money) + (int(var_bet) * 12)
-            # For game_integration
-            player_data["cash_balance"] = int(var_money) + (int(var_bet) * 12)
+                player_data["cash_balance"] = int(var_money) + (
+                    int(var_bet) * 2
+                )
+    elif var_bettype.lower() == "third" and var_ballquarter == var_betequals:
+        var_money = int(var_money) + (int(var_bet) * 12)
+        # For game_integration
+        player_data["cash_balance"] = int(var_money) + (int(var_bet) * 12)
     var_betequals = ""
     var_bet = ""
     return ()
@@ -235,10 +247,14 @@ def drawwindow():
     global roulette_wheel, var_ball, rotations
     topleft = [57, 50]
     try:
-        rotated_wheel = pygame.transform.rotate(roulette_wheel, rotations[var_ball])
+        rotated_wheel = pygame.transform.rotate(
+            roulette_wheel, rotations[var_ball]
+        )
     except:
         rotated_wheel = pygame.transform.rotate(roulette_wheel, rotations[0])
-    new_rect = rotated_wheel.get_rect(center=roulette_wheel.get_rect(topleft=topleft).center)
+    new_rect = rotated_wheel.get_rect(
+        center=roulette_wheel.get_rect(topleft=topleft).center
+    )
     Window.blit(rotated_wheel, new_rect)
     drawtextboxbetequals()
     drawtextboxbet()
@@ -267,7 +283,9 @@ def drawleavetable():
     color = BLUE
     pygame.draw.rect(Window, color, leave_table_button, 2)
     text_surface_2 = font1.render("Leave Table", True, BLACK)
-    Window.blit(text_surface_2, (leave_table_button.x + 10, leave_table_button.y + 7))
+    Window.blit(
+        text_surface_2, (leave_table_button.x + 10, leave_table_button.y + 7)
+    )
 
 
 # Main Game Loop

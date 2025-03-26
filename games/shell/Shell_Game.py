@@ -10,13 +10,8 @@ import time
 
 import pygame
 
-
 # For game_integration
-from game_integration import (
-    load_player_data,
-    save_and_exit,
-    check_balance
-)
+from game_integration import check_balance, load_player_data, save_and_exit
 
 # Initialize Pygame
 pygame.init()
@@ -43,7 +38,9 @@ bg_image = pygame.image.load("games/shell/img/background.jpg")
 # Load character sprites
 player_sprite = pygame.image.load("games/shell/img/3.png")
 player_victory_sprite = pygame.image.load("games/shell/img/3_victory.png")
-player_victory_sprite = pygame.transform.scale(player_victory_sprite, (200, 350))
+player_victory_sprite = pygame.transform.scale(
+    player_victory_sprite, (200, 350)
+)
 
 # Define shell positions
 shell_positions = [(250, 200), (500, 200), (750, 200)]
@@ -57,7 +54,7 @@ play_again_button = pygame.Rect(700, 500, BUTTON_WIDTH, BUTTON_HEIGHT)
 # Betting System
 # For game_integration
 # Replace original cash variable:
-player_data = load_player_data() # Load the data
+player_data = load_player_data()  # Load the data
 # cash_credit = 100  # Starting credit # Original
 cash_credit = player_data["cash_balance"]
 
@@ -85,11 +82,21 @@ def draw_game(show_ball=False, message=None, victory=False):
             screen.blit(ball_image, (pos[0] - 25, pos[1] + 30))
 
     player_x, player_y = 1050, 250
-    screen.blit(player_victory_sprite if victory else player_sprite, (player_x, player_y))
+    screen.blit(
+        player_victory_sprite if victory else player_sprite,
+        (player_x, player_y),
+    )
 
     pygame.draw.rect(screen, (200, 0, 0), quit_button, border_radius=10)
     pygame.draw.rect(screen, (0, 200, 0), play_again_button, border_radius=10)
-    draw_text("Quit", font, (255, 255, 255), screen, quit_button.centerx, quit_button.centery)
+    draw_text(
+        "Quit",
+        font,
+        (255, 255, 255),
+        screen,
+        quit_button.centerx,
+        quit_button.centery,
+    )
     draw_text(
         "Play Again",
         font,
@@ -100,13 +107,26 @@ def draw_game(show_ball=False, message=None, victory=False):
     )
 
     if message:
-        draw_text(message, message_font, (255, 215, 0), screen, WIDTH // 2, HEIGHT // 2 - 100)
+        draw_text(
+            message,
+            message_font,
+            (255, 215, 0),
+            screen,
+            WIDTH // 2,
+            HEIGHT // 2 - 100,
+        )
 
-    draw_text(f"Credit: £{cash_credit}", font, (255, 255, 255), screen, 1100, 420)
+    draw_text(
+        f"Credit: £{cash_credit}", font, (255, 255, 255), screen, 1100, 420
+    )
     draw_text(f"Bet: £{bet}", font, (255, 255, 255), screen, 1100, 460)
 
-    pygame.draw.rect(screen, (0, 200, 200), increase_bet_button, border_radius=5)
-    pygame.draw.rect(screen, (200, 100, 0), decrease_bet_button, border_radius=5)
+    pygame.draw.rect(
+        screen, (0, 200, 200), increase_bet_button, border_radius=5
+    )
+    pygame.draw.rect(
+        screen, (200, 100, 0), decrease_bet_button, border_radius=5
+    )
     draw_text(
         "+£10",
         font,
@@ -183,7 +203,11 @@ while running:
                         result_timer = pygame.time.get_ticks()
                         show_result = True
 
-    if show_result and result_timer and pygame.time.get_ticks() - result_timer > 2000:
+    if (
+        show_result
+        and result_timer
+        and pygame.time.get_ticks() - result_timer > 2000
+    ):
         show_result = False
         result_message = None
         result_timer = None
@@ -191,5 +215,5 @@ while running:
         ball_position = random.choice([0, 1, 2])
     if cash_credit < 1:
         # For game_integration
-        check_balance(screen, player_data) # check for no money
+        check_balance(screen, player_data)  # check for no money
 pygame.quit()

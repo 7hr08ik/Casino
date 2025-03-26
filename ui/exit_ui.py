@@ -65,10 +65,13 @@ class ExitUI:
         info_box_height = 150
         info_box = pg.Rect(50, 80, info_box_width, info_box_height)
         credits_box_width = 300  # 1/4 of the screen with 50 border
-        credits_box_height = 400 - info_box_height  # Remaining height with 50 border
+        credits_box_height = (
+            400 - info_box_height
+        )  # Remaining height with 50 border
         credits_box = pg.Rect(
             1230 - credits_box_width,  # (screen width - border) - credits width
-            700 - credits_box_height,  # (screen height - border) - credits height
+            700
+            - credits_box_height,  # (screen height - border) - credits height
             credits_box_width,
             credits_box_height,
         )
@@ -82,21 +85,39 @@ class ExitUI:
         # Text
         title_text = self.font.render("Your Account Details:", True, ("white"))
         high_score_text = self.font.render(
-            f"Highest Score: ${current_player['high_scores']['cash']}", True, ("white")
+            f"Highest Score: ${current_player['high_scores']['cash']}",
+            True,
+            ("white"),
         )
         cash_balance_text = self.font.render(
-            f"Current Balance: ${current_player['cash_balance']}", True, ("white")
+            f"Current Balance: ${current_player['cash_balance']}",
+            True,
+            ("white"),
         )
         goodbye_lines = [
             "Thank you for visiting the Casino!",
             "We hope to see you again soon!",
             "Goodbye!",
         ]
-        goodbye_texts = [self.font.render(line, True, ("white")) for line in goodbye_lines]
-        help_text = self.small_font.render("Press the 'ANY' key to continue ;)", True, ("white"))
-        credits_text = self.small_font.render("Project Credits:", True, ("white"))
-        names = ["Rob Hickling", "Paul Leanca", "Viorica Anghel", "Sorin Sofronov", "James Young"]
-        names_texts = [self.small_font.render(name, True, ("white")) for name in names]
+        goodbye_texts = [
+            self.font.render(line, True, ("white")) for line in goodbye_lines
+        ]
+        help_text = self.small_font.render(
+            "Press the 'ANY' key to continue ;)", True, ("white")
+        )
+        credits_text = self.small_font.render(
+            "Project Credits:", True, ("white")
+        )
+        names = [
+            "Rob Hickling",
+            "Paul Leanca",
+            "Viorica Anghel",
+            "Sorin Sofronov",
+            "James Young",
+        ]
+        names_texts = [
+            self.small_font.render(name, True, ("white")) for name in names
+        ]
         help_rect = help_text.get_rect(topleft=(50, 680))
 
         # ----------------------------------
@@ -110,7 +131,10 @@ class ExitUI:
         pg.draw.rect(self.screen, ("white"), credits_box, 2)
 
         # Blit Items to the screen
-        self.screen.blit(title_text, (self.screen.get_width() / 2 - title_text.get_width() / 2, 20))
+        self.screen.blit(
+            title_text,
+            (self.screen.get_width() / 2 - title_text.get_width() / 2, 20),
+        )
         self.screen.blit(player_name_text, (info_box.x + 20, info_box.y + 20))
         self.screen.blit(high_score_text, (info_box.x + 20, info_box.y + 60))
         self.screen.blit(cash_balance_text, (info_box.x + 20, info_box.y + 100))
@@ -118,7 +142,9 @@ class ExitUI:
 
         # Blit each name in the list
         for i, name_text in enumerate(names_texts):
-            self.screen.blit(name_text, (credits_box.x + 20, credits_box.y + 60 + i * 30))
+            self.screen.blit(
+                name_text, (credits_box.x + 20, credits_box.y + 60 + i * 30)
+            )
 
         # Blit each goodbye message in the list
         y_offset = 200 + info_box_height
@@ -132,7 +158,9 @@ class ExitUI:
         # Finally
         # Save the current player data
         self.save_player(
-            player_data["player_name"], player_data["cash_balance"], player_data["high_scores"]
+            player_data["player_name"],
+            player_data["cash_balance"],
+            player_data["high_scores"],
         )
 
     def print_exit_ui(self, screen, player_data):
@@ -153,7 +181,9 @@ class ExitUI:
 
         # Save player data and exit
         self.save_player(
-            player_data["player_name"], player_data["cash_balance"], player_data["high_scores"]
+            player_data["player_name"],
+            player_data["cash_balance"],
+            player_data["high_scores"],
         )
         print("Player data saved. Exiting game.")
 
