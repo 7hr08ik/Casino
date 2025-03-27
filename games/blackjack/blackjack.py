@@ -12,6 +12,7 @@
 #    # For game_integration
 # ===========================
 
+import os
 import random
 import sys
 import time
@@ -19,7 +20,16 @@ import time
 import pygame
 
 # For game_integration
-from game_integration import check_balance, load_player_data, save_and_exit
+# Add Casino project root directory to Python path
+casino_root = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..", "..")
+)  # Up 2 folders
+sys.path.append(casino_root)  # Append to imports below this
+from integration_module.game_integration import (  # noqa: E402
+    check_balance,
+    load_player_data,
+    save_and_exit,
+)
 
 # Initialize Pygame
 pygame.init()

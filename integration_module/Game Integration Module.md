@@ -11,6 +11,9 @@ Call check_balance() regularly in the game loop
 Use save_and_exit() instead of normal exit procedures
 Remove any existing save/load systems
 
+Note to add
+-----------
+
 # Modified by: Rob Hickling
 # 21/03/2025
 # Added functionality for saving and loading player data
@@ -24,10 +27,16 @@ Add Imports:
 ```py
 
 # For game_integration
-from game_integration import (
+# Add Casino project root directory to Python path
+casino_root = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..", "..")
+) # Up 2 folders
+sys.path.append(casino_root) # Append to imports below this
+from integration_module.game_integration import (  # noqa: E402
+    check_balance,
     load_player_data,
     save_and_exit,
-    check_balance
+    maze_exit,
 )
 
 ```
@@ -67,7 +76,6 @@ self.balance = player_data["cash_balance"]
 
 player_data["cash_balance"] += amount  # or -= amount
 current_cash = player_data["cash_balance"]
-
 
 
 Testing procedure:

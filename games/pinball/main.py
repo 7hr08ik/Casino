@@ -1,18 +1,37 @@
-# # ===========================
-# # Pinball
-# #
-# # Author: Rob Hickling -- E4491341
-# # 04/02/2025
-# # ===========================
-# #
-# # Imports
+# ===========================
+# Pinball
+#
+# Author: Rob Hickling -- E4491341
+# 04/02/2025
+#
+# Modified by: Rob Hickling
+# 21/03/2025
+# Added functionality for saving and loading player data
+# required for integration into the lobby
+# all commented with;
+#    # For game_integration
+# ===========================
+
+# Imports
+import os
+import sys
+
 import conf
 import pygame as pg
 from ball import PlayerBall
 from board import GameBoard
 
 # For game_integration
-from game_integration import check_balance, load_player_data, save_and_exit
+# Add Casino project root directory to Python path
+casino_root = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..", "..")
+)  # Up 2 folders
+sys.path.append(casino_root)  # Append to imports below this
+from integration_module.game_integration import (  # noqa: E402
+    check_balance,
+    load_player_data,
+    save_and_exit,
+)
 
 
 def main():

@@ -37,3 +37,4 @@ Finally got collision workign with the ball and the flippers
 06/03
 FUCKING DONE IT!!
 Flippers are now rotating correctly around a pivot
+Had the wrong idea, i was trying to put the pivot point on the flipper, then atatch the flipper to the board. Wrong way round, the pivot point goes on the board, then the flipper is atatched to it.

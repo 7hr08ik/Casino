@@ -5,13 +5,23 @@
 # ===========================
 
 # Imports
+import os
+import sys
+
 import conf
 import pygame as pg
 from ball import PlayerBall
 from flipper import Flipper
 
 # For game_integration
-from game_integration import save_and_exit
+# Add Casino project root directory to Python path
+casino_root = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..", "..")
+)  # Up 2 folders
+sys.path.append(casino_root)  # Append to imports below this
+from integration_module.game_integration import (  # noqa: E402
+    save_and_exit,
+)
 
 
 class GameBoard:

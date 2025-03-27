@@ -14,12 +14,20 @@ import tempfile
 # Local Imports
 import conf
 import pygame as pg
-
-# For game_integration
-from game_integration import check_balance, load_player_data, maze_exit
-
 from maze_logic.player import Player
 from maze_logic.ui import Ui
+
+# For game_integration
+# Add Casino project root directory to Python path
+casino_root = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..", "..")
+)  # Up 2 folders
+sys.path.append(casino_root)  # Append to imports below this
+from integration_module.game_integration import (  # noqa: E402
+    check_balance,
+    load_player_data,
+    maze_exit,
+)
 
 # For game_integration
 # Platform agnostic temp file

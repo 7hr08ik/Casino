@@ -7,9 +7,21 @@
 #
 # Main Imports
 # Local Imports
+import os
+import sys
+
 import conf
 import pygame as pg
-from game_integration import load_player_data
+
+# For game_integration
+# Add Casino project root directory to Python path
+casino_root = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..", "..", "..")
+)  # Up 2 folders
+sys.path.append(casino_root)  # Append to imports below this
+from integration_module.game_integration import (  # noqa: E402
+    load_player_data,
+)
 
 
 class Ui:

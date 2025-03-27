@@ -12,13 +12,23 @@
 #    # For game_integration
 # ===========================
 
+import os
 import random
 import sys
 
 import pygame
 
 # For game_integration
-from game_integration import check_balance, load_player_data, save_and_exit
+# Add Casino project root directory to Python path
+casino_root = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..", "..")
+)  # Up 2 folders
+sys.path.append(casino_root)  # Append to imports below this
+from integration_module.game_integration import (  # noqa: E402
+    check_balance,
+    load_player_data,
+    save_and_exit,
+)
 
 # Initialize pygame
 pygame.init()
@@ -266,10 +276,10 @@ def game_loop(player_name):
         display_text(f"{player_name}'s Last Rolls:", 20, 140, BLUE, 24)
         for i, roll in enumerate(player_roll_history[-5:], 1):
             display_text(f"{i}. {roll}", 20, 140 + i * 30, BLUE, 24)
-        display_text("House's Last Rolls:", SCREEN_WIDTH - 400, 140, RED, 22)
+        display_text("House's Last Rolls:", SCREEN_WIDTH - 300, 140, RED, 22)
         for i, roll in enumerate(house_roll_history[-5:], 1):
             display_text(
-                f"{i}. {roll}", SCREEN_WIDTH - 400, 140 + i * 30, RED, 24
+                f"{i}. {roll}", SCREEN_WIDTH - 300, 140 + i * 30, RED, 24
             )
 
         for event in pygame.event.get():
@@ -311,16 +321,28 @@ def game_loop(player_name):
                     display_text(
                         f"{player_name}'s Dice: {player_dice}", 200, 300, BLUE
                     )
-                    screen.blit(DICE_IMAGES[house_dice[0]], (500, 200))
-                    screen.blit(DICE_IMAGES[house_dice[1]], (550, 200))
-                    screen.blit(DICE_IMAGES[house_dice[2]], (600, 200))
-                    display_text(f"House Dice: {house_dice}", 500, 300, RED)
+                    screen.blit(
+                        DICE_IMAGES[house_dice[0]], (SCREEN_WIDTH - 300, 200)
+                    )
+                    screen.blit(
+                        DICE_IMAGES[house_dice[1]], (SCREEN_WIDTH - 250, 200)
+                    )
+                    screen.blit(
+                        DICE_IMAGES[house_dice[2]], (SCREEN_WIDTH - 200, 200)
+                    )
+                    display_text(
+                        f"House Dice: {house_dice}",
+                        SCREEN_WIDTH - 300,
+                        300,
+                        RED,
+                    )
 
                     if player_sum > house_sum:
                         display_text(
                             f"{player_name} Wins £{bet}", 300, 400, GREEN, 48
                         )
                         player_money += bet
+                        # For game_integration
                         player_data["cash_balance"] += bet
                         house_money -= bet
                     elif player_sum < house_sum:
@@ -328,6 +350,7 @@ def game_loop(player_name):
                             f"The House Wins £{bet}", 300, 400, RED, 48
                         )
                         player_money -= bet
+                        # For game_integration
                         player_data["cash_balance"] -= bet
                         house_money += bet
                     else:
@@ -392,7 +415,7 @@ def main_menu():
             if start_button.is_clicked(event):
                 # player_name = get_player_name()
                 # game_loop(player_name)
-                game_loop(player_data["player_name"])
+                game_loop(player_data["player_name"])  # For game_integration
             if quit_button.is_clicked(event):
                 save_and_exit(screen, player_data)  # For game_integration
                 pygame.quit()
