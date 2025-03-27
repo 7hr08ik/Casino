@@ -13,7 +13,7 @@ Product Description
 This is Teesside Casino. It is a suite of 7 games.
 The games themselves are in differing stages of completion. Each game was created by a separate developer,
 and the code is commented with the name of the developer responsible for its creation.
-Each game folder, contains its own 'docs' folder with the relevant readme and testing documentation.
+Each game contains its own readme, whereas testing documentation is collected together in the testing folder.
 
 The player will be created with a starting balance of £1000. The player can walk around the lobby,
 and choose which game they wish to play. Upon entering the game, the player can gamble away at will.
