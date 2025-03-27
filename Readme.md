@@ -11,12 +11,17 @@ Product Description
 -------------------
 
 This is Teesside Casino. It is a suite of 7 games.
-The games themselves are in differing stages of completion. Each game was created by a separate developer, and the code is commented with the name of the developer responsible for its creation.
+The games themselves are in differing stages of completion. Each game was created by a separate developer,
+and the code is commented with the name of the developer responsible for its creation.
 Each game folder, contains its own 'docs' folder with the relevant readme and testing documentation.
 
-The player will be created with a starting balance of £1000. The player can walk around the lobby, and choose which game they wish to play. Upon entering the game, the player can gamble away at will. Upon exiting the game, the player will return to the lobby, with an updated player balance. 
+The player will be created with a starting balance of £1000. The player can walk around the lobby,
+and choose which game they wish to play. Upon entering the game, the player can gamble away at will.
+Upon exiting the game, the player will return to the lobby, with an updated player balance. 
 
-The lobby is modular in the mini games available. In the 'integration_module' folder, is a .py file that contains functions required to bring an independently created python game/program into the lobby and its save/load system, allowing a user to have continuous gameplay across all games, with one cash balance.
+The lobby is modular in the mini games available. In the 'integration_module' folder, is a .py file that
+contains functions required to bring an independently created python game/program into the lobby and its
+save/load system, allowing a user to have continuous gameplay across all games, with one cash balance.
 
 
 Development Environment
@@ -113,7 +118,9 @@ Delete aged files
 Noted Bugs and missing features
 -------------------------------
 
-    For the lobby I would like to have the main lobby stay open in the background, and reload the players data when the window becomes active. Currently the only feature implemented is, the ability for each game to return to the lobby, but this simplly closes the game, then runs the main.py again.
+    For the lobby I would like to have the main lobby stay open in the background, and reload the players
+    data when the window becomes active. Currently the only feature implemented is, the ability for each
+    game to return to the lobby, but this simplly closes the game, then runs the main.py again.
 
     Audio would have been nice to get in, but due to deadline constraints it was not done.
 
