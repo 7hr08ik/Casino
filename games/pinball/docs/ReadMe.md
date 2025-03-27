@@ -64,5 +64,9 @@ Resources used
 Noted Bugs and missing features
 -------------------------------
 
-    Ants everywhere...
+    Pretty much all of it.
+    Gravity is just a basic y - 1 coordinate.
+    The collision for the ball does not work correctly.
+    The flippers do not interact with the ball. So the ball is not pushed by them.
+
 
