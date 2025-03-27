@@ -122,7 +122,7 @@ leave_table_button = pygame.Rect(1070, 670, 200, 40)
 
 
 def betting():
-    global active_2
+    global var_money, var_bet, active_2
 
     # For game_integration
     player_data = load_player_data()  # Load the data

@@ -1,11 +1,11 @@
 {
     "Major Pain": {
         "player_name": "Major Pain",
-        "cash_balance": 9830,
+        "cash_balance": 9718,
         "high_scores": {
             "cash": 13419
         },
-        "last_played": "2025-03-24 20:55:17"
+        "last_played": "2025-03-27 14:00:18"
     },
     "Corporal Punishment": {
         "player_name": "Corporal Punishment",
@@ -33,10 +33,10 @@
     },
     "Mr B Ator": {
         "player_name": "Mr B Ator",
-        "cash_balance": 1170,
+        "cash_balance": 1160,
         "high_scores": {
-            "cash": 1170
+            "cash": 1280
         },
-        "last_played": "2025-03-27 13:13:37"
+        "last_played": "2025-03-27 13:51:08"
     }
 }

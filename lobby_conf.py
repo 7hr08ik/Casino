@@ -32,11 +32,11 @@ GAME_MAZE = [sys.executable, os.path.abspath("games/maze/main.py")]
 GAME_LOTTERY = [sys.executable, os.path.abspath("games/lottery/lottery.py")]
 GAME_BLACKJACK = [
     sys.executable,
-    os.path.abspath("games/blackjack/BlackJack_ICA.py"),
+    os.path.abspath("games/blackjack/blackjack.py"),
 ]
 GAME_DICE = [sys.executable, os.path.abspath("games/dice/dice.py")]
-GAME_ROULETTE = [sys.executable, os.path.abspath("games/roulette/Roulette.py")]
-GAME_SHELL = [sys.executable, os.path.abspath("games/shell/Shell_Game.py")]
+GAME_ROULETTE = [sys.executable, os.path.abspath("games/roulette/roulette.py")]
+GAME_SHELL = [sys.executable, os.path.abspath("games/shell/shell_game.py")]
 
 # ----------------------------------
 # Player / Targets

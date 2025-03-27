@@ -18,8 +18,8 @@ import pygame as pg
 # For game_integration
 from game_integration import check_balance, load_player_data, maze_exit
 
-from logic.player import Player
-from logic.ui import Ui
+from maze_logic.player import Player
+from maze_logic.ui import Ui
 
 # For game_integration
 # Platform agnostic temp file
