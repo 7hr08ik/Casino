@@ -12,7 +12,7 @@ The game was to be a typical game of pinball. Fire the ball with the space bar, 
 
 Unfortunately too much time was spent fixing collision, and even more so, trying to figure out how to implement gravity was rturning out to be a very large problem. My implementation was to move the ball ndownwards at a constant rate, but in order to get the ball to react to the flippers and the vame world correctly, I think i would have to replace my simple gravity with a velocity calculation that constantly pulled the ball downwards, depending on its speed, fall distance, angle of attack, surface it has bounced off etc.
 
-I was also responsible for 2 other parts of this project, so the decision was made to shelf this game and concentrate on the other parts.
+I was also responsible for 2 other parts of this project, so the decision was made to shelf this game and concentrate on the other parts. Due to the incomplete nature of this game, no testing documentation was completed.
 
 
 Development Environment
@@ -64,7 +64,7 @@ Resources used
 Noted Bugs and missing features
 -------------------------------
 
-    Pretty much all of it.
+    Game is incomplete.
     Gravity is just a basic y - 1 coordinate.
     The collision for the ball does not work correctly.
     The flippers do not interact with the ball. So the ball is not pushed by them.
