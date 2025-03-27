@@ -8,7 +8,7 @@
 import sys
 
 import pygame as pg
-from high_scores_ui import HighScoresUI
+from ui.high_scores_ui import HighScoresUI
 
 import lobby_conf as conf
 from logic.save_load import (

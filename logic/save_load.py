@@ -150,27 +150,23 @@ def load_all_high_scores():
     """
     Load and sort list of players by high score
     """
-    try:
-        # Load all players data
-        all_players = load_all_players()
+    # Load all players data
+    all_players = load_all_players()
 
-        # If no players exist, return empty list
-        if not all_players:
-            return []
-
-        # Extract valid players with high scores
-        players = []
-        for player_data in all_players.items():
-            if player_data is not None and "high_scores" in player_data:
-                players.append(player_data)
-
-        # Sort by cash high score
-        sorted_players = sorted(players, key=get_cash_score, reverse=True)
-
-        return sorted_players
-    except Exception:
-        # Return empty list if any error occurs
+    # If no players exist, return empty list
+    if not all_players:
         return []
+
+    # Extract valid players with high scores
+    players = []
+    for player_name, player_data in all_players.items():
+        if player_data is not None and "high_scores" in player_data:
+            players.append(player_data)
+
+    # Sort by cash high score
+    sorted_players = sorted(players, key=get_cash_score, reverse=True)
+
+    return sorted_players
 
 
 # -------------------------------------------------------------------------
