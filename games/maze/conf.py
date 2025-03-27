@@ -19,7 +19,7 @@ WINDOW_SIZE = (1280, 720)
 FLOOR_IMG = pg.image.load("games/maze/img/maze_floor.png")
 BG_IMG = pg.image.load("games/maze/img/maze.png")
 LOAD_SCR_IMG = pg.image.load("games/maze/img/loading.png")
-LOAD_SCRN_DLY = 3000  # 15sec
+LOAD_SCRN_DLY = 7000  # 15sec
 
 GAME_LOBBY = [sys.executable, os.path.abspath("main.py")]
 
