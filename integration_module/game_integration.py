@@ -14,25 +14,21 @@ import tempfile
 import pygame as pg
 
 # Add Casino project root directory to Python path
-casino_root = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "..")
-)
+casino_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(casino_root)
 
 # Import your existing systems
-from logic.save_load import save_player_data
-from ui.exit_ui import ExitUI
+from logic.save_load import save_player_data  # noqa: E402
+from ui.exit_ui import ExitUI  # noqa: E402
 
 TEMP_FILE = os.path.join(tempfile.gettempdir(), "current_player.json")
 
 """
-All code additions commented with;
-    # For game_integration
-
 Notes on usage:
-    Use the load_lobby_player_data() function to load player data from the lobby
-    Use the save_and_exit() function to save player data and return to the lobby
-    Use the check_balance() function to check if player's balance is too low
+    load_lobby_player_data() = Load player data from the lobby
+    save_and_exit()          = Save player data and return to the lobby
+    check_balance()          = Check if player's balance is too low
+    maze_exit()              = When exiting the maze
 """
 
 # -------------------------------------------------------------------------
@@ -42,7 +38,7 @@ Notes on usage:
 
 def return_to_lobby():
     """
-    Return control to the main lobby
+    Return to the main lobby
     """
     pg.quit()
     # Launch lobby process
@@ -73,7 +69,8 @@ def load_player_data():
 
 def save_and_exit(screen, player_data):
     """
-    Save player data and return to lobby
+    Save player data and return to lobby.
+    Data is saved in both the temp file and the full database
     """
 
     # Save player data to temp file for the lobby
@@ -92,8 +89,10 @@ def save_and_exit(screen, player_data):
 
 def check_balance(screen, player_data):
     """
-    Check if player's balance is too low
+    Check if player's balance is too low.
+    If the player has no balance, show the loser screen
     """
+
     if player_data["cash_balance"] < 1:
         exit_ui = ExitUI(screen)
         exit_ui.draw_exit_loser(screen, player_data["player_name"])
@@ -105,6 +104,7 @@ def maze_exit(screen, player_data):
     1. Save player data to both files
     2. Show exit UI
     """
+
     player_data = load_player_data()
 
     # Save to main database

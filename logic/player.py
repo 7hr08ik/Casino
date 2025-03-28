@@ -1,7 +1,8 @@
 # ===========================
 # Python game suite
 #
-# Casino Lobby
+# Author: Rob Hickling -- E4491341
+# Casino Lobby - Player Class
 # ===========================
 #
 # Main Imports
@@ -65,6 +66,7 @@ class Player:
         """
         Update the player's movement and image.
         """
+
         self.move_player()  # Move the player
         self.animate(dt)  # Animate the player using delta time
 
@@ -89,6 +91,7 @@ class Player:
         The player's image list is changed to reflect the direction of movement.
         If no movement keys are pressed, player set to the idle image.
         """
+
         self.keys = pg.key.get_pressed()
 
         if (self.keys[pg.K_UP] or self.keys[pg.K_w]) and self.pos_y > 0:
@@ -98,7 +101,7 @@ class Player:
             conf.WIN_SIZE[1] - 15
         ):
             self.pos_y += conf.mv_spd
-            self.images = self.pl_run_down  # player image = down facing
+            self.images = self.pl_run_down  # player image v down facing
         if (self.keys[pg.K_LEFT] or self.keys[pg.K_a]) and (self.pos_x > 0):
             self.pos_x -= conf.mv_spd
             self.images = self.pl_run_left  # player image < left facing
@@ -124,9 +127,9 @@ class Player:
 
         # Add the delta time to the anim_timer
         self.anim_timer += dt
-        #  Increment through the index after 70 ms.
+        #  Increment through the index.
         if self.anim_timer > 0.07:  # After 70 ms.
-            self.anim_timer = 0  # Reset the timer.
             self.anim_index += 1  # Increment the index.
             self.anim_index %= len(self.images)  # Modulo to cycle the index.
             self.image = self.images[self.anim_index]  # And switch the image.
+            self.anim_timer = 0  # Reset the timer.

@@ -1,6 +1,7 @@
 # ===========================
 # Casino Lobby
 #
+# Author: Rob Hickling -- E4491341
 # Config File
 # ===========================
 #

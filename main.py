@@ -63,11 +63,11 @@ def activate_target(
     with open(TEMP_FILE, "w") as f:
         json.dump(player_data, f)
 
+    # Different action for games, and exit.
     if player_rect.colliderect(target_rect):
         if game_command == leave_game:
             exit_ui = ExitUI(screen)
             exit_ui.print_exit_ui(screen, player_data)
-            # pg.quit()
             sys.exit()
         if game_command:
             pg.quit()
@@ -86,7 +86,7 @@ def check_player_balance(screen, player_data):
     if not isinstance(player_data["cash_balance"], int):
         player_data["cash_balance"] = int(player_data["cash_balance"])
 
-    if player_data["cash_balance"] < 1:  # 10 for testing
+    if player_data["cash_balance"] < 1:  # < 1 just to be safe
         exit_ui = ExitUI(screen)
         exit_ui.draw_exit_loser(screen, player_data["player_name"])
     else:
@@ -113,14 +113,15 @@ def main():
 
     # 3 - Player data elements
     ui = UIElements(screen)
-    # Check if TEMP_FILE exists and load player data
+
+    # 4 - Check if TEMP_FILE exists and load player data
     try:
         # If temp exists but is older than 60s, delete
         # If it is there, its probably because the game crashed.
         if os.path.exists(TEMP_FILE):
-            file_age_limit = 60
+            one_minute = 60
             st = os.stat(TEMP_FILE)
-            if (time.time() - st.st_mtime) > file_age_limit:
+            if (time.time() - st.st_mtime) > one_minute:
                 print(f"Removing outdated temp file: {TEMP_FILE}")
                 os.remove(TEMP_FILE)
                 # No player data to load, will create new below
@@ -136,6 +137,7 @@ def main():
     except Exception as e:
         print(f"Error handling temp file: {e}")
         player_data = None
+
     # If no player data was loaded, show player selection screen
     if player_data is None:
         # Show player selection screen and create/load player data
@@ -152,7 +154,7 @@ def main():
             }"
         )
 
-    # 4 - Initialize game elements
+    # 5 - Initialize game elements
     running = True
     player = Player(conf.p_pos[0], conf.p_pos[1])
     clock = conf.CLOCK
@@ -161,7 +163,7 @@ def main():
     small_font = pg.font.Font(None, 24)
 
     # ----------------------------------
-    # 5 - Main game loop
+    # 6 - Main game loop
     while running:
         # Handle events
         for event in pg.event.get():
@@ -250,7 +252,6 @@ def main():
     # Try to delete the TEMP_FILE if it exists
     with contextlib.suppress(OSError):
         os.remove(TEMP_FILE)
-
     pg.quit()
     sys.exit()
 

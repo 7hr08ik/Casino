@@ -1,14 +1,14 @@
 # ===========================
 # Python game suite
 #
-# Casino Lobby
+# Author: Rob Hickling -- E4491341
+# Casino Lobby - Main UI
 # ===========================
 #
 # Main Imports
 import sys
 
 import pygame as pg
-from ui.high_scores_ui import HighScoresUI
 
 import lobby_conf as conf
 from logic.save_load import (
@@ -16,6 +16,7 @@ from logic.save_load import (
     load_player_data,
     save_player_data,
 )
+from ui.high_scores_ui import HighScoresUI
 
 
 class UIElements:
@@ -31,7 +32,7 @@ class UIElements:
     for what I was trying to make.
     I asked the AI coding assistant to build the basic framework for me,
     with a New player button and a Load player button, and an Exit button.
-    Using this as a  framework, I then added the rest of the UI elements,
+    Using this as a framework, I then added the rest of the UI elements,
     expanded on the code and made it my own. The 2 other UI files,
     grew from this, and were split into their own separate classes.
     """
@@ -49,13 +50,13 @@ class UIElements:
         # Initialize parts
         self.btns = []
         self.create_btns()
+        self.player_list = []
         self.selected_btn = 0
         self.current_player = None
         self.new_player_active = False
+        self.tgl_load_player = False
         self.input_text = ""
         self.new_player_prompt = ""
-        self.player_list = []
-        self.tgl_load_player = False
 
         # Player selection variables
         self.selected_player_index = 0
@@ -95,7 +96,7 @@ class UIElements:
 
     def mouse_hover(self, pos):
         """
-        Check if mouse is colliding with any button
+        Check if mouse hovers over any button
         """
         for button in self.btns:
             if button["rect"].collidepoint(pos):
@@ -181,7 +182,7 @@ class UIElements:
 
     def load_selected_player(self):
         """
-        Load the selected player
+        Load the selected players data into memory
         """
         # If player list is empty
         if not self.player_list:
@@ -232,7 +233,6 @@ class UIElements:
         if event.type == pg.KEYDOWN:
             # Create standard keyboard input
             if event.key == pg.K_RETURN:
-                # self.process_txt()
                 self.db_add_player(self.input_text)
             elif event.key == pg.K_BACKSPACE:
                 self.input_text = self.input_text[:-1]
@@ -335,7 +335,7 @@ class UIElements:
         """
         Draw the UI elements to the screen
 
-        Written in chunks that look for specific toggles
+        Written in blocks that look for specific toggles
         If that toggle has been set, then the game will react
         and print the corresponding UI
 

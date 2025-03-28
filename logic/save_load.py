@@ -1,7 +1,8 @@
 # ===========================
 # Python game suite
 #
-# Casino Lobby
+# Author: Rob Hickling -- E4491341
+# Casino Lobby - Save/Load
 # ===========================
 #
 # Main Imports
@@ -35,6 +36,7 @@ def load_all_players():
             return json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         # Return empty dict if file doesn't exist or is corrupted
+        print("Database not found, or corrupted.")
         return {}
 
 
@@ -73,15 +75,16 @@ def get_players_display_data():
 
 def save_player_data(player_name, cash_balance, high_scores=None):
     """
-    Save player data to a JSON file
-    Assigned defaults if no data
-    Update high score if applicable
-    Limit the number of entries in the DB
+    Save player data to a JSON file.
+    Assigned defaults if no data available.
+    Update high score if applicable.
+    Limit the number of entries in the DB.
+
     """
 
     # Initialize some things with defaults
     high_scores = high_scores or {"cash": 0}
-    # Convert cash balance to integer if it's a string
+    # Cast cash balance to integer for error checks
     cash_balance = int(cash_balance) if cash_balance else 0
 
     # Variables
@@ -119,6 +122,7 @@ def load_player_data(player_name):
     """
     Load specific players data from the JSON file
     """
+
     all_players = load_all_players()
 
     # Return the requested player data if it exists
@@ -159,7 +163,7 @@ def load_all_high_scores():
 
     # Extract valid players with high scores
     players = []
-    for player_name, player_data in all_players.items():
+    for _player_name, player_data in all_players.items():
         if player_data is not None and "high_scores" in player_data:
             players.append(player_data)
 

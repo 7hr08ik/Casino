@@ -1,7 +1,8 @@
 # ===========================
 # Python game suite
 #
-# Casino Lobby - Player Selection
+# Author: Rob Hickling -- E4491341
+# Casino Lobby - High Scores
 # ===========================
 #
 # Main Imports
@@ -54,14 +55,14 @@ class HighScoresUI:
         Sends True signal to UI to inform it to close the High Scoers page
         and return to the Main menu
         """
-        if event.type == pg.MOUSEMOTION:
+        if event.type == pg.MOUSEMOTION:  # Hover and highlight
             self.back_button["hover"] = self.back_button["rect"].collidepoint(
                 pg.mouse.get_pos()
             )
-        elif event.type == pg.MOUSEBUTTONDOWN:
+        elif event.type == pg.MOUSEBUTTONDOWN:  # Click on Back button
             if self.back_button["rect"].collidepoint(pg.mouse.get_pos()):
-                return True  # Go Back
-        elif event.type == pg.KEYDOWN and (
+                return True
+        elif event.type == pg.KEYDOWN and (  # Press Keys to return
             event.key == pg.K_q or event.key == pg.K_RETURN
         ):
             return True  # Go Back
@@ -73,11 +74,12 @@ class HighScoresUI:
     #
     def draw_high_scores(self):
         """
-        Draw the high scores list
+        Draw the high scores page
         """
+
         # ----------------------------------
         # Top Player
-
+        #
         # Variables
         top_player = self.high_scores[0]
         top_box = pg.Rect(50, 80, self.screen.get_width() - 100, 150)
@@ -153,6 +155,8 @@ class HighScoresUI:
         """
         Draw the High Scores screen
         """
+
+        # ----------------------------------
         title_text = self.font.render("Hall of Fame", True, (255, 255, 255))
 
         # Background fill - Black

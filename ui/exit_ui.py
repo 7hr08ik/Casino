@@ -1,6 +1,7 @@
 # ===========================
 # Python game suite
 #
+# Author: Rob Hickling -- E4491341
 # Casino Lobby - Exit Screens
 # ===========================
 #
@@ -60,7 +61,7 @@ class ExitUI:
         # ----------------------------------
         # Variables
 
-        # Boxes
+        # Boxes (hard-coded values because I'm lazy)
         info_box_width = 1180  # 50 Border on each side
         info_box_height = 150
         info_box = pg.Rect(50, 80, info_box_width, info_box_height)
@@ -121,7 +122,7 @@ class ExitUI:
         help_rect = help_text.get_rect(topleft=(50, 680))
 
         # ----------------------------------
-        # Draw Items
+        # Draw Stuff
 
         # Background fill
         self.screen.fill((0, 0, 0))
@@ -165,7 +166,10 @@ class ExitUI:
 
     def print_exit_ui(self, screen, player_data):
         """
-        Show exit screen
+        Show exit screen. Processes player data and exit gracefully.
+        Saves current player data into the database, and removes the
+        temporary file.
+
         """
 
         running = True
@@ -188,13 +192,15 @@ class ExitUI:
         print("Player data saved. Exiting game.")
 
         # Try to delete the TEMP_FILE if it exists
-        # Contextlib suggested by Ruff
+        # Contextlib suggested by Ruff (originally if/else block)
         with contextlib.suppress(OSError):
             os.remove(TEMP_FILE)
 
         running = False
         pg.quit()
         sys.exit()
+
+    # -------------------------------------------------------------------------
 
     def draw_exit_loser(self, screen, player_name):
         """
