@@ -99,9 +99,9 @@ class Card:
         self.image = card_images.get((value, suit))
 
     def card_value(self):
-        if self.value in [11, 12, 13]:
+        if self.value in [12, 13, 14]:
             return 10  # Jack, Queen, King
-        elif self.value == 14:
+        elif self.value == 11:
             return 11  # Ace (will be adjusted in score calculation)
         return self.value
 
@@ -129,7 +129,7 @@ class Player:
 
     def calculate_score(self):
         score = sum(card.card_value() for card in self.hand)
-        ace_count = sum(1 for card in self.hand if card.value == 14)
+        ace_count = sum(1 for card in self.hand if card.value == 11)
         # Adjust for aces if score > 21:
         while score > 21 and ace_count:
             score -= 10
@@ -235,7 +235,8 @@ def play_round():
             hit_button.draw(screen)
             stand_button.draw(screen)
 
-        pygame.display.update()
+        # Removed to fix flickering issues
+        # pygame.display.update()
 
         # Handle player's turn actions
         if player_turn:
