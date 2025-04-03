@@ -261,22 +261,21 @@ def play_round():
                 dealer_score = dealer.calculate_score()
 
                 if dealer.is_busted() or player_score > dealer_score:
-                    outcome = "Player wins!"
+                    outcome = f"Player wins! Score: {player_score}"
                     gambling_credits += bet * 2  # Player wins double the bet
-                    player_data["cash_balance"] += (
-                        bet * 2
-                    )  # For game_integration
+                    # For game_integration
+                    player_data["cash_balance"] += bet * 2
                 elif player_score < dealer_score:
-                    outcome = "Dealer wins!"
+                    outcome = f"Dealer wins! Score: {dealer_score}"
 
                 else:
                     outcome = "It's a tie!"
                     gambling_credits += bet  # Refund bet to player
                     player_data["cash_balance"] += bet  # For game_integration
                 if dealer_score == 21:
-                    outcome = "BlackJack"
+                    outcome = "BlackJack!"
                 if player_score == 21:
-                    outcome = "BlackJack"
+                    outcome = "BlackJack!"
                 round_over = True
         for button in bet_buttons:
             button.draw(screen)

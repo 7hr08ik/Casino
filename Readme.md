@@ -1,5 +1,6 @@
 Teesside Casino - Game Suite
 ============================
+https://github.com/7hr08ik/Casino
 
 Authors: 
     
