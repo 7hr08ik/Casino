@@ -1,5 +1,5 @@
 # ===========================
-# BlackJack
+# Lottery
 #
 # Author: Viorica Anghel
 # 07/02/2025

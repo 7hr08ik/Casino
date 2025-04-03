@@ -44,3 +44,12 @@ Noted Bugs and missing features
 The BlackJack game runs properly without major issues.
 One bug that I found but not rectified is the possibility of the player to adjust the bet during game play after the cards were shown.
 
+Strange flickering occuring in the gameplay. The bet buttons flicker differently on differnet systems.
+Is this a code problem, or a system problem? More investigation required.
+It is deffinately a bug that needs fixing, but investigation would require a lot of work.
+Current theories include, graphics drivers, code bugs, and the game running too fast,
+requireing a small rewrite to fix the issue. Only after discovering the full issue.
+
+There is currently a bug with the score calculation. 
+Picture cards are not always treated with the correct score values.
+Also, Ace is not correctly valued as 1 or 11. 
