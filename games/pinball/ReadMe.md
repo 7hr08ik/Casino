@@ -1,7 +1,8 @@
 Pinball
 =======
 
-Author: Rob Hickling
+Author: 
+- Rob Hickling
 
 Product Description
 -------------------
@@ -18,55 +19,57 @@ I was also responsible for 2 other parts of this project, so the decision was ma
 Development Environment
 -----------------------
 
-    VSCode
-    Linux
-    Python version 3.12
+- VSCode
+- Linux
+- Python version 3.12
 
 Requirements
 ------------
 
-    Python >= 3.6
-    Pygame >= 2.6.1
+- Python >= 3.6
+- Pygame >= 2.6.1
 
 Install Instructions
 --------------------
 
-    This game is now integrated into the lobby system, and as such requires no special installation, outside of the lobby.
+This game has been fully integrated into the lobby suite.
+Installation is handled as part of the full project
 
 Usage Instructions
 ------------------
 
-    Launch the lobby, and activate the target for Pinball.
+Game is run from the main lobby. 
+Open the lobby, and walk to the `Pinball` target to begin this game.
 
 Resources used
 --------------
     
-    Guide for gravity implementation
-        https://www.pygame.org/project/1964/3488
-        https://stackoverflow.com/questions/62720811/how-to-make-gravity-function-in-pygame
+- Guide for gravity implementation
+    - https://www.pygame.org/project/1964/3488
+    - https://stackoverflow.com/questions/62720811/how-to-make-gravity-function-in-pygame
         
-    Character Files
-        https://aske4.itch.io/antihero-character
+- Character Files
+    - https://aske4.itch.io/antihero-character
 
-    Help found for rotating the flippers:
-        https://stackoverflow.com/questions/4183208/how-do-i-rotate-an-image-around-its-center-using-pygame
+- Help found for rotating the flippers:
+    - https://stackoverflow.com/questions/4183208/how-do-i-rotate-an-image-around-its-center-using-pygame
 
-    Collisions Help
-        https://stackoverflow.com/questions/55817422/collision-between-masks-in-pygame
-        https://toxigon.com/implementing-collision-detection-in-pygame
+- Collisions Help
+    - https://stackoverflow.com/questions/55817422/collision-between-masks-in-pygame
+    - https://toxigon.com/implementing-collision-detection-in-pygame
 
-    Pivot point helper
-        https://stackoverflow.com/questions/15098900/how-to-set-the-pivot-point-center-of-rotation-for-pygame-transform-rotate/49413006#49413006
+- Pivot point helper
+    - https://stackoverflow.com/questions/15098900/how-to-set-the-pivot-point-center-of-rotation-for-pygame-transform-rotate/49413006#49413006
 
-    Physics Simulation
-        https://www.petercollingridge.co.uk/tutorials/pygame-physics-simulation/
+- Physics Simulation
+    - https://www.petercollingridge.co.uk/tutorials/pygame-physics-simulation/
     
 Noted Bugs and missing features
 -------------------------------
 
-    Game is incomplete.
-    Gravity is just a basic y - 1 coordinate.
-    The collision for the ball does not work correctly.
-    The flippers do not interact with the ball. So the ball is not pushed by them.
+- Game is incomplete.
+- Gravity is just a basic `y = -1` coordinate.
+- The collision for the ball does not work correctly.
+- The flippers do not interact with the ball. So the ball is not pushed by them.
 
 

@@ -1,7 +1,8 @@
 Roulette
 =========
 
-Author: James David Young
+Author:
+- James David Young
 
 Product Description
 -------------------------
@@ -17,18 +18,21 @@ Python version 3.11.2
 
 Requirements
 ---------------
-Python 3.6 and up
-Pygame 2.6 and up
 
-Install instructions
------------------------
-Download and install Python 3.12
-Do pip 3 install pygame in powershell
-Unzip the file in your directory
+- Python >= 3.6
+- Pygame >= 2.6.1
 
-Usage instructions
----------------------
-Run the Roulette Version 4.py file
+Install Instructions
+--------------------
+
+This game has been fully integrated into the lobby suite.
+Installation is handled as part of the full project
+
+Usage Instructions
+------------------
+
+Game is run from the main lobby. 
+Open the lobby, and walk to the `Roulette` target to begin this game.
 
 Resources Used
 -------------------
@@ -43,6 +47,12 @@ ChatGPT - Assistance with logical errors
 Noted Bugs
 ------------
 -Enter symbol appearing in the second input box
+
+Rob added;
+Game has no instructions for the player. Nothing to inform the player of how to play.
+No UI information about wins, loses.
+Many missing bets.
+
 
 Removed Features
 -------------------
